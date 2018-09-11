@@ -1,2 +1,2 @@
 # ressources
-common ressources for metwork-framework organization
+common resources for metwork-framework organization
