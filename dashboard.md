@@ -1,6 +1,13 @@
 # MetWork Organization builds dashboard
 
-## Build images
+## Links 
+
+- [Organization (open) issues](https://github.com/issues?utf8=%E2%9C%93&q=is%3Aopen+is%3Aissue+archived%3Afalse+user%3Ametwork-framework+)
+- [Organization (open) PRs](https://github.com/issues?utf8=%E2%9C%93&q=is%3Apr+archived%3Afalse+user%3Ametwork-framework+is%3Aopen+)
+
+## Builds dashboard
+
+### Build images
 
 | Build image | CentOS6 | CentOS7 |
 | --- | --- | --- |
@@ -11,7 +18,7 @@
 | **mfxxx** (master branch) | [![Drone CI](http://metwork-framework.org:8000/api/badges/metwork-framework/docker-mfxxx-centos6-buildimage/status.svg?branch=master)](http://metwork-framework.org:8000/metwork-framework/docker-mfxxx-centos6-buildimage)  | [![Drone CI](http://metwork-framework.org:8000/api/badges/metwork-framework/docker-mfxxx-centos7-buildimage/status.svg?branch=master)](http://metwork-framework.org:8000/metwork-framework/docker-mfxxx-centos7-buildimage) |
 | **mfxxx** (integration branch) | [![Drone CI](http://metwork-framework.org:8000/api/badges/metwork-framework/docker-mfxxx-centos6-buildimage/status.svg?branch=integration)](http://metwork-framework.org:8000/metwork-framework/docker-mfxxx-centos6-buildimage)  | [![Drone CI](http://metwork-framework.org:8000/api/badges/metwork-framework/docker-mfxxx-centos7-buildimage/status.svg?branch=integration)](http://metwork-framework.org:8000/metwork-framework/docker-mfxxx-centos7-buildimage) |
 
-## Modules
+### Modules
 
 | Module | CentOS6 | CentOS7 |
 | --- | --- | --- |
@@ -20,3 +27,5 @@
 | **mfcom** (master branch) | [![Drone CI](http://metwork-framework.org:8000/api/badges/metwork-framework/mfcom/status.svg?branch=master)](http://metwork-framework.org:8000/metwork-framework/mfcom)  | [![Drone CI](http://metwork-framework.org:8000/api/badges/metwork-framework/mfcom/status.svg?branch=master)](http://metwork-framework.org:8000/metwork-framework/mfcom) |
 | **mfcom** (integration branch) | [![Drone CI](http://metwork-framework.org:8000/api/badges/metwork-framework/mfcom/status.svg?branch=integration)](http://metwork-framework.org:8000/metwork-framework/mfcom)  | [![Drone CI](http://metwork-framework.org:8000/api/badges/metwork-framework/mfcom/status.svg?branch=integration)](http://metwork-framework.org:8000/metwork-framework/mfcom) |
 | **mfserv** (master branch) | [![Drone CI](http://metwork-framework.org:8000/api/badges/metwork-framework/mfserv/status.svg?branch=master)](http://metwork-framework.org:8000/metwork-framework/mfserv)  | [![Drone CI](http://metwork-framework.org:8000/api/badges/metwork-framework/mfserv/status.svg?branch=master)](http://metwork-framework.org:8000/metwork-framework/mfserv) |
+
+
