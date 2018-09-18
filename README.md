@@ -20,12 +20,12 @@
 
 ### Modules
 
-| Module | CentOS6 | CentOS7 |
-| --- | --- | --- |
-| **mfext** (master branch) | [![Drone CI](http://metwork-framework.org:8000/api/badges/metwork-framework/mfext/status.svg?branch=master)](http://metwork-framework.org:8000/metwork-framework/mfext) | [![Drone CI](http://metwork-framework.org:8000/api/badges/metwork-framework/mfext/status.svg?branch=master)](http://metwork-framework.org:8000/metwork-framework/mfext) |
-| **mfext** (integration branch) | [![Drone CI](http://metwork-framework.org:8000/api/badges/metwork-framework/mfext/status.svg?branch=integration)](http://metwork-framework.org:8000/metwork-framework/mfext)  | [![Drone CI](http://metwork-framework.org:8000/api/badges/metwork-framework/mfext/status.svg?branch=integration)](http://metwork-framework.org:8000/metwork-framework/mfext) |
-| **mfcom** (master branch) | [![Drone CI](http://metwork-framework.org:8000/api/badges/metwork-framework/mfcom/status.svg?branch=master)](http://metwork-framework.org:8000/metwork-framework/mfcom)  | [![Drone CI](http://metwork-framework.org:8000/api/badges/metwork-framework/mfcom/status.svg?branch=master)](http://metwork-framework.org:8000/metwork-framework/mfcom) |
-| **mfcom** (integration branch) | [![Drone CI](http://metwork-framework.org:8000/api/badges/metwork-framework/mfcom/status.svg?branch=integration)](http://metwork-framework.org:8000/metwork-framework/mfcom)  | [![Drone CI](http://metwork-framework.org:8000/api/badges/metwork-framework/mfcom/status.svg?branch=integration)](http://metwork-framework.org:8000/metwork-framework/mfcom) |
-| **mfserv** (master branch) | [![Drone CI](http://metwork-framework.org:8000/api/badges/metwork-framework/mfserv/status.svg?branch=master)](http://metwork-framework.org:8000/metwork-framework/mfserv)  | [![Drone CI](http://metwork-framework.org:8000/api/badges/metwork-framework/mfserv/status.svg?branch=master)](http://metwork-framework.org:8000/metwork-framework/mfserv) |
+| Module |
+| --- | 
+| **mfext** (master branch) | [![Drone CI](http://metwork-framework.org:8000/api/badges/metwork-framework/mfext/status.svg?branch=master)](http://metwork-framework.org:8000/metwork-framework/mfext) |
+| **mfext** (integration branch) | [![Drone CI](http://metwork-framework.org:8000/api/badges/metwork-framework/mfext/status.svg?branch=integration)](http://metwork-framework.org:8000/metwork-framework/mfext)  |
+| **mfcom** (master branch) | [![Drone CI](http://metwork-framework.org:8000/api/badges/metwork-framework/mfcom/status.svg?branch=master)](http://metwork-framework.org:8000/metwork-framework/mfcom)  |
+| **mfcom** (integration branch) | [![Drone CI](http://metwork-framework.org:8000/api/badges/metwork-framework/mfcom/status.svg?branch=integration)](http://metwork-framework.org:8000/metwork-framework/mfcom)  |
+| **mfserv** (master branch) | [![Drone CI](http://metwork-framework.org:8000/api/badges/metwork-framework/mfserv/status.svg?branch=master)](http://metwork-framework.org:8000/metwork-framework/mfserv)  |
 
 
