@@ -20,8 +20,8 @@
 
 ### Modules
 
-| Module |
-| --- | 
+| Module | Build status |
+| --- | --- |
 | **mfext** (master branch) | [![Drone CI](http://metwork-framework.org:8000/api/badges/metwork-framework/mfext/status.svg?branch=master)](http://metwork-framework.org:8000/metwork-framework/mfext) |
 | **mfext** (integration branch) | [![Drone CI](http://metwork-framework.org:8000/api/badges/metwork-framework/mfext/status.svg?branch=integration)](http://metwork-framework.org:8000/metwork-framework/mfext)  |
 | **mfcom** (master branch) | [![Drone CI](http://metwork-framework.org:8000/api/badges/metwork-framework/mfcom/status.svg?branch=master)](http://metwork-framework.org:8000/metwork-framework/mfcom)  |
