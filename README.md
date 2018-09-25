@@ -1,1 +1,1 @@
-# MetWork Organization common ressources
+# MetWork Organization common resources
