@@ -1,6 +1,6 @@
-# Contributing guide
+# Contributing guide
 
-## Commit Message Guidelines
+## Commit Message Guidelines
 
 Inspired by Angular project and [https://www.conventionalcommits.org](conventional commits initiative), 
 we have very precise rules over how our git commit messages can be formatted. This leads to more readable messages that are 
