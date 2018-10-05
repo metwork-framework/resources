@@ -87,7 +87,7 @@ Must be one of the following:
 
 The scope is not used for the moment. Please don't use scopes in commit messages.
 
-### Description
+### Description
 
 The description contains a succinct description of the change:
 
