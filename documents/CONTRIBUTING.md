@@ -147,3 +147,44 @@ that this commit Closes.
 
 `Breaking Changes` should start with the word `BREAKING CHANGE:` with a space or two newlines. The rest of the commit 
 message is then used for this.
+
+## Pull-requests and issues labels
+
+We use a consistent labelling scheme inspired by [https://github.com/Relequestual/sensible-github-labels](sensible-github-labels).
+
+### Type
+
+- `Type: Bug`: it's about a bug
+- `Type: Enhancement`: it's about a new feature
+- `Type: Question`: it's just a question
+- `Type: Maintenance`: it's about a better way to implement an existing feature (refactor, performances improvement...)
+
+### Priority
+
+- `Priority: Critical`: This should be dealt with ASAP. Not fixing this issue would be a serious error.
+- `Priority: High`: After critical issues are fixed, these should be dealt with before any further issues.
+- `Priority: Medium`: (implicit, does not exist as a label) This issue may be useful, and needs some attention.
+- `Priority: Low` : This issue can probably be picked up by anyone looking to contribute to the project, as an entry fix.
+
+### Status
+
+- `Status: Pending`: The issue is new, this is the triage status.
+- `Status: Closed`: The issue/pr is closed (because the corresponding change is merged or because the corresponding change was abandoned/rejected)
+- `Status: Accepted`: It's clear what the subject of the issue is about, what the resolution should be, and we want this :-)
+- `Status: Blocked`: There is another issue that needs to be resolved first, or a specific person is required to comment or reply to progress. There may also be some external blocker.
+- `Status: In Progress`: This issue is being worked on, and has someone assigned.
+- `Status: Review Needed`: The PR must be reviewed by a team member.
+- `Status: Revision Needed`: Submitter of PR needs to revise the PR related to the issue.
+
+### Labels management by `MetworkBot`
+
+We have a bot to do some automatic labelling:
+
+- When an issue/pr is opended, it adds the `Status: Pending` label (if no other `Status: *` label was given initialy)
+- When an issue/pr is closed, it removes every `Status: *` labels and adds `Status: Closed`
+- When an issue/pr is reopened, it removes the `Status: Closed` label and adds `Status: Pending`
+- When a new `Priority: *` label is set, old `Priority: *` labels are removed (if necessary)
+- When a new `Status: *` label is set, old `Status: *` labels are removed (if necessary)
+- When a pr is not "good" (because of bad statuses for example), the label `Status: Revision Needed` is set
+- When a pr is "good" (statuses all green), the label `Status: Review Needed` is set
+
