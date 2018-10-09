@@ -8,7 +8,7 @@ Because building and testing whole metwork-framework is a long and difficult tas
 merge pull-requests. Every change is made by a pull-request on this branch and every change must be reviewed by a team member
 to be accepted.
 
-We use a [https://mergify.io/](mergify bot) to merge pull-requests, so merging rules are clear and described in the `.mergify.yml` file in the repository.
+We use a [mergify bot](https://mergify.io/) to merge pull-requests, so merging rules are clear and described in the `.mergify.yml` file in the repository.
 
 ### The `master` branch
 
@@ -28,7 +28,7 @@ FIXME
 
 ## Version numbering 
 
-We follow the [https://semver.org/](semantic versionning specification). 
+We follow the [semantic versionning specification](https://semver.org/). 
 
 ### Summary (see above specification for more details)
 
@@ -40,12 +40,12 @@ Given a version number `MAJOR.MINOR.PATCH`, we increment the:
 
 ## Commit Message Guidelines
 
-Inspired by Angular project and [https://www.conventionalcommits.org](conventional commits initiative), 
+Inspired by Angular project and [conventional commits initiative](https://www.conventionalcommits.org), 
 we have very precise rules over how our git commit messages can be formatted. This leads to more readable messages that are 
 easy to follow when looking through the project history. But also, we use the git commit messages to generate the project 
 changelog.
 
-So we follow the [https://www.conventionalcommits.org](conventional commits initiative) specification.
+So we follow the [conventional commits initiative](https://www.conventionalcommits.org) specification.
 
 ### Summary (see above specification for more details)
 
@@ -150,7 +150,7 @@ message is then used for this.
 
 ## Pull-requests and issues labels
 
-We use a consistent labelling scheme inspired by [https://github.com/Relequestual/sensible-github-labels](sensible-github-labels).
+We use a consistent labelling scheme inspired by [sensible-github-labels](https://github.com/Relequestual/sensible-github-labels).
 
 ### Type
 
