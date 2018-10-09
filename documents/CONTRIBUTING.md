@@ -180,11 +180,14 @@ We use a consistent labelling scheme inspired by [sensible-github-labels](https:
 
 We have a bot to do some automatic labelling:
 
-- When an issue/pr is opended, it adds the `Status: Pending` label (if no other `Status: *` label was given initialy)
-- When an issue/pr is closed, it removes every `Status: *` labels and adds `Status: Closed`
-- When an issue/pr is reopened, it removes the `Status: Closed` label and adds `Status: Pending`
-- When a new `Priority: *` label is set, old `Priority: *` labels are removed (if necessary)
-- When a new `Status: *` label is set, old `Status: *` labels are removed (if necessary)
-- When a pr is not "good" (because of bad statuses for example), the label `Status: Revision Needed` is set
-- When a pr is "good" (statuses all green), the label `Status: Review Needed` is set
+- [x] When a pr is opended, it adds the `Status: Pending` label 
+- [ ] When an issue is opened, it adds the `Status: Pending` label (if no other `Status: *` label was given initialy)
+- [x] When a pr is closed, it removes every `Status: *` labels and adds `Status: Closed`
+- [ ] When an issue is closed, it removes every `Status: *` labels and adds `Status: Closed`
+- [x] When a pr is reopened, it removes the `Status: Closed` label and adds `Status: Review Needed`
+- [ ] When an issue is reopened, it removes the `Status: Closed` label and adds `Status: Pending`
+- [ ] When a new `Priority: *` label is set, old `Priority: *` labels are removed (if necessary)
+- [ ] When a new `Status: *` label is set, old `Status: *` labels are removed (if necessary)
+- [x] When a pr is not "good" (because of bad statuses for example), the label `Status: Revision Needed` is set
+- [x] When a pr is "good" (statuses all green), the label `Status: Review Needed` is set
 
