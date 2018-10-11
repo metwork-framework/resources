@@ -6,6 +6,8 @@ We have several cumulative "integration levels" documented as a [repository topi
 
 ## Integration level 0
 
+This is the default case if there is no `integration-level-*` topic on the repository.
+
 No particular integration. Minimal support and unknown maturity. It is probably not ready for you.
 
 ## Integration level 1
