@@ -2,7 +2,7 @@
 
 Repositories hosted inside the MetWork Organization have not the same level of integration, maturity or support.
 
-We have several cumulative "integration levels" documented as a [repository topic](https://help.github.com/articles/about-topics/).
+We have several **cumulative** "integration levels" documented as a [repository topic](https://help.github.com/articles/about-topics/).
 
 ## Integration level 0
 
@@ -13,7 +13,7 @@ No particular integration. Minimal support and unknown maturity. It is probably 
 ## Integration level 1
 
 No particular integration but reasonably supported. It is probably a fork of another repos with custom patches.
-The project is visible in the organization custom dashboard.
+The project is visible in the organization custom dashboard. And the project must be integrated to our continuous integrations server.
 
 ## Integration level 2
 
