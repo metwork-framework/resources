@@ -26,7 +26,8 @@ We follow the version numbering schema and the commit message guidelines with au
 ## Integration level 4
 
 We add the branching model with mandatory pull-requests on `integration` branch for example.
+CLA must be signed by contributors.
 
 ## Integration level 5
 
-Nothing new but just to showcase most interesting projects.
+Nothing new but just to showcase most interesting projects. The license must be BSD.
