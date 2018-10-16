@@ -1,1 +1,5 @@
-{% if cookiecutter.integration_level|int < 5 %}{% if cookiecutter.repo != "docker-mfxxx-centos7-buildimage" and cookiecutter.repo != "docker-mfxxx-centos6-buildimage" %}yes{% endif %}{% endif %}
+{% if cookiecutter.integration_level|int < 5 %}
+{% if "autoreadme" not in "REPO_TOPICS"|getenv|from_json %}
+yes
+{% endif %}
+{% endif %}
