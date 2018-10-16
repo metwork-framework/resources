@@ -25,6 +25,7 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) file.
 
 {% if cookiecutter.integration_level|int >= 2 %}
 
+
 ## Code of Conduct
 
 See [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md) file.
