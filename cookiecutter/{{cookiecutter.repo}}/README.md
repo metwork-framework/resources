@@ -19,13 +19,13 @@
 
 {{ ("cat " + "REPO_HOME"|getenv + "/.metwork-framework/README.md 2>/dev/null")|shell }}
 
-## Contributing guide
+## Contributing guide
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) file.
 
 {% if cookiecutter.integration_level|int >= 2 %}
 
-## Code of Conduct
+## Code of Conduct
 
 See [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md) file.
 
