@@ -1,4 +1,6 @@
 {
     "repo": "FIXME",
-    "integration_level": 0
+    "integration_level": 0,
+    "_extensions": ["jinja2_from_json_extension", "jinja2_shell_extension", 
+                    "jinja2_getenv_extension"]
 }
