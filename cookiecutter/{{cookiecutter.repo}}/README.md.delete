@@ -1,1 +1,1 @@
-{% if cookiecutter.integration_level|int < 5 %}yes{% endif %}
+{% if cookiecutter.integration_level|int < 5 %}{% if cookiecutter.repo != "docker-mfxxx-centos7-buildimage" and cookiecutter.repo != "docker-mfxxx-centos6-buildimage" %}yes{% endif %}{% endif %}
