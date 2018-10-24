@@ -63,7 +63,7 @@ enabled=1
 metadata_expire=0
 ```
 
-You can do this with one command:
+You can do this with one command (as `root` user):
 
 ```
 cat >/etc/yum.repos.d/metwork.repo <<EOF
@@ -78,5 +78,5 @@ EOF
 
 ## Test
 
-To test the repository, you can use the command `yum list "metwork*"`. You must have several "metwork-..." packages available.
+To test the repository, you can use the command `yum list "metwork*"` (as `root`). You must have several `metwork-...` packages available.
 
