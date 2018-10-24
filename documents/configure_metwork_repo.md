@@ -10,7 +10,7 @@
 To disable SELinux, which is enabled by default, you have to change the file `/etc/selinux/config` to set `SELINUX=disabled`, then
 reboot the system.
 
-## Configure the metwork yum repository for CentOS 6 distribution
+## Configure the metwork yum repository for CentOS 6 distribution
 
 First check the output of `uname -a |grep x86_64`. If you have nothing, you don't have a `x86_64` distribution installed and you can't 
 install MetWork on it.
@@ -43,7 +43,7 @@ metadata_expire=0
 EOF
 ```
 
-## Configure the metwork yum repository for CentOS 7 distribution
+## Configure the metwork yum repository for CentOS 7 distribution
 
 First check the output of `uname -a |grep x86_64`. If you have nothing, you don't have a `x86_64` distribution installed and you can't 
 install MetWork on it.
@@ -76,7 +76,7 @@ metadata_expire=0
 EOF
 ```
 
-## Test
+## Test
 
 To test the repository, you can use the command `yum list "metwork*"`. You must have several "metwork-..." packages available.
 
