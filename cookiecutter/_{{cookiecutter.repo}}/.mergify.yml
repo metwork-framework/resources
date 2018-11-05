@@ -1,27 +1,29 @@
-pull_request_rules:
-- name: metworkbot automerge
-  actions:
-    merge:
-      method: rebase
-      rebase_fallback: merge
-      strict: false
-  conditions:
-    - author=metworkbot
-{% if cookiecutter.integration_level|int >= 4 %}
-- name: integration branch
-  actions:
-    merge:
-      method: rebase
-      rebase_fallback: merge
-      strict: true
-    delete_head_branch: {}
-  conditions:
-    - base=integration
-    - label!=no-mergify
-    - '#approved-reviews-by>=1'
-    - status-success=license/cla
-    - author!=metworkbot
-{% if cookiecutter.repo != "mfext" %}
-    - status-success=continuous-integration/drone/pr
-{% endif %}
-{% endif %}
+rules:
+  default: null
+  branches:
+    integration:
+      merge_strategy:
+        method: rebase
+        rebase_fallback: none
+      protection:
+        required_status_checks:
+          strict: true
+          contexts:
+          - license/cla
+          - continuous-integration/drone/pr
+        required_pull_request_reviews:
+          required_approving_review_count: 1
+          require_code_owner_reviews: true
+          dismiss_stale_reviews: true
+        enforce_admins: true
+    master:
+      merge_strategy:
+        method: rebase
+        rebase_fallback: none
+      protection:
+        required_status_checks:
+          strict: true
+          contexts:
+          - no pullrequest on master
+        required_pull_request_reviews: null
+        enforce_admins: true
