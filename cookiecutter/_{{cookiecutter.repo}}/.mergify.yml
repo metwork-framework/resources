@@ -6,6 +6,8 @@ pull_request_rules:
         - Merge Now
   conditions:
     - author=metworkbot
+    - merged=false
+    - closed=false
 {% if cookiecutter.integration_level|int >= 4 %}
 - name: integration branch
   actions:
@@ -18,7 +20,7 @@ pull_request_rules:
     - '#approved-reviews-by>=1'
     - status-success=license/cla
     - author!=metworkbot
-{% if cookiecutter.repo != 'mfext' %}
+{% if cookiecutter.repo != 'mfext' and cookiecutter.repo != 'testrepo' %}
     - status-success=continuous-integration/drone/pr
 {% endif %}
 {% endif %}
