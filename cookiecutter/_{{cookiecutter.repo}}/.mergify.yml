@@ -6,8 +6,8 @@ pull_request_rules:
         - Merge Now
   conditions:
     - author=metworkbot
-    - merged=false
-    - closed=false
+    - -merged
+    - -closed
 {% if cookiecutter.integration_level|int >= 4 %}
 - name: integration branch
   actions:
