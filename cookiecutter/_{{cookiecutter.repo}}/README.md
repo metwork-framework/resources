@@ -19,7 +19,7 @@
 
 {{ ("cat " + "REPO_HOME"|getenv + "/.metwork-framework/README.md 2>/dev/null")|shell }}
 
-{% if cookiecutter.integration_level >= 5 %}
+{% if cookiecutter.integration_level|int >= 5 %}
 ## Installation guide
 
 See [this document](https://github.com/metwork-framework/resources/blob/master/documents/install_a_metwork_package.md).
