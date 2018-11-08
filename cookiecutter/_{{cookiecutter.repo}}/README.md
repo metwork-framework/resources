@@ -14,10 +14,16 @@
 [![Maintenance](https://github.com/metwork-framework/resources/blob/master/badges/maintained.svg)]()
 {%- endif %}
 {%- if cookiecutter.integration_level|int >= 5 %}
-[![License](https://github.com/metwork-framework/resources/blob/master/badges/bsd.svg)]() 
+[![License](https://github.com/metwork-framework/resources/blob/master/badges/bsd.svg)]()
 {%- endif %}
 
 {{ ("cat " + "REPO_HOME"|getenv + "/.metwork-framework/README.md 2>/dev/null")|shell }}
+
+{% if cookiecutter.integration_level >= 5 %}
+## Installation guide
+
+See [this document](https://github.com/metwork-framework/resources/blob/master/documents/install_a_metwork_package.md).
+{% endif %}
 
 ## Contributing guide
 
@@ -25,10 +31,8 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) file.
 
 {% if cookiecutter.integration_level|int >= 2 %}
 
-
 ## Code of Conduct
 
 See [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md) file.
 
 {% endif %}
-
