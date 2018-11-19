@@ -3,6 +3,9 @@
 {% if cookiecutter.repo == "mfcom" %}
     {% set DEP_MODULE = "mfext" %}
     {% set BUILD_IMAGE_NAME = "mfcom-${OS_VERSION}-buildimage" %}
+{% elif cookiecutter.repo == "mfext" %}
+    {% set DEP_MODULE = "" %}
+    {% set BUILD_IMAGE_NAME = "mfext-${OS_VERSION}-buildimage" %}
 {% else %}
     {% set DEP_MODULE = "mfcom" %}
     {% set BUILD_IMAGE_NAME = "mfxxx-${OS_VERSION}-buildimage" %}
@@ -12,24 +15,48 @@ bootstrap_common: &bootstrap_common
   pull: true
   commands:
     - if test "$${FORCED_OS_VERSION}" != ""; then if test "$${FORCED_OS_VERSION}" != "${OS_VERSION}"; then echo "step bypass"; exit 0; fi; fi
-    - mkdir -p /opt/metwork-{{cookiecutter.repo}}-${DRONE_BRANCH}
-    - ./bootstrap.sh /opt/metwork-{{cookiecutter.repo}}-${DRONE_BRANCH} /opt/metwork-{{DEP_MODULE}}-$${DEP_DIR}
+    - mkdir -p /opt/metwork-{{cookiecutter.repo}}-$${TARGET_DIR}
+{% if cookiecutter.repo == "mfext" %}
+    - ./bootstrap.sh /opt/metwork-{{cookiecutter.repo}}-$${TARGET_DIR}
+{% else %}
+    - ./bootstrap.sh /opt/metwork-{{cookiecutter.repo}}-$${TARGET_DIR} /opt/metwork-{{DEP_MODULE}}-$${DEP_DIR}
+{% endif %}
     - cat adm/root.mk
+{% if cookiecutter.repo == "mfext" %}
+    - CACHE_HASH=`./adm2/_build_cache_hash.sh .`
+{% else %}
     - CACHE_HASH=`/opt/metwork-mfext/bin/_build_cache_hash.sh .`
+{% endif %}
     - if ! test -f /buildcache/build_{{cookiecutter.repo}}_${DRONE_BRANCH}_$${CACHE_HASH}; then echo $${CACHE_HASH} >.drone_cache; fi
 
 build_common: &build_common
   commands:
     - if test "$${FORCED_OS_VERSION}" != ""; then if test "$${FORCED_OS_VERSION}" != "${OS_VERSION}"; then echo "step bypass"; exit 0; fi; fi
     - if ! test -f .drone_cache; then echo "step bypass"; exit 0; fi
-    - mkdir -p /opt/metwork-{{cookiecutter.repo}}-${DRONE_BRANCH}
+    - export METWORK_BUILD_OS=${OS_VERSION}
+{% if cookiecutter.repo == "mfext" %}
+    - mkdir -p /opt/metwork-mfext-$${TARGET_DIR}
+    - mkdir -p /pub/metwork/continuous_integration/buildlogs/${DRONE_BRANCH}/mfext/${OS_VERSION}/${DRONE_BUILD_NUMBER}
+    - make >/pub/metwork/continuous_integration/buildlogs/${DRONE_BRANCH}/mfext/${OS_VERSION}/${DRONE_BUILD_NUMBER}/make.log 2>&1
+    - make doc >>/pub/metwork/continuous_integration/buildlogs/${DRONE_BRANCH}/mfext/${OS_VERSION}/${DRONE_BUILD_NUMBER}/make.log 2>&1
+    - rm -Rf html_doc
+    - cp -Rf /opt/metwork-mfext-$${TARGET_DIR}/html_doc .
+    - make test >>/pub/metwork/continuous_integration/buildlogs/${DRONE_BRANCH}/mfext/${OS_VERSION}/${DRONE_BUILD_NUMBER}/make.log 2>&1
+    - make RELEASE_BUILD=${DRONE_BUILD_NUMBER} rpm >>/pub/metwork/continuous_integration/buildlogs/${DRONE_BRANCH}/mfext/${OS_VERSION}/${DRONE_BUILD_NUMBER}/make.log 2>&1
+    - mv /opt/metwork-mfext-$${TARGET_DIR}/*.rpm .
+  volumes:
+    - /pub:/pub
+    - /buildcache:/buildcache
+{% else %}
+    - mkdir -p /opt/metwork-{{cookiecutter.repo}}-$${TARGET_DIR}
     - make
     - make doc
     - rm -Rf html_doc
-    - cp -Rf /opt/metwork-{{cookiecutter.repo}}-${DRONE_BRANCH}/html_doc .
+    - cp -Rf /opt/metwork-{{cookiecutter.repo}}-$${TARGET_DIR}/html_doc .
     - make test
     - make RELEASE_BUILD=${DRONE_BUILD_NUMBER} rpm
-    - mv /opt/metwork-{{cookiecutter.repo}}-${DRONE_BRANCH}/*.rpm .
+    - mv /opt/metwork-{{cookiecutter.repo}}-$${TARGET_DIR}/*.rpm .
+{% endif %}
 
 publish_ci_common: &publish_ci_common
   commands:
@@ -50,8 +77,12 @@ pipeline:
     environment:
 {% if cookiecutter.repo == "mfcom" %}
       - DEP_DIR=master
+      - TARGET_DIR=integration
+{% elif cookiecutter.repo == "mfext" %}
+      - TARGET_DIR=master
 {% else %}
       - DEP_DIR=integration
+      - TARGET_DIR=integration
 {% endif %}
     <<: *bootstrap_common
     volumes:
@@ -59,9 +90,11 @@ pipeline:
     when:
       event: push
       branch: integration
+{% if cookiecutter.repo != "mfext" %}
   bootstrap_integration_pr:
     image: metwork/{{BUILD_IMAGE_NAME}}:integration
     environment:
+      - TARGET_DIR=integration
 {% if cookiecutter.repo == "mfcom" %}
       - DEP_DIR=master
 {% else %}
@@ -71,10 +104,12 @@ pipeline:
     when:
       event: pull_request
       branch: integration
+{% endif %}
   bootstrap:
     image: metwork/{{BUILD_IMAGE_NAME}}:master
     environment:
       - DEP_DIR=master
+      - TARGET_DIR=master
     <<: *bootstrap_common
     volumes:
       - /buildcache:/buildcache
@@ -84,12 +119,28 @@ pipeline:
   build_integration:
     <<: *build_common
     image: metwork/{{BUILD_IMAGE_NAME}}:integration
+    environment:
+{% if cookiecutter.repo == "mfext" %}
+      - TARGET_DIR=master
+{% else %}
+      - TARGET_DIR=integration
+{% endif %}
     when:
+{% if cookiecutter.repo == "mfext" %}
+      event: push
+{% else %}
       event: [push, pull_request]
+{% endif %}
       branch: integration
   build:
     <<: *build_common
     image: metwork/{{BUILD_IMAGE_NAME}}:master
+    environment:
+{% if cookiecutter.repo == "mfext" %}
+      - TARGET_DIR=master
+{% else %}
+      - TARGET_DIR=${DRONE_BRANCH}
+{% endif %}
     when:
       event: push
       branch: [ master, ci_*, pci_* ]
@@ -123,6 +174,31 @@ pipeline:
     pull: true
     repositories:
       - metwork-framework/{{cookiecutter.repo}}-integration-tests-runner@${DRONE_BRANCH}
+    params:
+      - FORCED_OS_VERSION=${OS_VERSION}
+    secrets: [ downstream_token, downstream_server ]
+    when:
+      status: [ success ]
+      event: push
+      branch: [ master, integration ]
+{% elif cookiecutter.repo == "mfext" %}
+  trigger:
+    image: metwork/drone-downstream-specific-image:master
+    pull: true
+    repositories:
+      - metwork-framework/docker-mfcom-${OS_VERSION}-buildimage@${DRONE_BRANCH}
+    secrets: [ downstream_token, downstream_server ]
+    when:
+      status: [ success ]
+      event: push
+      branch: [ master, integration ]
+  trigger_tests:
+    image: metwork/drone-downstream-specific-image:master
+    pull: true
+    repositories:
+      - metwork-framework/mfext-integration-tests@${DRONE_BRANCH}
+      - metwork-framework/docker-mfext-centos6-testimage@${DRONE_BRANCH}
+      - metwork-framework/docker-mfext-centos7-testimage@${DRONE_BRANCH}
     params:
       - FORCED_OS_VERSION=${OS_VERSION}
     secrets: [ downstream_token, downstream_server ]
