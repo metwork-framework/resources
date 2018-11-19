@@ -77,10 +77,15 @@ Build your virtualenv from sources
 
 Add you python3 dependencies inside this file
 
+FIXME: explain requirements3.txt and the differences with requirements-to-freeze.txt and how the freeze of versions
+is managed
+
 #### python2_virtualenv_sources/requirements-to-freeze.txt
 
 Add you python2 dependencies inside this file
 
+FIXME: explain requirements3.txt and the differences with requirements-to-freeze.txt and how the freeze of versions
+is managed
 
 #### FIXME/nodejs 
 
