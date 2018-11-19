@@ -1,6 +1,3 @@
 {% if cookiecutter.integration_level|int != 5 %}
 yes
 {% endif %}
-{% if cookiecutter.repo == 'mfext' or cookiecutter.repo == 'mfcom' %}
-yes
-{% endif %}

@@ -1,11 +1,19 @@
 # automatically generated from https://github.com/metwork-framework/resources/blob/master/cookiecutter/_%7B%7Bcookiecutter.repo%7D%7D/.drone.yml template
 
+{% if MODULE == "MFCOM" %}
+    {% set DEP_MODULE = "mfext" %}
+    {% set BUILD_IMAGE_NAME = mfcom-${OS_VERSION}-buildimage %}
+{% else %}
+    {% set DEP_MODULE = "mfcom" %}
+    {% set BUILD_IMAGE_NAME = mfxxx-${OS_VERSION}-buildimage %}
+{% endif %}
+
 bootstrap_common: &bootstrap_common
   pull: true
   commands:
     - if test "$${FORCED_OS_VERSION}" != ""; then if test "$${FORCED_OS_VERSION}" != "${OS_VERSION}"; then echo "step bypass"; exit 0; fi; fi
     - mkdir -p /opt/metwork-{{cookiecutter.repo}}-${DRONE_BRANCH}
-    - ./bootstrap.sh /opt/metwork-{{cookiecutter.repo}}-${DRONE_BRANCH} /opt/metwork-mfcom-$${MFCOM_BRANCH}
+    - ./bootstrap.sh /opt/metwork-{{cookiecutter.repo}}-${DRONE_BRANCH} /opt/metwork-{{DEP_MODULE}}-$${DEP_DIR}
     - cat adm/root.mk
     - CACHE_HASH=`/opt/metwork-mfext/bin/_build_cache_hash.sh .`
     - if ! test -f /buildcache/build_{{cookiecutter.repo}}_${DRONE_BRANCH}_$${CACHE_HASH}; then echo $${CACHE_HASH} >.drone_cache; fi 
@@ -26,7 +34,7 @@ build_common: &build_common
 publish_ci_common: &publish_ci_common
   commands:
     - if test "$${FORCED_OS_VERSION}" != ""; then if test "$${FORCED_OS_VERSION}" != "${OS_VERSION}"; then echo "step bypass"; exit 0; fi; fi
-    - if ! test -f .drone_cache; then echo "step bypass"; exit 0; fi
+    - if ! test -f .drone_cache; then echo "step bypass"; touch .drone_downstream_bypass; exit 0; fi
     - mkdir -p /pub/metwork/continuous_integration/rpms/${DRONE_BRANCH}/${OS_VERSION}/
     - cp *.rpm /pub/metwork/continuous_integration/rpms/${DRONE_BRANCH}/${OS_VERSION}/
     - createrepo --update /pub/metwork/continuous_integration/rpms/${DRONE_BRANCH}/${OS_VERSION}
@@ -38,9 +46,9 @@ publish_ci_common: &publish_ci_common
 
 pipeline:
   bootstrap_integration_push:
-    image: metwork/mfxxx-${OS_VERSION}-buildimage:integration
+    image: metwork/{{BUILD_IMAGE_NAME}}:integration
     environment:
-      - MFCOM_BRANCH=integration
+      - DEP_DIR=integration
     <<: *bootstrap_common
     volumes:
       - /buildcache:/buildcache
@@ -48,17 +56,17 @@ pipeline:
       event: push
       branch: integration
   bootstrap_integration_pr:
-    image: metwork/mfxxx-${OS_VERSION}-buildimage:integration
+    image: metwork/{{BUILD_IMAGE_NAME}}:integration
     environment:
-      - MFCOM_BRANCH=integration
+      - DEP_DIR=integration
     <<: *bootstrap_common
     when:
       event: pull_request
       branch: integration
   bootstrap:
-    image: metwork/mfxxx-${OS_VERSION}-buildimage:master
+    image: metwork/{{BUILD_IMAGE_NAME}}:master
     environment:
-      - MFCOM_BRANCH=master
+      - DEP_DIR=master
     <<: *bootstrap_common
     volumes:
       - /buildcache:/buildcache
@@ -67,28 +75,40 @@ pipeline:
       branch: [ master, ci_*, pci_* ]
   build_integration:
     <<: *build_common
-    image: metwork/mfxxx-${OS_VERSION}-buildimage:integration
+    image: metwork/{{BUILD_IMAGE_NAME}}:integration
     when:
       event: [push, pull_request]
       branch: integration
   build:
     <<: *build_common
-    image: metwork/mfxxx-${OS_VERSION}-buildimage:master
+    image: metwork/{{BUILD_IMAGE_NAME}}:master
     when:
       event: push
       branch: [ master, ci_*, pci_* ]
   publish_ci_integration:
     <<: *publish_ci_common
-    image: metwork/mfxxx-${OS_VERSION}-buildimage:integration
+    image: metwork/{{BUILD_IMAGE_NAME}}:integration
     when:
       event: push
       branch: integration
   publish_ci:
     <<: *publish_ci_common
-    image: metwork/mfxxx-${OS_VERSION}-buildimage:master
+    image: metwork/{{BUILD_IMAGE_NAME}}:master
     when:
       event: push
-      branch: [ master, pci_*]
+      branch: [ master, pci_* ]
+{% if MODULE == "MFCOM" %}
+  trigger:
+    image: metwork/drone-downstream-specific-image:master
+    pull: true
+    secrets: [ downstream_server, downstream_token ]
+    repositories:
+      - metwork-framework/docker-mfxxx-${OS_VERSION}-buildimage@${DRONE_BRANCH}
+    when:
+      status: success
+      event: push
+      branch: [ master, integration ]
+{% endif %}
 
 matrix:
   OS_VERSION:
