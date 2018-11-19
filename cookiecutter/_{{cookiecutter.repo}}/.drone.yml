@@ -48,7 +48,11 @@ pipeline:
   bootstrap_integration_push:
     image: metwork/{{BUILD_IMAGE_NAME}}:integration
     environment:
+{% if cookiecutter.repo == "mfcom" %}
+      - DEP_DIR=master
+{% else %}
       - DEP_DIR=integration
+{% endif %}
     <<: *bootstrap_common
     volumes:
       - /buildcache:/buildcache
@@ -58,7 +62,11 @@ pipeline:
   bootstrap_integration_pr:
     image: metwork/{{BUILD_IMAGE_NAME}}:integration
     environment:
+{% if cookiecutter.repo == "mfcom" %}
+      - DEP_DIR=master
+{% else %}
       - DEP_DIR=integration
+{% endif %}
     <<: *bootstrap_common
     when:
       event: pull_request
