@@ -1,11 +1,11 @@
 # automatically generated from https://github.com/metwork-framework/resources/blob/master/cookiecutter/_%7B%7Bcookiecutter.repo%7D%7D/.drone.yml template
 
-{% if MODULE == "MFCOM" %}
+{% if cookiecutter.repo == "mfcom" %}
     {% set DEP_MODULE = "mfext" %}
-    {% set BUILD_IMAGE_NAME = mfcom-${OS_VERSION}-buildimage %}
+    {% set BUILD_IMAGE_NAME = "mfcom-${OS_VERSION}-buildimage" %}
 {% else %}
     {% set DEP_MODULE = "mfcom" %}
-    {% set BUILD_IMAGE_NAME = mfxxx-${OS_VERSION}-buildimage %}
+    {% set BUILD_IMAGE_NAME = "mfxxx-${OS_VERSION}-buildimage" %}
 {% endif %}
 
 bootstrap_common: &bootstrap_common
@@ -16,7 +16,7 @@ bootstrap_common: &bootstrap_common
     - ./bootstrap.sh /opt/metwork-{{cookiecutter.repo}}-${DRONE_BRANCH} /opt/metwork-{{DEP_MODULE}}-$${DEP_DIR}
     - cat adm/root.mk
     - CACHE_HASH=`/opt/metwork-mfext/bin/_build_cache_hash.sh .`
-    - if ! test -f /buildcache/build_{{cookiecutter.repo}}_${DRONE_BRANCH}_$${CACHE_HASH}; then echo $${CACHE_HASH} >.drone_cache; fi 
+    - if ! test -f /buildcache/build_{{cookiecutter.repo}}_${DRONE_BRANCH}_$${CACHE_HASH}; then echo $${CACHE_HASH} >.drone_cache; fi
 
 build_common: &build_common
   commands:
@@ -105,7 +105,7 @@ pipeline:
     when:
       event: push
       branch: [ master, pci_* ]
-{% if MODULE == "MFCOM" %}
+{% if cookiecutter.repo == "mfcom" %}
   trigger:
     image: metwork/drone-downstream-specific-image:master
     pull: true
