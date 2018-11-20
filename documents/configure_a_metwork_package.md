@@ -91,7 +91,28 @@ env |grep "^${MODULE}_"
 
 #### Understand what is overriden during module upgrades
 
+During a metwork module upgrade :
 
+- the default values file `${MODULE_HOME}/config/config.ini` (most of the time in `opt`) is silently overriden
+- the custom values file `${MODULE_RUNTIME_HOME}/config/config.ini` (most of the time in `home`) is overriden by a new default one **only if there is no change in it**
+
+So, if you changed some keys in `${MODULE_RUNTIME_HOME}/config/config.ini`, your change will never be overriden by a metwork upgrade.
+
+But the upgrade add a new configuration option, the new configuration option will be (of course) visible in `${MODULE_HOME}/config/config.ini` but not in your `${MODULE_RUNTIME_HOME}/config/config.ini` (because we prefer to keep your changes). It's not a problem in itself but you can miss some configuration options. 
+
+So, when you do some metwork ugprades on a customized system, you should sometimes do a kind of diff/merge between `${MODULE_RUNTIME_HOME}/config/config.ini` and `${MODULE_HOME}/config/config.ini`.
+
+But again: if you don't do this, it won't break anything. But you can just miss some new configuration features.
+
+### How to configure plugins during development process ?
+
+FIXME
+
+### How to configure a metwork package (mfserv, mfbase, mfdata...) during production deployment process ?
+
+Of course, you can use the same way described above but we recommand another way for production deployment.
+
+FIXME: /etc/metwork.config.d/mfserv/
 
 
 
