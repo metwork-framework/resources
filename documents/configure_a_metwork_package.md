@@ -106,16 +106,97 @@ But again: if you don't do this, it won't break anything. But you can just miss 
 
 ### How to configure plugins during development process ?
 
-FIXME
+If you are working on a plugin named `foo` which need extra configuration variables, add a section to 
+`${MODULE_RUNTIME_HOME}/config/config.ini` named `[plugin_foo]`. For example, for a `mfserv` plugin:
+
+```
+# [...]
+# At the end of ${MODULE_RUNTIME_HOME}/config/config.ini
+
+[plugin_foo]
+key1=value1
+key2=value2
+key3=value3
+```
+
+After restarting your terminal to force a profile loading, you will get some new environement variables:
+
+```bash
+$ env |grep "^MFSERV_PLUGIN_FOO_" 
+MFSERV_PLUGIN_FOO_KEY1=value1
+MFSERV_PLUGIN_FOO_KEY2=value2
+MFSERV_PLUGIN_FOO_KEY3=value3
+```
+
+Then, in your plugin code, use them to get the corresponding value. For example:
+
+```python
+import os
+[...]
+KEY1_VALUE = os.environ.get("MFSERV_PLUGIN_FOO_KEY1", "default_value")
+```
+
+We recommend you to use good default values in your code (`default_value` in the above example) to be sure that your plugin
+will work even if configuration is not set.
+
+Another tip if you don't want to hardcode the plugin name in your code, you can use the environment variable `MFSERV_CURRENT_PLUGIN_NAME` automatically defined by metwork.
+
+For continue with the same example: 
+
+```python
+import os
+[...]
+CURRENT_PLUGIN_NAME = os.environ['MFSERV_CURRENT_PLUGIN_NAME']
+KEY1_VALUE = os.environ.get("MFSERV_PLUGIN_%s_KEY1" % CURRENT_PLUGIN_NAME.upper(), 
+                            "default_value")
+```
 
 ### How to configure a metwork package (mfserv, mfbase, mfdata...) during production deployment process ?
 
-Of course, you can use the same way described above but we recommand another way for production deployment.
+Of course, you can use the same way described above but we recommend another way for production deployment.
 
-FIXME: /etc/metwork.config.d/mfserv/
+With the following way, you just need to use the `root` account and your don't have to know anything about metwork users.
 
+As you can deploy your released plugins just by putting them in `/etc/metwork.config.d/{metwork_module_in_lowercase}/external_plugins/` directory and restarting the module (`service metwork restart`), you can also configure the module in
+this directory by putting your changes in `/etc/metwork.config.d/{metwork_module_in_lowercase}/config.ini` file.
 
+For example, to change the listening port of `nginx` for `mfserv` module, just create the `/etc/metwork.config.d/mfserv/config.ini` file with following content:
 
+```
+# This file overrides default values available in /opt/metwork-mfserv/config/config.ini
+# DO NOT REMOVE THE FOLLOWING LINE
+[INCLUDE_config.ini]
 
+# Overridden values
+[nginx]
+port=8080
+```
 
+The file must be readable by metwork users.
+
+When this file is created and when you (re)load the `mfserv` profile, the file `${MODULE_RUNTIME_HOME}/config/config.ini` is silently replaced by a symbolic link: `${MODULE_RUNTIME_HOME}/config/config.ini -> /etc/metwork.config.d/mfserv/config.ini`.
+
+After that, you have to configure your module through this `/etc` file.
+
+### How to configure plugins during production deployment process ?
+
+Exactly in the same way as for a module. Add your custom plugin section at the end of `/etc/metwork.config.d/mfserv/config.ini`. to continue with the previous examples:
+
+```
+# This file overrides default values available in /opt/metwork-mfserv/config/config.ini
+# DO NOT REMOVE THE FOLLOWING LINE
+[INCLUDE_config.ini]
+
+# Overridden values (module wide)
+[nginx]
+port=8080
+
+# Overriden values (for plugins)
+[plugin_foo]
+key1=value1
+key2=value2
+key3=value3
+```
+
+As previously said, a good plugin should use good default values in its code to avoid to crash if custom values are not set at all.
 
