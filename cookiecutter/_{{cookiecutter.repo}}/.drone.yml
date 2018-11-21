@@ -12,7 +12,6 @@
 {% endif %}
 
 bootstrap_common: &bootstrap_common
-  pull: true
   commands:
     - if test "$${FORCED_OS_VERSION}" != ""; then if test "$${FORCED_OS_VERSION}" != "${OS_VERSION}"; then echo "step bypass"; exit 0; fi; fi
     - mkdir -p /opt/metwork-{{cookiecutter.repo}}-$${TARGET_DIR}
@@ -159,7 +158,6 @@ pipeline:
 {% if cookiecutter.repo == "mfcom" %}
   trigger:
     image: metwork/drone-downstream-specific-image:latest
-    pull: true
     secrets: [ downstream_server, downstream_token ]
     repositories:
       - metwork-framework/docker-mfxxx-${OS_VERSION}-buildimage@${DRONE_BRANCH}
@@ -171,7 +169,6 @@ pipeline:
 {% if cookiecutter.repo == "mfbase" or cookiecutter.repo == "mfserv" or cookiecutter.repo == "mfadmin" %}
   trigger_integration_tests:
     image: metwork/drone-downstream-specific-image:latest
-    pull: true
     repositories:
       - metwork-framework/{{cookiecutter.repo}}-integration-tests-runner@${DRONE_BRANCH}
     params:
@@ -184,7 +181,6 @@ pipeline:
 {% elif cookiecutter.repo == "mfext" %}
   trigger:
     image: metwork/drone-downstream-specific-image:latest
-    pull: true
     repositories:
       - metwork-framework/docker-mfcom-${OS_VERSION}-buildimage@${DRONE_BRANCH}
     secrets: [ downstream_token, downstream_server ]
@@ -194,7 +190,6 @@ pipeline:
       branch: [ master, integration ]
   trigger_tests:
     image: metwork/drone-downstream-specific-image:latest
-    pull: true
     repositories:
       - metwork-framework/mfext-integration-tests@${DRONE_BRANCH}
       - metwork-framework/docker-mfext-centos6-testimage@${DRONE_BRANCH}
@@ -206,6 +201,19 @@ pipeline:
       status: [ success ]
       event: push
       branch: [ master, integration ]
+{% endif %}
+{% if cookiecutter.repo == "mfserv" %}
+  trigger_plugins_buildimage:
+    image: metwork/drone-downstream-specific-image:latest
+    repositories:
+      - metwork-framework/docker-mfservplugins-centos7-buildimage@${DRONE_BRANCH}
+    secrets: [ downstream_token, downstream_server ]
+    when:
+      status: [ success ]
+      event: push
+      branch: [ master, integration ]
+      matrix:
+        OS_VERSION: centos7
 {% endif %}
 
 matrix:
