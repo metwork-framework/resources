@@ -1,13 +1,4 @@
 pull_request_rules:
-- name: metworkbot automerge
-  actions:
-    label:
-      add:
-        - Merge Now
-  conditions:
-    - author=metworkbot
-    - -merged
-    - -closed
 {% if cookiecutter.integration_level|int >= 4 %}
 - name: integration branch
   actions:
