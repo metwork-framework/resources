@@ -158,7 +158,7 @@ pipeline:
       branch: [ master, pci_* ]
 {% if cookiecutter.repo == "mfcom" %}
   trigger:
-    image: metwork/drone-downstream-specific-image:master
+    image: metwork/drone-downstream-specific-image:latest
     pull: true
     secrets: [ downstream_server, downstream_token ]
     repositories:
@@ -183,7 +183,7 @@ pipeline:
       branch: [ master, integration ]
 {% elif cookiecutter.repo == "mfext" %}
   trigger:
-    image: metwork/drone-downstream-specific-image:master
+    image: metwork/drone-downstream-specific-image:latest
     pull: true
     repositories:
       - metwork-framework/docker-mfcom-${OS_VERSION}-buildimage@${DRONE_BRANCH}
@@ -193,7 +193,7 @@ pipeline:
       event: push
       branch: [ master, integration ]
   trigger_tests:
-    image: metwork/drone-downstream-specific-image:master
+    image: metwork/drone-downstream-specific-image:latest
     pull: true
     repositories:
       - metwork-framework/mfext-integration-tests@${DRONE_BRANCH}
