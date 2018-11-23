@@ -16,6 +16,8 @@ def test_empty(path):
 
 paths_to_delete = []
 for path in [os.path.join(x[0], y) for x in os.walk('.') for y in x[2]]:
+    if path.endswith('.rename'):
+        continue
     if test_empty(path):
         paths_to_delete.append(path)
     if path.endswith('.delete'):
@@ -27,6 +29,7 @@ for path in paths_to_delete:
     if os.path.basename(path) in ['__init__.py']:
         continue
     try:
+        print("remove %s" % path)
         os.unlink(path)
     except Exception:
         pass
@@ -49,7 +52,9 @@ for path in [os.path.join(x[0], y) for x in os.walk('.') for y in x[2]]:
             paths_to_delete.append(path)
 
 for source, target in paths_to_rename:
+    print("move %s => %s" % (source, target))
     shutil.move(source, target)
 
 for path in paths_to_delete:
+    print("remove %s" % path)
     os.unlink(path)
