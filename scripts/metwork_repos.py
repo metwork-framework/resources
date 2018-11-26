@@ -6,10 +6,12 @@ from aiohttp import ClientSession, BasicAuth, ClientTimeout
 import os
 import aiohttp_github_helpers as h
 
-GITHUB_USER = os.environ['GITHUB_USER']
-GITHUB_PASS = os.environ['GITHUB_PASS']
+GITHUB_USER = os.environ.get('GITHUB_USER', None)
+GITHUB_PASS = os.environ.get('GITHUB_PASS', None)
 TIMEOUT = ClientTimeout(total=20)
-AUTH = BasicAuth(GITHUB_USER, GITHUB_PASS)
+AUTH = None
+if GITHUB_USER is not None and GITHUB_PASS is not None:
+    AUTH = BasicAuth(GITHUB_USER, GITHUB_PASS)
 ORG = "metwork-framework"
 TOPICS_TO_EXCLUDE = ["testrepo"]
 
