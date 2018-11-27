@@ -25,16 +25,19 @@ ret=0
 for rep in $list_rep; do
     if [ -d $rep ]; then
         cd $rep
-{% if MODULE == "mfext" %}
-        LAYERS_TO_LOAD=`cat .layerapi2_dependencies |xargs |sed 's/ /,/g'`
-{% endif %}
+        if test -s .layerapi2_dependencies; then
+             LAYERS_TO_LOAD=`cat .layerapi2_dependencies |xargs |sed 's/ /,/g'` 
+             WRAPPER=0
+        else
+             WRAPPER=1
+        fi
         for test in test*.sh; do
             echo "Test" $test "in" $rep
-{% if MODULE == "mfext" %}
-            layer_wrapper --layers=$LAYERS_TO_LOAD -- ./$test
-{% else %}
-            ./$test
-{% endif %}
+            if test $WRAPPER -eq 0; then
+                layer_wrapper --layers=$LAYERS_TO_LOAD -- ./$test
+            else
+                ./$test
+            fi
             if test $? == 0; then
                 echo "Test $test OK"
             else
