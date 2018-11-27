@@ -26,13 +26,7 @@ pipeline:
       - /root:/root
     commands:
       - HASH_BEFORE=`docker images -q metwork/{{MODULE}}-{{OS}}-buildimage:${DRONE_BRANCH}`
-      - if test "${DRONE_BRANCH}" = "master"; then
-          docker build -t metwork/{{MODULE}}-{{OS}}-buildimage:master -t metwork/{{MODULE}}-{{OS}}-buildimage:latest --build-arg BRANCH=master --build-arg CACHEBUST=${DRONE_BUILD_NUMBER} .;
-        elif test "${DRONE_BRANCH}" = "integration"; then
-          docker build -t metwork/{{MODULE}}-{{OS}}-buildimage:integration --build-arg BRANCH=integration --build-arg CACHEBUST=${DRONE_BUILD_NUMBER} .;
-        else
-          docker build -t metwork/{{MODULE}}-{{OS}}-buildimage:${DRONE_BRANCH} --build-arg BRANCH=master --build-arg CACHEBUST=${DRONE_BUILD_NUMBER} .;
-        fi
+      - docker build -t metwork/{{MODULE}}-{{OS}}-buildimage:${DRONE_BRANCH} --build-arg BRANCH=${DRONE_BRANCH} --build-arg CACHEBUST=${DRONE_BUILD_NUMBER} .
       - HASH_AFTER=`docker images -q metwork/{{MODULE}}-{{OS}}-buildimage:${DRONE_BRANCH}`
       - if test "$${HASH_BEFORE}" = "$${HASH_AFTER}"; then
           touch .drone_downstream_bypass;
@@ -47,38 +41,21 @@ pipeline:
     when:
       event: push
 {% if MODULE == "mfext" or MODULE == "mfcom" or MODULE == "mfxxx" %}
-  trigger_master:
+  trigger:
     <<: *trigger_common
     repositories:
 {% if MODULE == "mfext" or MODULE == "mfcom" %}
-      - metwork-framework/{{MODULE}}@master
+      - metwork-framework/{{MODULE}}@${DRONE_BRANCH}
 {% elif MODULE == "mfxxx" %}
-      - metwork-framework/mfserv@master
-      - metwork-framework/mfdata@master
-      - metwork-framework/mfbase@master
-      - metwork-framework/mfadmin@master
-      - metwork-framework/mfsysmon@master
+      - metwork-framework/mfserv@${DRONE_BRANCH}
+      - metwork-framework/mfdata@${DRONE_BRANCH}
+      - metwork-framework/mfbase@${DRONE_BRANCH}
+      - metwork-framework/mfadmin@${DRONE_BRANCH}
+      - metwork-framework/mfsysmon@${DRONE_BRANCH}
 {% endif %}
     when:
       status: success
       event: push
-      branch: master
-  trigger_integration:
-    <<: *trigger_common
-    repositories:
-{% if MODULE == "mfext" or MODULE == "mfcom" %}
-      - metwork-framework/{{MODULE}}@integration
-{% elif MODULE == "mfxxx" %}
-      - metwork-framework/mfserv@integration
-      - metwork-framework/mfdata@integration
-      - metwork-framework/mfbase@integration
-      - metwork-framework/mfadmin@integration
-      - metwork-framework/mfsysmon@integration
-{% endif %}
-    when:
-      status: success
-      event: push
-      branch: integration
 {% endif %}
 
-branches: [ master, integration, ci_*, pci_* ]
+branches: [ master, integration, release_* ]

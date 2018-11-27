@@ -81,7 +81,7 @@ pipeline:
       - /buildcache:/buildcache
     when:
       event: push
-      branch: integration
+      branch: [ integration, ci_*, pci_* ]
 {% if cookiecutter.repo != "mfext" %}
   bootstrap_integration_pr:
     image: metwork/{{BUILD_IMAGE_NAME}}:integration
@@ -94,16 +94,16 @@ pipeline:
       branch: integration
 {% endif %}
   bootstrap:
-    image: metwork/{{BUILD_IMAGE_NAME}}:master
+    image: metwork/{{BUILD_IMAGE_NAME}}:${DRONE_BRANCH}
     environment:
-      - DEP_DIR=master
-      - TARGET_DIR=master
+      - DEP_DIR=${DRONE_BRANCH##release_}
+      - TARGET_DIR=${DRONE_BRANCH##release_}
     <<: *bootstrap_common
     volumes:
       - /buildcache:/buildcache
     when:
       event: push
-      branch: [ master, ci_*, pci_* ]
+      branch: [ master, release_* ]
   build_integration:
     <<: *build_common
     image: metwork/{{BUILD_IMAGE_NAME}}:integration
@@ -115,27 +115,27 @@ pipeline:
 {% else %}
       event: [push, pull_request]
 {% endif %}
-      branch: integration
+      branch: [ integration, ci_*, pci_* ]
   build:
     <<: *build_common
-    image: metwork/{{BUILD_IMAGE_NAME}}:master
+    image: metwork/{{BUILD_IMAGE_NAME}}:${DRONE_BRANCH}
     environment:
-      - TARGET_DIR=master
+      - TARGET_DIR=${DRONE_BRANCH##release_}
     when:
       event: push
-      branch: [ master, ci_*, pci_* ]
+      branch: [ master, release_* ]
   publish_ci_integration:
     <<: *publish_ci_common
     image: metwork/{{BUILD_IMAGE_NAME}}:integration
     when:
       event: push
-      branch: integration
+      branch: [ integration, pci_* ]
   publish_ci:
     <<: *publish_ci_common
-    image: metwork/{{BUILD_IMAGE_NAME}}:master
+    image: metwork/{{BUILD_IMAGE_NAME}}:${DRONE_BRANCH}
     when:
       event: push
-      branch: [ master, pci_* ]
+      branch: [ master, release_* ]
 {% if cookiecutter.repo == "mfcom" %}
   trigger:
     image: metwork/drone-downstream-specific-image:latest
@@ -145,7 +145,7 @@ pipeline:
     when:
       status: success
       event: push
-      branch: [ master, integration ]
+      branch: [ master, integration, release_* ]
 {% endif %}
 {% if cookiecutter.repo == "mfbase" or cookiecutter.repo == "mfserv" or cookiecutter.repo == "mfadmin" or cookiecutter.repo == "mfdata" or cookiecutter.repo == "mfsysmon" %}
   trigger_integration_tests:
@@ -158,7 +158,7 @@ pipeline:
     when:
       status: [ success ]
       event: push
-      branch: [ master, integration ]
+      branch: [ master, integration, release_* ]
 {% elif cookiecutter.repo == "mfext" %}
   trigger:
     image: metwork/drone-downstream-specific-image:latest
@@ -168,7 +168,7 @@ pipeline:
     when:
       status: [ success ]
       event: push
-      branch: [ master, integration ]
+      branch: [ master, integration, release_* ]
   trigger_tests:
     image: metwork/drone-downstream-specific-image:latest
     repositories:
@@ -181,7 +181,7 @@ pipeline:
     when:
       status: [ success ]
       event: push
-      branch: [ master, integration ]
+      branch: [ master, integration, release_* ]
 {% endif %}
 {% if cookiecutter.repo == "mfserv" %}
   trigger_plugins_buildimage:
@@ -192,7 +192,7 @@ pipeline:
     when:
       status: [ success ]
       event: push
-      branch: [ master, integration ]
+      branch: [ master, integration, release_* ]
       matrix:
         OS_VERSION: centos7
 {% endif %}
@@ -202,4 +202,4 @@ matrix:
     - centos6
     - centos7
 
-branches: [ master, integration, ci_*, pci_* ]
+branches: [ master, integration, ci_*, pci_*, release_* ]
