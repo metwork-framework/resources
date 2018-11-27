@@ -1,0 +1,80 @@
+{% if cookiecutter.repo|fnmatch('docker-mf*-*-buildimage') %}
+    {% set LIST = cookiecutter.repo.split("-") %}
+    {% set MODULE = LIST[1] %}
+    {% set OS = LIST[2] %}
+{% else %}
+    {% set MODULE = "" %}
+    {% set OS = "" %}
+{% endif %}
+
+trigger_common: &trigger_common
+  image: metwork/drone-downstream-specific-image:latest
+  pull: true
+  secrets: [ downstream_token, downstream_server ]
+  params:
+    - FORCED_OS_VERSION={{OS}}
+
+
+
+pipeline:
+  docker:
+    image: metwork/drone-docker-specific-image:latest
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /root:/root
+    commands:
+      - HASH_BEFORE=`docker images -q metwork/{{MODULE}}-{{OS}}-buildimage:${DRONE_BRANCH}`
+      - if test "${DRONE_BRANCH}" = "master"; then
+          docker build -t metwork/{{MODULE}}-{{OS}}-buildimage:master -t metwork/{{MODULE}}-{{OS}}-buildimage:latest --build-arg BRANCH=master --build-arg CACHEBUST=${DRONE_BUILD_NUMBER} .;
+        elif test "${DRONE_BRANCH}" = "integration"; then
+          docker build -t metwork/{{MODULE}}-{{OS}}-buildimage:integration --build-arg BRANCH=integration --build-arg CACHEBUST=${DRONE_BUILD_NUMBER} .;
+        else
+          docker build -t metwork/{{MODULE}}-{{OS}}-buildimage:${DRONE_BRANCH} --build-arg BRANCH=master --build-arg CACHEBUST=${DRONE_BUILD_NUMBER} .;
+        fi
+      - HASH_AFTER=`docker images -q metwork/{{MODULE}}-{{OS}}-buildimage:${DRONE_BRANCH}`
+      - if test "$${HASH_BEFORE}" = "$${HASH_AFTER}"; then
+          touch .drone_downstream_bypass;
+        else
+          if test "${DRONE_BRANCH}" = "master"; then
+            docker push metwork/{{MODULE}}-{{OS}}-buildimage:${DRONE_BRANCH};
+            docker push metwork/{{MODULE}}-{{OS}}-buildimage:latest;
+          elif test "${DRONE_BRANCH}" = "integration"; then
+            docker push metwork/{{MODULE}}-{{OS}}-buildimage:${DRONE_BRANCH};
+          fi;
+        fi
+    when:
+      event: push
+  trigger_master:
+    <<: *trigger_common
+    repositories:
+{% if MODULE == "mfext" or MODULE == "mfcom" %}
+      - metwork-framework/{{MODULE}}@master
+{% else %}
+      - metwork-framework/mfserv@master
+      - metwork-framework/mfdata@master
+      - metwork-framework/mfbase@master
+      - metwork-framework/mfadmin@master
+      - metwork-framework/mfsysmon@master
+{% endif %}
+    when:
+      status: success
+      event: push
+      branch: master
+  trigger_integration:
+    <<: *trigger_common
+    repositories:
+{% if MODULE == "mfext" or MODULE == "mfcom" %}
+      - metwork-framework/{{MODULE}}@integration
+{% else %}
+      - metwork-framework/mfserv@integration
+      - metwork-framework/mfdata@integration
+      - metwork-framework/mfbase@integration
+      - metwork-framework/mfadmin@integration
+      - metwork-framework/mfsysmon@integration
+{% endif %}
+    when:
+      status: success
+      event: push
+      branch: integration
+
+branches: [ master, integration, ci_*, pci_* ]

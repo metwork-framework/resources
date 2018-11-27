@@ -3,5 +3,6 @@
     "integration_level": 0,
     "_extensions": ["jinja2_from_json_extension.FromJsonExtension",
                     "jinja2_shell_extension.ShellExtension", 
+                    "jinja2_fnmatch_extension.FnMatchExtension", 
                     "jinja2_getenv_extension.GetenvExtension"]
 }
