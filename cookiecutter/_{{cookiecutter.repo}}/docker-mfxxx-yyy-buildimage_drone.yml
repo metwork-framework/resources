@@ -46,12 +46,13 @@ pipeline:
         fi
     when:
       event: push
+{% if MODULE == "mfext" or MODULE == "mfcom" or MODULE == "mfxxx" %}
   trigger_master:
     <<: *trigger_common
     repositories:
 {% if MODULE == "mfext" or MODULE == "mfcom" %}
       - metwork-framework/{{MODULE}}@master
-{% else %}
+{% elif MODULE == "mfxxx" %}
       - metwork-framework/mfserv@master
       - metwork-framework/mfdata@master
       - metwork-framework/mfbase@master
@@ -67,7 +68,7 @@ pipeline:
     repositories:
 {% if MODULE == "mfext" or MODULE == "mfcom" %}
       - metwork-framework/{{MODULE}}@integration
-{% else %}
+{% elif MODULE == "mfxxx" %}
       - metwork-framework/mfserv@integration
       - metwork-framework/mfdata@integration
       - metwork-framework/mfbase@integration
@@ -78,5 +79,6 @@ pipeline:
       status: success
       event: push
       branch: integration
+{% endif %}
 
 branches: [ master, integration, ci_*, pci_* ]
