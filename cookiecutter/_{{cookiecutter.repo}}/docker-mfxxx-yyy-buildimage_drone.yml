@@ -1,3 +1,5 @@
+# automatically generated from https://github.com/metwork-framework/resources/blob/master/cookiecutter/%7B%7Bcookiecutter.repo%7D%7D/docker-mfxxx-yyy-buildimage_drone.yml)
+
 {% if cookiecutter.repo|fnmatch('docker-mf*-*-buildimage') %}
     {% set LIST = cookiecutter.repo.split("-") %}
     {% set MODULE = LIST[1] %}
