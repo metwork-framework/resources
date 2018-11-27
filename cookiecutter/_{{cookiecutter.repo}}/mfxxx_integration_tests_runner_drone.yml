@@ -17,11 +17,11 @@ pipeline:
     image: metwork/mfext-${OS_VERSION}-testimage:integration
     commands:
       - if test "$${FORCED_OS_VERSION}" != ""; then if test "$${FORCED_OS_VERSION}" != "${OS_VERSION}"; then echo "step bypass"; exit 0; fi; fi
-      - /opt/metwork-{{MODULE}}/bin/{{MODULE}}_wrapper metwork_debug
-      - /opt/metwork-{{MODULE}}/bin/{{MODULE}}_wrapper env |grep ^MF
 {% if MODULE != "mfext" %}
       - yum -y install metwork-{{MODULE}}
 {% endif %}
+      - /opt/metwork-{{MODULE}}/bin/{{MODULE}}_wrapper metwork_debug
+      - /opt/metwork-{{MODULE}}/bin/{{MODULE}}_wrapper env |grep ^MF
       - rpm -qa | grep metwork
       - /opt/metwork-{{MODULE}}/bin/{{MODULE}}_wrapper ./run_tests.sh
     when:
@@ -30,11 +30,11 @@ pipeline:
     image: metwork/mfext-${OS_VERSION}-testimage:master
     commands:
       - if test "$${FORCED_OS_VERSION}" != ""; then if test "$${FORCED_OS_VERSION}" != "${OS_VERSION}"; then echo "step bypass"; exit 0; fi; fi
-      - /opt/metwork-{{MODULE}}/bin/{{MODULE}}_wrapper metwork_debug
-      - /opt/metwork-{{MODULE}}/bin/{{MODULE}}_wrapper env |grep ^MF
 {% if MODULE != "mfext" %}
       - yum -y install metwork-{{MODULE}}
 {% endif %}
+      - /opt/metwork-{{MODULE}}/bin/{{MODULE}}_wrapper metwork_debug
+      - /opt/metwork-{{MODULE}}/bin/{{MODULE}}_wrapper env |grep ^MF
       - rpm -qa | grep ^metwork
       - /opt/metwork-{{MODULE}}/bin/{{MODULE}}_wrapper ./run_tests.sh
     when:
