@@ -1,0 +1,48 @@
+# automatically generated from https://github.com/metwork-framework/resources/blob/master/cookiecutter/_%7B%7Bcookiecutter.repo%7D%7D/mfxxx_drone.yml template
+
+{% if cookiecutter.repo|fnmatch('mf*-integration-tests-runner') %}
+    {% set LIST = cookiecutter.repo.split("-") %}
+    {% set MODULE = LIST[0] %}
+{% else %}
+    {% set MODULE = "" %}
+{% endif %}
+
+pipeline:
+  clone_{{MODULE}}:
+    image: docker:git
+    commands:
+      - if test "$${FORCED_OS_VERSION}" != ""; then if test "$${FORCED_OS_VERSION}" != "${OS_VERSION}"; then echo "step bypass"; exit 0; fi; fi
+      - git clone -b ${DRONE_BRANCH} https://github.com/metwork-framework/{{MODULE}}.git {{MODULE}}
+  runtests_integration:
+    image: metwork/mfext-${OS_VERSION}-testimage:integration
+    commands:
+      - if test "$${FORCED_OS_VERSION}" != ""; then if test "$${FORCED_OS_VERSION}" != "${OS_VERSION}"; then echo "step bypass"; exit 0; fi; fi
+      - /opt/metwork-{{MODULE}}/bin/{{MODULE}}_wrapper metwork_debug
+      - /opt/metwork-{{MODULE}}/bin/{{MODULE}}_wrapper env |grep ^MF
+{% if MODULE != "mfext" %}
+      - yum -y install metwork-{{MODULE}}
+{% endif %}
+      - rpm -qa | grep metwork
+      - /opt/metwork-{{MODULE}}/bin/{{MODULE}}_wrapper ./run_tests.sh
+    when:
+      branch: [ integration, ci_*, pci_* ]
+  runtests:
+    image: metwork/mfext-${OS_VERSION}-testimage:master
+    commands:
+      - if test "$${FORCED_OS_VERSION}" != ""; then if test "$${FORCED_OS_VERSION}" != "${OS_VERSION}"; then echo "step bypass"; exit 0; fi; fi
+      - /opt/metwork-{{MODULE}}/bin/{{MODULE}}_wrapper metwork_debug
+      - /opt/metwork-{{MODULE}}/bin/{{MODULE}}_wrapper env |grep ^MF
+{% if MODULE != "mfext" %}
+      - yum -y install metwork-{{MODULE}}
+{% endif %}
+      - rpm -qa | grep ^metwork
+      - /opt/metwork-{{MODULE}}/bin/{{MODULE}}_wrapper ./run_tests.sh
+    when:
+      branch: master
+
+matrix:
+  OS_VERSION:
+    - centos6
+    - centos7
+
+branches: [ master, integration, ci_*, pci_* ]
