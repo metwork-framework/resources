@@ -147,7 +147,7 @@ pipeline:
       event: push
       branch: [ master, integration ]
 {% endif %}
-{% if cookiecutter.repo == "mfbase" or cookiecutter.repo == "mfserv" or cookiecutter.repo == "mfadmin" or cookiecutter.repo == "mfdata" or cookiecutter.repo == mfsysmon %}
+{% if cookiecutter.repo == "mfbase" or cookiecutter.repo == "mfserv" or cookiecutter.repo == "mfadmin" or cookiecutter.repo == "mfdata" or cookiecutter.repo == "mfsysmon" %}
   trigger_integration_tests:
     image: metwork/drone-downstream-specific-image:latest
     repositories:
