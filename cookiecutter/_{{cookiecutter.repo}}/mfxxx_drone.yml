@@ -74,15 +74,8 @@ pipeline:
   bootstrap_integration_push:
     image: metwork/{{BUILD_IMAGE_NAME}}:integration
     environment:
-{% if cookiecutter.repo == "mfcom" %}
       - DEP_DIR=master
-      - TARGET_DIR=integration
-{% elif cookiecutter.repo == "mfext" %}
       - TARGET_DIR=master
-{% else %}
-      - DEP_DIR=integration
-      - TARGET_DIR=integration
-{% endif %}
     <<: *bootstrap_common
     volumes:
       - /buildcache:/buildcache
@@ -93,12 +86,8 @@ pipeline:
   bootstrap_integration_pr:
     image: metwork/{{BUILD_IMAGE_NAME}}:integration
     environment:
-      - TARGET_DIR=integration
-{% if cookiecutter.repo == "mfcom" %}
+      - TARGET_DIR=master
       - DEP_DIR=master
-{% else %}
-      - DEP_DIR=integration
-{% endif %}
     <<: *bootstrap_common
     when:
       event: pull_request
@@ -119,11 +108,7 @@ pipeline:
     <<: *build_common
     image: metwork/{{BUILD_IMAGE_NAME}}:integration
     environment:
-{% if cookiecutter.repo == "mfext" %}
       - TARGET_DIR=master
-{% else %}
-      - TARGET_DIR=integration
-{% endif %}
     when:
 {% if cookiecutter.repo == "mfext" %}
       event: push
@@ -135,11 +120,7 @@ pipeline:
     <<: *build_common
     image: metwork/{{BUILD_IMAGE_NAME}}:master
     environment:
-{% if cookiecutter.repo == "mfext" %}
       - TARGET_DIR=master
-{% else %}
-      - TARGET_DIR=${DRONE_BRANCH}
-{% endif %}
     when:
       event: push
       branch: [ master, ci_*, pci_* ]
