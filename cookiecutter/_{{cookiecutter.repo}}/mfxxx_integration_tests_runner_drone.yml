@@ -13,8 +13,8 @@ pipeline:
     commands:
       - if test "$${FORCED_OS_VERSION}" != ""; then if test "$${FORCED_OS_VERSION}" != "${OS_VERSION}"; then echo "step bypass"; exit 0; fi; fi
       - git clone -b ${DRONE_BRANCH} https://github.com/metwork-framework/{{MODULE}}.git {{MODULE}}
-  runtests_integration:
-    image: metwork/mfext-${OS_VERSION}-testimage:integration
+  runtests:
+    image: metwork/mfext-${OS_VERSION}-testimage:${DRONE_BRANCH}
     commands:
       - if test "$${FORCED_OS_VERSION}" != ""; then if test "$${FORCED_OS_VERSION}" != "${OS_VERSION}"; then echo "step bypass"; exit 0; fi; fi
 {% if MODULE != "mfext" %}
@@ -25,24 +25,11 @@ pipeline:
       - rpm -qa | grep metwork
       - /opt/metwork-{{MODULE}}/bin/{{MODULE}}_wrapper ./run_tests.sh
     when:
-      branch: [ integration, ci_*, pci_* ]
-  runtests:
-    image: metwork/mfext-${OS_VERSION}-testimage:master
-    commands:
-      - if test "$${FORCED_OS_VERSION}" != ""; then if test "$${FORCED_OS_VERSION}" != "${OS_VERSION}"; then echo "step bypass"; exit 0; fi; fi
-{% if MODULE != "mfext" %}
-      - yum -y install metwork-{{MODULE}}
-{% endif %}
-      - /opt/metwork-{{MODULE}}/bin/{{MODULE}}_wrapper metwork_debug
-      - /opt/metwork-{{MODULE}}/bin/{{MODULE}}_wrapper env |grep ^MF
-      - rpm -qa | grep ^metwork
-      - /opt/metwork-{{MODULE}}/bin/{{MODULE}}_wrapper ./run_tests.sh
-    when:
-      branch: master
+      event: push
 
 matrix:
   OS_VERSION:
     - centos6
     - centos7
 
-branches: [ master, integration, ci_*, pci_* ]
+branches: [ master, integration, release_* ]

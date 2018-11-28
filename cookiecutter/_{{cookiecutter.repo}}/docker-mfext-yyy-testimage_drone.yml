@@ -12,39 +12,23 @@ pipeline:
     image: metwork/drone-docker-specific-image:latest
     commands:
       - if test "$${FORCED_OS_VERSION}" != ""; then if test "$${FORCED_OS_VERSION}" != "{{OS}}"; then echo "step bypass"; touch .drone_downstream_bypass; exit 0; fi; fi
-      - if test "${DRONE_BRANCH}" = "master"; then
-          docker build -t metwork/mfext-{{OS}}-testimage:master -t metwork/mfext-{{OS}}-testimage:latest --build-arg BRANCH=master --build-arg CACHEBUST=${DRONE_BUILD_NUMBER} .;
-        elif test "${DRONE_BRANCH}" = "integration"; then
-          docker build -t metwork/mfext-{{OS}}-testimage:integration --build-arg BRANCH=integration --build-arg CACHEBUST=${DRONE_BUILD_NUMBER} .;
-        else
-          docker build -t metwork/mfservplugins-{{OS}}-testimage:${DRONE_BRANCH} --build-arg BRANCH=master --build-arg CACHEBUST=${DRONE_BUILD_NUMBER} .;
-        fi
+      - if test "${DRONE_BRANCH}" = "master"; then EXTRA_TAGS="-t metwork/mfext-{{OS}}-testimge:latest"; else EXTRA_TAGS=""; fi
+      - docker build -t metwork/mfext-{{OS}}-testimage:${DRONE_BRANCH} $${EXTRA_TAGS} --build-arg BRANCH=${DRONE_BRANCH} --build-arg CACHEBUST=${DRONE_BUILD_NUMBER} .
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - /root:/root
     when:
       event: push 
-  push_master:
+  push:
     image: metwork/drone-docker-specific-image:latest
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - /root:/root
     commands:
       - if test "$${FORCED_OS_VERSION}" != ""; then if test "$${FORCED_OS_VERSION}" != "{{OS}}"; then echo "step bypass"; touch .drone_downstream_bypass; exit 0; fi; fi
-      - docker push metwork/mfext-{{OS}}-testimage:master
-      - docker push metwork/mfext-{{OS}}-testimage:latest
-    when:
-      event: push 
-      branch: master
-  push_integration_pci:
-    image: metwork/drone-docker-specific-image:latest
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-      - /root:/root
-    commands:
       - docker push metwork/mfext-{{OS}}-testimage:${DRONE_BRANCH}
+      - if test "${DRONE_BRANCH}" = "master"; then docker push metwork/mfext-{{OS}}-testimage:latest; fi
     when:
       event: push 
-      branch: [ integration, pci_* ]
 
-branches: [ master, integration, ci_*, pci_* ]
+branches: [ master, integration, release_* ]
