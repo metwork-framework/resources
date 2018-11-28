@@ -115,7 +115,7 @@ pipeline:
 {% else %}
       event: [push, pull_request]
 {% endif %}
-      branch: [ integration, ci_*, pci_* ]
+      branch: [ integration, ci_*, pci_* ]
   build:
     <<: *build_common
     image: metwork/{{BUILD_IMAGE_NAME}}:${DRONE_BRANCH}
