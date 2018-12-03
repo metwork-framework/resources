@@ -1,0 +1,5 @@
+pipeline:
+  runtests:
+    image: metwork/mfext-centos7-testimage:master
+    commands:
+      - /opt/metwork-mfext/bin/mfext_wrapper make test
