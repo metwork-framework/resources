@@ -3,6 +3,7 @@
 import os
 import shutil
 
+
 def test_empty(path):
     try:
         with open(path, 'rb') as f:
