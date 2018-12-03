@@ -24,7 +24,7 @@ If you are developing with a standard metwork installation using a standard metw
 is the home directory of the current user. So, if you are developing with `mfserv` user, you will find the module configuration file
 in `~/config/config.ini`.
 
-Please make sure that your configuration file is not a symbolic link. In that particular case, you are in "production mode" 
+Please make sure that your configuration file is not a symbolic link. In that particular case, you are in "production mode"
 (refer to the corresponding section).
 
 #### Understand the inheritance process
@@ -68,19 +68,19 @@ The value in the configuration file is read only by a custom profile script that
 
 Only this environment variable will be used by the rest of the module.
 
-To resume the previous example, the key `port` in `[nginx]` section of the `mfserv` configuration file is put into 
+To resume the previous example, the key `port` in `[nginx]` section of the `mfserv` configuration file is put into
 `MFSERV_NGINX_PORT` environment variable.
 
 In a more general way, every configuration option of module is stored in an environment variable: `{MODULE}_{SECTION}_{KEY}`.
 
-And this environment variable is set **only during profile loading**. 
+And this environment variable is set **only during profile loading**.
 
 **VERY IMPORTANT : when you change the configuration file, it does not change existing environment variable so it does not change
 daemons behaviour**
 
 **To get the new value, you have to close/reopen your terminal to force a new profile loading**
 
-**To change daemons and services behaviour (like `nginx` listening port in your example), you have to restart services from a 
+**To change daemons and services behaviour (like `nginx` listening port in your example), you have to restart services from a
 newly restarted terminal or from a `root` user through `service metwork restart` command.**
 
 To get current environment variables values for the current module, you can use for example:
@@ -98,7 +98,7 @@ During a metwork module upgrade :
 
 So, if you changed some keys in `${MODULE_RUNTIME_HOME}/config/config.ini`, your change will never be overriden by a metwork upgrade.
 
-But the upgrade add a new configuration option, the new configuration option will be (of course) visible in `${MODULE_HOME}/config/config.ini` but not in your `${MODULE_RUNTIME_HOME}/config/config.ini` (because we prefer to keep your changes). It's not a problem in itself but you can miss some configuration options. 
+But the upgrade add a new configuration option, the new configuration option will be (of course) visible in `${MODULE_HOME}/config/config.ini` but not in your `${MODULE_RUNTIME_HOME}/config/config.ini` (because we prefer to keep your changes). It's not a problem in itself but you can miss some configuration options.
 
 So, when you do some metwork ugprades on a customized system, you should sometimes do a kind of diff/merge between `${MODULE_RUNTIME_HOME}/config/config.ini` and `${MODULE_HOME}/config/config.ini`.
 
@@ -106,7 +106,7 @@ But again: if you don't do this, it won't break anything. But you can just miss 
 
 ### How to configure plugins during development process ?
 
-If you are working on a plugin named `foo` which need extra configuration variables, add a section to 
+If you are working on a plugin named `foo` which need extra configuration variables, add a section to
 `${MODULE_RUNTIME_HOME}/config/config.ini` named `[plugin_foo]`. For example, for a `mfserv` plugin:
 
 ```
@@ -122,7 +122,7 @@ key3=value3
 After restarting your terminal to force a profile loading, you will get some new environement variables:
 
 ```bash
-$ env |grep "^MFSERV_PLUGIN_FOO_" 
+$ env |grep "^MFSERV_PLUGIN_FOO_"
 MFSERV_PLUGIN_FOO_KEY1=value1
 MFSERV_PLUGIN_FOO_KEY2=value2
 MFSERV_PLUGIN_FOO_KEY3=value3
@@ -136,18 +136,18 @@ import os
 KEY1_VALUE = os.environ.get("MFSERV_PLUGIN_FOO_KEY1", "default_value")
 ```
 
-We recommend you to use good default values in your code (`default_value` in the above example) to be sure that your plugin
+We recommend you to use good default values in your code (`default_value` in the above example) to be sure that your plugin
 will work even if configuration is not set.
 
 Another tip if you don't want to hardcode the plugin name in your code, you can use the environment variable `MFSERV_CURRENT_PLUGIN_NAME` automatically defined by metwork.
 
-For continue with the same example: 
+For continue with the same example:
 
 ```python
 import os
 [...]
 CURRENT_PLUGIN_NAME = os.environ['MFSERV_CURRENT_PLUGIN_NAME']
-KEY1_VALUE = os.environ.get("MFSERV_PLUGIN_%s_KEY1" % CURRENT_PLUGIN_NAME.upper(), 
+KEY1_VALUE = os.environ.get("MFSERV_PLUGIN_%s_KEY1" % CURRENT_PLUGIN_NAME.upper(),
                             "default_value")
 ```
 
@@ -163,11 +163,11 @@ this directory by putting your changes in `/etc/metwork.config.d/{metwork_module
 For example, to change the listening port of `nginx` for `mfserv` module, just create the `/etc/metwork.config.d/mfserv/config.ini` file with following content:
 
 ```
-# This file overrides default values available in /opt/metwork-mfserv/config/config.ini
-# DO NOT REMOVE THE FOLLOWING LINE
+# This file overrides default values available in /opt/metwork-mfserv/config/config.ini
+# DO NOT REMOVE THE FOLLOWING LINE
 [INCLUDE_config.ini]
 
-# Overridden values
+# Overridden values
 [nginx]
 port=8080
 ```
@@ -176,18 +176,18 @@ The file must be readable by metwork users.
 
 When this file is created and when you (re)load the `mfserv` profile, the file `${MODULE_RUNTIME_HOME}/config/config.ini` is silently replaced by a symbolic link: `${MODULE_RUNTIME_HOME}/config/config.ini -> /etc/metwork.config.d/mfserv/config.ini`.
 
-After that, you have to configure your module through this `/etc` file.
+After that, you have to configure your module through this `/etc` file.
 
 ### How to configure plugins during production deployment process ?
 
 Exactly in the same way as for a module. Add your custom plugin section at the end of `/etc/metwork.config.d/mfserv/config.ini`. to continue with the previous examples:
 
 ```
-# This file overrides default values available in /opt/metwork-mfserv/config/config.ini
-# DO NOT REMOVE THE FOLLOWING LINE
+# This file overrides default values available in /opt/metwork-mfserv/config/config.ini
+# DO NOT REMOVE THE FOLLOWING LINE
 [INCLUDE_config.ini]
 
-# Overridden values (module wide)
+# Overridden values (module wide)
 [nginx]
 port=8080
 
@@ -199,4 +199,3 @@ key3=value3
 ```
 
 As previously said, a good plugin should use good default values in its code to avoid to crash if custom values are not set at all.
-

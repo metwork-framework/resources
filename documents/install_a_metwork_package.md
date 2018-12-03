@@ -2,14 +2,14 @@
 
 ## Prerequisites
 
-You must: 
+You must:
 
 - have configured the metwork yum repository. Please see [the corresponding document](configure_metwork_repo.md) document to do that.
 - have an internet access on this computer
 
 ## Install a metwork package
 
-You just have to execute the following command (as `root` user): 
+You just have to execute the following command (as `root` user):
 
 ```
 yum install metwork-{METWORK_PACKAGE_NAME}
@@ -36,11 +36,11 @@ Or you can also reboot your computer (because metwork services are started autom
 
 ## Uninstall a metwork package
 
-To uninstall a given metwork package, please stop corresponding metwork services with the `root` command:
+To uninstall a given metwork package, please stop corresponding metwork services with the `root` command:
 
 ```
-# note: this is not necessary with mfext or mfcom 
-# because there is no corresponding services
+# note: this is not necessary with mfext or mfcom
+# because there is no corresponding services
 service metwork stop {METWORK_PACKAGE_NAME}
 ```
 
@@ -55,7 +55,7 @@ yum remove "metwork-{METWORK_PACKAGE_NAME}*"
 To uninstall all metwork packages, use following root commands:
 
 ```
-# We stop metwork services
+# We stop metwork services
 service metwork stop
 
 # we remove metwork packages
@@ -75,6 +75,6 @@ service metwork stop
 # We upgrade metwork packages
 yum upgrade "metwork-*"
 
-# We start metwork services
+# We start metwork services
 service metwork start
 ```

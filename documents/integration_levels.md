@@ -17,8 +17,8 @@ The project is visible in the organization custom dashboard. And the project mus
 
 ## Integration level 2
 
-We use the organization labels management with some automatic features from MetworkBot about them. The project must follow 
-our code of conduct. The main `README.md` file is automatically generated.
+We use the organization labels management with some automatic features from MetworkBot about them. The project must follow
+our code of conduct. The main `README.md` file is automatically generated.
 
 ## Integration level 3
 

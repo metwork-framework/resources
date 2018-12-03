@@ -18,6 +18,5 @@
 
 Because we want :
 
-- to be able to auto-accept pull-requests of `metworkbot` user
+- to be able to auto-accept pull-requests of `metworkbot` user
 - to be able to force an urgent pull-request merge with label `Merge Now` (without explicit review)
-
