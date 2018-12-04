@@ -137,7 +137,7 @@ pipeline:
       event: push
       branch: [ master, release_* ]
 {% if cookiecutter.repo == "mfcom" %}
-  trigger:
+  trigger_mfxxxbuildimage:
     image: metwork/drone-downstream-specific-image:latest
     secrets: [ downstream_server, downstream_token ]
     repositories:
@@ -147,7 +147,7 @@ pipeline:
       event: push
       branch: [ master, integration, release_* ]
 {% endif %}
-{% if cookiecutter.repo == "mfbase" or cookiecutter.repo == "mfserv" or cookiecutter.repo == "mfadmin" or cookiecutter.repo == "mfdata" or cookiecutter.repo == "mfsysmon" %}
+{% if cookiecutter.repo == "mfbase" or cookiecutter.repo == "mfserv" or cookiecutter.repo == "mfadmin" or cookiecutter.repo == "mfdata" or cookiecutter.repo == "mfsysmon" or cookiecutter.repo == "mfext" %}
   trigger_integration_tests:
     image: metwork/drone-downstream-specific-image:latest
     repositories:
@@ -159,8 +159,9 @@ pipeline:
       status: [ success ]
       event: push
       branch: [ master, integration, release_* ]
-{% elif cookiecutter.repo == "mfext" %}
-  trigger:
+{% endif %}
+{% if cookiecutter.repo == "mfext" %}
+  trigger_mfcombuildimage:
     image: metwork/drone-downstream-specific-image:latest
     repositories:
       - metwork-framework/docker-mfcom-${OS_VERSION}-buildimage@${DRONE_BRANCH}
@@ -169,10 +170,9 @@ pipeline:
       status: [ success ]
       event: push
       branch: [ master, integration, release_* ]
-  trigger_tests:
+  trigger_testimages:
     image: metwork/drone-downstream-specific-image:latest
     repositories:
-      - metwork-framework/mfext-integration-tests@${DRONE_BRANCH}
       - metwork-framework/docker-mfext-centos6-testimage@${DRONE_BRANCH}
       - metwork-framework/docker-mfext-centos7-testimage@${DRONE_BRANCH}
     params:
