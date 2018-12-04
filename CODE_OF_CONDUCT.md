@@ -1,5 +1,7 @@
 # Contributor Covenant Code of Conduct
 
+[//]: # (automatically generated from https://github.com/metwork-framework/resources/blob/master/cookiecutter/%7B%7Bcookiecutter.repo%7D%7D/CODE_OF_CONDUCT.md)
+
 ## Our Pledge
 
 In the interest of fostering an open and welcoming environment, we as
@@ -55,7 +57,7 @@ further defined and clarified by project maintainers.
 ## Enforcement
 
 Instances of abusive, harassing, or otherwise unacceptable behavior may be
-reported by contacting the project team at [INSERT EMAIL ADDRESS]. All
+reported by contacting the project team at `team@metwork-framework.org`. All
 complaints will be reviewed and investigated and will result in a response that
 is deemed necessary and appropriate to the circumstances. The project team is
 obligated to maintain confidentiality with regard to the reporter of an incident.
@@ -71,4 +73,3 @@ This Code of Conduct is adapted from the [Contributor Covenant][homepage], versi
 available at https://www.contributor-covenant.org/version/1/4/code-of-conduct.html
 
 [homepage]: https://www.contributor-covenant.org
-
