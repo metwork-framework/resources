@@ -13,7 +13,6 @@ pull_request_rules:
     - base=integration
     - -merged
     - -closed
-    - label!=no-mergify
     - label!=Merge Manual
     - status-success=pr ready to merge
     - status-success=license/cla
@@ -32,7 +31,6 @@ pull_request_rules:
     - base=master
     - -merged
     - -closed
-    - label!=no-mergify
     - label!=Merge Manual
     - status-success=continuous-integration/drone/pr
     - '#approved-reviews-by>=1'
@@ -47,7 +45,6 @@ pull_request_rules:
     - base=master
     - -merged
     - -closed
-    - label!=no-mergify
     - label!=Merge Manual
     - label=Merge Now
 {% endif %}
