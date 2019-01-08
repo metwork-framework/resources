@@ -135,7 +135,7 @@ pipeline:
     when:
       event: push
       branch: [ master, release_* ]
-  build:
+  build_tag:
     <<: *build_common
     image: metwork/{{BUILD_IMAGE_NAME}}:${DRONE_BRANCH}
     environment:
