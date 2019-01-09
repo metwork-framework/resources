@@ -59,4 +59,4 @@ pipeline:
       event: push
 {% endif %}
 
-branches: [ master, integration, release_* ]
+branches: [ master, integration, experimental*, release_* ]
