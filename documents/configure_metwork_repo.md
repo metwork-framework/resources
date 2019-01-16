@@ -23,10 +23,10 @@ For each version, you will find the `BaseURL` in the following table:
 
 Version | BaseURL
 ------- | -------
-released stable | http://metwork-framework.org/pub/metwork/releases/rpms/stable/
-continuous stable | http://metwork-framework.org/pub/metwork/continuous_integration/rpms/stable/
-continuous master | http://metwork-framework.org/pub/metwork/continuous_integration/rpms/master/
-continuous integration | http://metwork-framework.org/pub/metwork/continuous_integration/rpms/integration/
+released stable | http://metwork-framework.org/pub/metwork/releases/rpms/stable/centos6/ (for centos6)<br/>http://metwork-framework.org/pub/metwork/releases/rpms/stable/centos7/ (for centos7)
+continuous stable | http://metwork-framework.org/pub/metwork/continuous_integration/rpms/stable/centos6/ (for centos6)<br/>http://metwork-framework.org/pub/metwork/continuous_integration/rpms/stable/centos7/ (for centos7)
+continuous master | http://metwork-framework.org/pub/metwork/continuous_integration/rpms/master/centos6/ (for centos6)<br/>http://metwork-framework.org/pub/metwork/continuous_integration/rpms/master/centos7/ (for centos7)
+continuous integration | http://metwork-framework.org/pub/metwork/continuous_integration/rpms/integration/centos6/ (for centos6)<br/>http://metwork-framework.org/pub/metwork/continuous_integration/rpms/integration/centos7/ (for centos7)
 
 ## Configure the metwork yum repository for CentOS 6 distribution
 
