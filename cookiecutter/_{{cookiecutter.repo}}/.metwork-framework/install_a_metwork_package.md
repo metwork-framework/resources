@@ -11,7 +11,7 @@ You must:
 
 ## Install {{cookiecutter.repo}} metwork package
 
-## Full installation
+## Full installation
 
 You just have to execute the following command (as `root` user):
 
@@ -46,7 +46,7 @@ yum install metwork-mfext-python2
 
 {% if cookiecutter.repo == "mfserv" %}
 
-### {{cookiecutter.repo}} addons
+### {{cookiecutter.repo}} addons
 
 ```
 # To install python2 support
