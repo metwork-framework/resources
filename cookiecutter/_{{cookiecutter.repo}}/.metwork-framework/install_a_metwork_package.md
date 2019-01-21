@@ -59,7 +59,7 @@ yum install metwork-mfserv-nodejs
 {% endif %}
 {% if cookiecutter.repo == "mfdata" %}
 
-### {{cookiecutter.repo}} addons
+### {{cookiecutter.repo}} addons
 
 ```
 # To install python2 support
