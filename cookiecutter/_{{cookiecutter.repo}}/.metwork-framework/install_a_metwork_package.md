@@ -121,6 +121,7 @@ yum upgrade "metwork-{{cookiecutter.repo}}*"
 # We start {{cookiecutter.repo}} services
 service metwork start {{cookiecutter.repo}}
 ```
+{% endif %}
 
 ## Uninstall all metwork packages
 
