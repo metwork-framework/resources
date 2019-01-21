@@ -11,15 +11,66 @@ You must:
 
 ## Install {{cookiecutter.repo}} metwork package
 
+## Full installation
+
 You just have to execute the following command (as `root` user):
 
 ```
 yum install metwork-{{cookiecutter.repo}}
 ```
 
-Of course, you can install several metwork packages on the same linux box.
+## Minimal installation
+
+If you prefer to start with a minimal installation, you have to execute the following command
+(as `root` user):
+
+```
+yum install metwork-{{cookiecutter.repo}}-minimal
+```
+
+## Addons
+
+### Dependencies addons
+
+```
+# To install some devtools
+yum install metwork-mfext-devtools
+
+# To install some scientific libraries
+yum install metwork-mfext-scientific
+
+# To install python2 support
+# (including corresponding scientific and devtools addons)
+yum install metwork-mfext-python2
+```
+
+{% if cookiecutter.repo == "mfserv" %}
+
+### {{cookiecutter.repo}} addons
+
+```
+# To install python2 support
+# (see above to install full scientific and devtools support)
+yum install metwork-mfserv-python2
+
+# To install nodejs support
+yum install metwork-mfserv-nodejs
+```
+{% endif %}
+{% if cookiecutter.repo == "mfdata" %}
+
+### {{cookiecutter.repo}} addons
+
+```
+# To install python2 support
+# (see above to install full scientific and devtools support)
+yum install metwork-mfdata-python2
+```
+{% endif %}
 
 {% if cookiecutter.repo != "mfcom" and cookiecutter.repo != "mfext" %}
+## Services
+
 You can start corresponding services with the root command:
 
 ```
@@ -36,8 +87,6 @@ Or you can also reboot your computer (because metwork services are started autom
 To uninstall {{cookiecutter.repo}} metwork package, please stop corresponding metwork services with the `root` command:
 
 ```
-# note: this is not necessary with mfext or mfcom
-# because there is no corresponding services
 service metwork stop {{cookiecutter.repo}}
 ```
 
@@ -49,6 +98,28 @@ To uninstall {{cookiecutter.repo}} metwork package, use the following command (s
 
 ```
 yum remove "metwork-{{cookiecutter.repo}}*"
+```
+
+## Upgrade {{cookiecutter.repo}} metwork package
+
+To upgrade {{cookiecutter.repo}} metwork package, use the following commands (still as `root` user):
+
+{% if cookiecutter.repo != 'mfcom' and cookiecutter.repo != 'mfext' %}
+```
+# We stop {{cookiecutter.repo}} services
+service metwork stop {{cookiecutter.repo}}
+```
+{% endif %}
+
+```
+# We upgrade {{cookiecutter.repo}} metwork package
+yum upgrade "metwork-{{cookiecutter.repo}}*"
+```
+
+{% if cookiecutter.repo != 'mfcom' and cookiecutter.repo != 'mfext' %}
+```
+# We start {{cookiecutter.repo}} services
+service metwork start {{cookiecutter.repo}}
 ```
 
 ## Uninstall all metwork packages
