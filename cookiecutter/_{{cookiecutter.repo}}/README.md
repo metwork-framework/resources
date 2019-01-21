@@ -1,6 +1,6 @@
 # {{cookiecutter.repo}}
 
-[//]: # (automatically generated from https://github.com/metwork-framework/resources/blob/master/cookiecutter/%7B%7Bcookiecutter.repo%7D%7D/README.md)
+[//]: # (automatically generated from https://github.com/metwork-framework/resources/blob/master/cookiecutter/_%7B%7Bcookiecutter.repo%7D%7D/README.md)
 
 ## Status (master branch)
 
@@ -24,9 +24,11 @@
 
 See [this document](.metwork-framework/install_a_metwork_package.md).
 
+{% if cookiecutter.repo != "mfext" and cookiecutter.repo != "mfcom" %}
 ## Configuration guide
 
 See [this document](.metwork-framework/configure_a_metwork_package.md).
+{% endif %}
 {% endif %}
 
 ## Contributing guide
