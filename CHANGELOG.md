@@ -17,5 +17,8 @@
 
 ### Fix
 - fix bad space
+- fix latest commit
+- fix utf8 char
+- fix utf8 issues
 - yum install {{MODULE}} before call to {{MODULE}}_wrapper
 
