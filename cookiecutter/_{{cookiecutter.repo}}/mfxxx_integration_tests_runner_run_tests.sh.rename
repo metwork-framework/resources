@@ -1,3 +1,0 @@
-{% if cookiecutter.repo|fnmatch('mf*-integration-tests-runner') %}
-        run_tests.sh
-{% endif %}
