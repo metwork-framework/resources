@@ -1,0 +1,5 @@
+{% if cookiecutter.integration_level|int == 5 %}
+{% if cookiecutter.repo != "mfcom" -%}
+run_integration_tests.sh
+{% endif %}
+{% endif %}
