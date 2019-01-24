@@ -86,7 +86,7 @@ integration_tests_common: &integration_tests_common
     - su --command="{{cookiecutter.repo}}.init" - {{cookiecutter.repo}}
     - su --command="{{cookiecutter.repo}}.start" - {{cookiecutter.repo}}
     - su --command="{{cookiecutter.repo}}.status" - {{cookiecutter.repo}}
-    - chown -R {{cookiecutter.repo}} integration_tests
+    - if test -d "integration_tests"; then chown -R {{cookiecutter.repo}} integration_tests; fi
     - su --command="cd `pwd`; ./run_integration_tests.sh" - {{cookiecutter.repo}}
     - su --command="{{cookiecutter.repo}}.stop" - {{cookiecutter.repo}}
 {% endif %}
