@@ -13,9 +13,11 @@
 - first version of contributing guide
 - generate .drone.yml and run_tests.sh from resource for repositories mf*-integration-tests-runner
 - generate README.md file for integration_level >= 5
+- new templates to execute integration tests directly from modules
 - optional auth
 
 ### Fix
+- directory integration_tests may no exist
 - fix bad space
 - fix latest commit
 - fix utf8 char
