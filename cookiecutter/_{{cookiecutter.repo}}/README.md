@@ -16,6 +16,7 @@
 {%- if cookiecutter.integration_level|int >= 5 %}
 [![License](https://github.com/metwork-framework/resources/blob/master/badges/bsd.svg)]()
 {%- endif %}
+{{ ("cat " + "REPO_HOME"|getenv + "/.metwork-framework/EXTRA_BADGES.md 2>/dev/null")|shell }}
 
 {{ ("cat " + "REPO_HOME"|getenv + "/.metwork-framework/README.md 2>/dev/null")|shell }}
 
