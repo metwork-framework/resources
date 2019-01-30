@@ -28,9 +28,9 @@ If you prefer to start with a minimal installation, you have to execute the foll
 yum install metwork-{{cookiecutter.repo}}-minimal
 ```
 
-## Addons
+## Optional Addons
 
-### Dependencies addons
+### Optional dependencies addons
 
 ```
 # To install some devtools
@@ -46,7 +46,7 @@ yum install metwork-mfext-python2
 
 {% if cookiecutter.repo == "mfserv" %}
 
-### {{cookiecutter.repo}} addons
+### Optional {{cookiecutter.repo}} addons
 
 ```
 # To install python2 support
@@ -59,7 +59,7 @@ yum install metwork-mfserv-nodejs
 {% endif %}
 {% if cookiecutter.repo == "mfdata" %}
 
-### {{cookiecutter.repo}} addons
+### Optional {{cookiecutter.repo}} addons
 
 ```
 # To install python2 support
