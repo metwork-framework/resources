@@ -137,7 +137,7 @@ pipeline:
       - /buildcache:/buildcache
     when:
       event: tag
-      branch: [ release_* ]
+      ref: refs/tags/v*
 
   build_integration:
     <<: *build_common
@@ -166,7 +166,7 @@ pipeline:
       - TARGET_DIR=${DRONE_BRANCH##release_}
     when:
       event: tag
-      branch: [ release_* ]
+      ref: refs/tags/v*
 
 {% if cookiecutter.repo != "mfcom" %}
   integration_tests_integration:
@@ -211,7 +211,7 @@ pipeline:
       - if test "${OS_VERSION}" = "centos6"; then rm -Rf /pub/metwork/releases/docs/${DRONE_BRANCH}/{{cookiecutter.repo}}; mkdir -p /pub/metwork/releases/docs/${DRONE_BRANCH}/{{cookiecutter.repo}} ; cp -Rf html_doc/* /pub/metwork/releases/docs/${DRONE_BRANCH}/{{cookiecutter.repo}}/ ; fi
     when:
       event: tag
-      branch: [ release_* ]
+      ref: refs/tags/v*
 
 {% if cookiecutter.repo == "mfcom" %}
   trigger_mfxxxbuildimage:
