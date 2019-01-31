@@ -23,5 +23,6 @@
 - fix latest commit
 - fix utf8 char
 - fix utf8 issues
+- tag condition
 - yum install {{MODULE}} before call to {{MODULE}}_wrapper
 
