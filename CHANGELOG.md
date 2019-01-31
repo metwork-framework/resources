@@ -2,6 +2,7 @@
 ## [Unreleased]
 
 ### Feat
+- add 0.5 support for mergify
 - add a cookiecutter template
 - add a new fnmatch extension and use it for docker-mfxxx-yyy-buildimage_drone.yml
 - add exact-level option
