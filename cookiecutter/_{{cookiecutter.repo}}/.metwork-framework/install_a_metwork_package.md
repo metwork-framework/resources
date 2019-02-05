@@ -1,4 +1,4 @@
-# How to install/upgrade/remove {{cookiecutter.repo}} metwork package (with internet access)
+# How to install/upgrade/remove {{cookiecutter.repo}} metwork module (with internet access)
 
 [//]: # (automatically generated from https://github.com/metwork-framework/resources/blob/master/cookiecutter/_%7B%7Bcookiecutter.repo%7D%7D/.metwork-framework/install_a_metwork_package.md)
 
@@ -9,7 +9,7 @@ You must:
 - have configured the metwork yum repository. Please see [the corresponding document](configure_metwork_repo.md) document to do that.
 - have an internet access on this computer
 
-## Install {{cookiecutter.repo}} metwork package
+## Install {{cookiecutter.repo}} metwork module
 
 ## Full installation
 
@@ -81,10 +81,10 @@ Or you can also reboot your computer (because metwork services are started autom
 {% endif %}
 
 
-## Uninstall {{cookiecutter.repo}} metwork package
+## Uninstall {{cookiecutter.repo}} metwork module
 
 {% if cookiecutter.repo != "mfcom" and cookiecutter.repo != "mfext" %}
-To uninstall {{cookiecutter.repo}} metwork package, please stop corresponding metwork services with the `root` command:
+To uninstall {{cookiecutter.repo}} metwork module, please stop corresponding metwork services with the `root` command:
 
 ```
 service metwork stop {{cookiecutter.repo}}
@@ -92,7 +92,7 @@ service metwork stop {{cookiecutter.repo}}
 
 Then, use the following command (still as `root` user):
 {% else %}
-To uninstall {{cookiecutter.repo}} metwork package, use the following command (still as `root` user):
+To uninstall {{cookiecutter.repo}} metwork module, use the following command (still as `root` user):
 
 {% endif %}
 
@@ -100,9 +100,9 @@ To uninstall {{cookiecutter.repo}} metwork package, use the following command (s
 yum remove "metwork-{{cookiecutter.repo}}*"
 ```
 
-## Upgrade {{cookiecutter.repo}} metwork package
+## Upgrade {{cookiecutter.repo}} metwork module
 
-To upgrade {{cookiecutter.repo}} metwork package, use the following commands (still as `root` user):
+To upgrade {{cookiecutter.repo}} metwork module, use the following commands (still as `root` user):
 
 {% if cookiecutter.repo != 'mfcom' and cookiecutter.repo != 'mfext' %}
 ```
@@ -112,7 +112,7 @@ service metwork stop {{cookiecutter.repo}}
 {% endif %}
 
 ```
-# We upgrade {{cookiecutter.repo}} metwork package
+# We upgrade {{cookiecutter.repo}} metwork module
 yum upgrade "metwork-{{cookiecutter.repo}}*"
 ```
 
@@ -123,29 +123,29 @@ service metwork start {{cookiecutter.repo}}
 ```
 {% endif %}
 
-## Uninstall all metwork packages
+## Uninstall all metwork modules
 
-To uninstall all metwork packages, use following root commands:
+To uninstall all metwork modules, use following root commands:
 
 ```
 # We stop metwork services
 service metwork stop
 
-# we remove metwork packages
+# we remove metwork modules
 yum remove "metwork-*"
 ```
 
-## Upgrade all metwork packages
+## Upgrade all metwork modules
 
 The same idea applies to upgrade.
 
-For example, to upgrade all metwork packages on a computer, use following root commands:
+For example, to upgrade all metwork modules on a computer, use following root commands:
 
 ```
 # We stop metwork services
 service metwork stop
 
-# We upgrade metwork packages
+# We upgrade metwork modules
 yum upgrade "metwork-*"
 
 # We start metwork services
