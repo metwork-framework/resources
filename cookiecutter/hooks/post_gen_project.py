@@ -49,7 +49,8 @@ for path in [os.path.join(x[0], y) for x in os.walk('.') for y in x[2]]:
             if len(content.encode('utf8').split(b"\n")) != 1:
                 raise Exception("bad content: [%s] for path=%s" %
                                 (content, path))
-            paths_to_rename.append((path.replace('.rename', ''), content))
+            newpath = os.path.join(os.path.dirname(path), content)
+            paths_to_rename.append((path.replace('.rename', ''), newpath))
             paths_to_delete.append(path)
 
 for source, target in paths_to_rename:
