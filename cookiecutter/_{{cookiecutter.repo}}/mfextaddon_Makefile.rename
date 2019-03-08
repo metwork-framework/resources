@@ -1,0 +1,5 @@
+{% if cookiecutter.integration_level|int >= 3 %}
+{% if "mfext-addon" in "REPO_TOPICS"|getenv|from_json %}
+Makefile
+{% endif %}
+{% endif %}
