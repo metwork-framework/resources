@@ -1,11 +1,10 @@
 # automatically generated from https://github.com/metwork-framework/resources/blob/master/cookiecutter/_%7B%7Bcookiecutter.repo%7D%7D/mfxxx_drone.yml template
 
+{% set PUB_ROOT = "/pub/metwork" %}
 {% if "mfext-addon" in "REPO_TOPICS"|getenv|from_json %}
-    {% set PUB_ROOT = "/private/metwork_addons" %}
     {% set MFEXT_ADDON = "1" %}
     {% set FORCED_REPO = "mfext" %}
 {% else %}
-    {% set PUB_ROOT = "/pub/metwork" %}
     {% set MFEXT_ADDON = "0" %}
     {% set FORCED_REPO = cookiecutter.repo %}
 {% endif %}
