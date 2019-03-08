@@ -30,7 +30,7 @@ bootstrap_common: &bootstrap_common
   commands:
     - if test "$${FORCED_OS_VERSION}" != ""; then if test "$${FORCED_OS_VERSION}" != "${OS_VERSION}"; then echo "step bypass"; exit 0; fi; fi
     - mkdir -p /opt/metwork-{{FORCED_REPO}}-$${TARGET_DIR}
-{% if cookiecutter.repo == "mfext" %}
+{% if cookiecutter.repo == "mfext" or MFEXT_ADDON == "1" %}
     - ./bootstrap.sh /opt/metwork-{{FORCED_REPO}}-$${TARGET_DIR}
 {% else %}
     - ./bootstrap.sh /opt/metwork-{{FORCED_REPO}}-$${TARGET_DIR} /opt/metwork-{{DEP_MODULE}}-$${DEP_DIR}
@@ -60,6 +60,7 @@ build_common: &build_common
     - mv /opt/metwork-mfext-$${TARGET_DIR}/*.rpm .
   volumes:
     - /pub:/pub
+    - /private:/private
     - /buildcache:/buildcache
 {% else %}
     - mkdir -p /opt/metwork-{{FORCED_REPO}}-$${TARGET_DIR}
@@ -85,9 +86,10 @@ publish_ci_common: &publish_ci_common
     - touch /buildcache/build_{{cookiecutter.repo}}_${DRONE_BRANCH}_`cat .drone_cache`
   volumes:
     - /pub:/pub
+    - /private:/private
     - /buildcache:/buildcache
 
-{% if cookiecutter.repo != "mfcom" %}
+{% if cookiecutter.repo != "mfcom" and MFEXT_ADDON == "0" %}
 integration_tests_common: &integration_tests_common
   commands:
     - if test "$${FORCED_OS_VERSION}" != ""; then if test "$${FORCED_OS_VERSION}" != "${OS_VERSION}"; then echo "step bypass"; exit 0; fi; fi
@@ -185,7 +187,7 @@ pipeline:
       event: tag
       ref: refs/tags/v*
 
-{% if cookiecutter.repo != "mfcom" %}
+{% if cookiecutter.repo != "mfcom" and MFEXT_ADDON == "0" %}
   integration_tests_integration:
     <<: *integration_tests_common
     image: centos:${OS_VERSION}
@@ -220,6 +222,7 @@ pipeline:
     image: metwork/mfxxx-${OS_VERSION}-buildimage:${DRONE_BRANCH}
     volumes:
       - /pub:/pub
+      - /private:/private
     commands:
       - if test "$${FORCED_OS_VERSION}" != ""; then if test "$${FORCED_OS_VERSION}" != "${OS_VERSION}"; then echo "step bypass"; exit 0; fi; fi
       - mkdir -p {{PUB_ROOT}}/releases/rpms/${DRONE_BRANCH}/${OS_VERSION}/
