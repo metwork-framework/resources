@@ -14,6 +14,7 @@
 - first version of contributing guide
 - generate .drone.yml and run_tests.sh from resource for repositories mf*-integration-tests-runner
 - generate README.md file for integration_level >= 5
+- introduce mfextaddon
 - new templates to execute integration tests directly from modules
 - optional auth
 
@@ -21,8 +22,12 @@
 - directory integration_tests may no exist
 - fix bad space
 - fix latest commit
+- fix renaming feature in subdir
 - fix utf8 char
 - fix utf8 issues
+- publish addons in /pub
+- remove doc publish for mfext addons
+- some fixes about mfext addon drone conf
 - tag condition
 - yum install {{MODULE}} before call to {{MODULE}}_wrapper
 
