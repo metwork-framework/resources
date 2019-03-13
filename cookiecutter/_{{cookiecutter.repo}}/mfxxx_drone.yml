@@ -272,7 +272,9 @@ pipeline:
 
 matrix:
   OS_VERSION:
+{% if cookiecutter.repo != "mfextaddon_python3_ia" %}
     - centos6
+{% endif %}
     - centos7
 
 branches: [ master, integration, experimental*, ci_*, pci_*, release_* ]
