@@ -20,6 +20,7 @@
 
 ### Fix
 - directory integration_tests may no exist
+- don t try to execute tests on data directory
 - fix bad space
 - fix latest commit
 - fix renaming feature in subdir
