@@ -1,0 +1,1 @@
+{% if cookiecutter.repo not in ['mfserv', 'mfdata', 'mfbase'] %}yes{% endif %}
