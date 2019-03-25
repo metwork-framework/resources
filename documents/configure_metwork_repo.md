@@ -39,7 +39,7 @@ you have a CentOS 6 distribution and you can continue here. Else, jump to the ce
 To configure the metwork yum repository for **releases stable** versions on **centos6**, you just have to create a new `/etc/yum.repos.d/metwork.repo` with the following 
 content :
 
-```
+```cfg
 [metwork_stable]
 name=MetWork Stable
 baseurl=http://metwork-framework.org/pub/metwork/releases/rpms/stable/centos6/
@@ -50,7 +50,7 @@ metadata_expire=0
 
 You can do this with one command:
 
-```
+```bash
 cat >/etc/yum.repos.d/metwork.repo <<EOF
 [metwork_stable]
 name=MetWork Stable
@@ -76,7 +76,7 @@ you have a CentOS 7 distribution and you can continue here. Else, go back to the
 To configure the metwork yum repository for centos7, you just have to create a new `/etc/yum.repos.d/metwork.repo` with the following 
 content :
 
-```
+```cfg
 [metwork_stable]
 name=MetWork Stable
 baseurl=http://metwork-framework.org/pub/metwork/releases/rpms/stable/centos7/
@@ -87,7 +87,7 @@ metadata_expire=0
 
 You can do this with one command (as `root` user):
 
-```
+```bash
 cat >/etc/yum.repos.d/metwork.repo <<EOF
 [metwork_stable]
 name=MetWork Stable

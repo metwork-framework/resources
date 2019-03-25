@@ -11,7 +11,7 @@ You must:
 
 You just have to execute the following command (as `root` user):
 
-```
+```bash
 yum install metwork-{METWORK_PACKAGE_NAME}
 ```
 
@@ -19,7 +19,7 @@ with `{METWORK_PACKAGE_NAME}` replaced by `mfext`, `mfcom`, `mfbase`, `mfadmin`,
 
 For example, to install `mfserv` package:
 
-```
+```bash
 yum install metwork-mfserv
 ```
 
@@ -27,7 +27,7 @@ Of course, you can install several packages on the same linux box.
 
 You can start corresponding services (not necessary for `mfext` or `mfcom` packages) with the root command:
 
-```
+```bash
 service metwork start
 ```
 
@@ -38,7 +38,7 @@ Or you can also reboot your computer (because metwork services are started autom
 
 To uninstall a given metwork package, please stop corresponding metwork services with the `root` command:
 
-```
+```bash
 # note: this is not necessary with mfext or mfcom
 # because there is no corresponding services
 service metwork stop {METWORK_PACKAGE_NAME}
@@ -46,7 +46,7 @@ service metwork stop {METWORK_PACKAGE_NAME}
 
 Then, use the following command (still as `root` user):
 
-```
+```bash
 yum remove "metwork-{METWORK_PACKAGE_NAME}*"
 ```
 
@@ -54,7 +54,7 @@ yum remove "metwork-{METWORK_PACKAGE_NAME}*"
 
 To uninstall all metwork packages, use following root commands:
 
-```
+```bash
 # We stop metwork services
 service metwork stop
 
@@ -68,7 +68,7 @@ The same idea applies to upgrade.
 
 For example, to upgrade all metwork packages on a computer, use following root commands:
 
-```
+```bash
 # We stop metwork services
 service metwork stop
 

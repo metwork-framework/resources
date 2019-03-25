@@ -32,7 +32,7 @@ If you have a "normal" installed plugin, you can use `plugin_env {PLUGIN_NAME}`.
 
 When you are inside a plugin environment, you will find some extra environment variables:
 
-```
+```cfg
 # Example with MFSERV, but it's the same idea with MFDATA or MFBASE
 MFSERV_CURRENT_PLUGIN_NAME=dashboard
 MFSERV_CURRENT_PLUGIN_DIR=/home/mfserv/var/plugins/dashboard
@@ -45,7 +45,7 @@ And of course, paths of your plugin "layer" (kind of virtualenv generalization) 
 
 This command follows the same idea than `plugin_env` but in a non-interactive way. Use it for example for `crontabs` or if you want to execute a command in a given plugin environment without changing anything to the current shell.
 
-```
+```bash
 plugin_wrapper {PLUGIN_NAME} {COMMAND} [{COMMAND_ARG1}] [{COMMAND_ARG2}] [...]
 ```
 
