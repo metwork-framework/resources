@@ -15,7 +15,7 @@ You must:
 
 You just have to execute the following command (as `root` user):
 
-```
+```bash
 yum install metwork-{{cookiecutter.repo}}
 ```
 
@@ -24,7 +24,7 @@ yum install metwork-{{cookiecutter.repo}}
 If you prefer to start with a minimal installation, you have to execute the following command
 (as `root` user):
 
-```
+```bash
 yum install metwork-{{cookiecutter.repo}}-minimal
 ```
 
@@ -32,7 +32,7 @@ yum install metwork-{{cookiecutter.repo}}-minimal
 
 ### Optional dependencies addons
 
-```
+```bash
 # To install some devtools
 yum install metwork-mfext-devtools
 
@@ -48,7 +48,7 @@ yum install metwork-mfext-python2
 
 ### Optional {{cookiecutter.repo}} addons
 
-```
+```bash
 # To install python2 support
 # (see above to install full scientific and devtools support)
 yum install metwork-mfserv-python2
@@ -61,7 +61,7 @@ yum install metwork-mfserv-nodejs
 
 ### Optional {{cookiecutter.repo}} addons
 
-```
+```bash
 # To install python2 support
 # (see above to install full scientific and devtools support)
 yum install metwork-mfdata-python2
@@ -73,7 +73,7 @@ yum install metwork-mfdata-python2
 
 You can start corresponding services with the root command:
 
-```
+```bash
 service metwork start
 ```
 
@@ -86,7 +86,7 @@ Or you can also reboot your computer (because metwork services are started autom
 {% if cookiecutter.repo != "mfcom" and cookiecutter.repo != "mfext" %}
 To uninstall {{cookiecutter.repo}} metwork module, please stop corresponding metwork services with the `root` command:
 
-```
+```bash
 service metwork stop {{cookiecutter.repo}}
 ```
 
@@ -96,7 +96,7 @@ To uninstall {{cookiecutter.repo}} metwork module, use the following command (st
 
 {% endif %}
 
-```
+```bash
 yum remove "metwork-{{cookiecutter.repo}}*"
 ```
 
@@ -105,19 +105,19 @@ yum remove "metwork-{{cookiecutter.repo}}*"
 To upgrade {{cookiecutter.repo}} metwork module, use the following commands (still as `root` user):
 
 {% if cookiecutter.repo != 'mfcom' and cookiecutter.repo != 'mfext' %}
-```
+```bash
 # We stop {{cookiecutter.repo}} services
 service metwork stop {{cookiecutter.repo}}
 ```
 {% endif %}
 
-```
+```bash
 # We upgrade {{cookiecutter.repo}} metwork module
 yum upgrade "metwork-{{cookiecutter.repo}}*"
 ```
 
 {% if cookiecutter.repo != 'mfcom' and cookiecutter.repo != 'mfext' %}
-```
+```bash
 # We start {{cookiecutter.repo}} services
 service metwork start {{cookiecutter.repo}}
 ```
@@ -127,7 +127,7 @@ service metwork start {{cookiecutter.repo}}
 
 To uninstall all metwork modules, use following root commands:
 
-```
+```bash
 # We stop metwork services
 service metwork stop
 
@@ -141,7 +141,7 @@ The same idea applies to upgrade.
 
 For example, to upgrade all metwork modules on a computer, use following root commands:
 
-```
+```bash
 # We stop metwork services
 service metwork stop
 
