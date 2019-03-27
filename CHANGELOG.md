@@ -1,6 +1,9 @@
 <a name="unreleased"></a>
 ## [Unreleased]
 
+### Docs
+- Add missing language to block code
+
 ### Feat
 - add 0.5 support for mergify
 - add a cookiecutter template
@@ -19,6 +22,7 @@
 - optional auth
 
 ### Fix
+- PR CI on release branches
 - directory integration_tests may no exist
 - don t try to execute tests on data directory
 - fix bad space
