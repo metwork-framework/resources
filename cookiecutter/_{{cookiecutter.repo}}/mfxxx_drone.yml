@@ -63,6 +63,17 @@ build_common: &build_common
     - /buildcache:/buildcache
 {% else %}
     - mkdir -p /opt/metwork-{{FORCED_REPO}}-$${TARGET_DIR}
+{%- if cookiecutter.repo == "mfextaddon_scientific" %}
+    - mkdir -p /pub/metwork/continuous_integration/buildlogs/${DRONE_BRANCH}/mfextaddon_scientific/${OS_VERSION}/${DRONE_BUILD_NUMBER}
+    - make >/pub/metwork/continuous_integration/buildlogs/${DRONE_BRANCH}/mfextaddon_scientific/${OS_VERSION}/${DRONE_BUILD_NUMBER}/make.log 2>&1
+    - make test >>/pub/metwork/continuous_integration/buildlogs/${DRONE_BRANCH}/mfextaddon_scientific/${OS_VERSION}/${DRONE_BUILD_NUMBER}/make.log 2>&1
+    - make RELEASE_BUILD=${DRONE_BUILD_NUMBER} rpm >>/pub/metwork/continuous_integration/buildlogs/${DRONE_BRANCH}/mfextaddon_scientific/${OS_VERSION}/${DRONE_BUILD_NUMBER}/make.log 2>&1
+    - mv /opt/metwork-{{FORCED_REPO}}-$${TARGET_DIR}/*.rpm .
+  volumes:
+    - /pub:/pub
+    - /private:/private
+    - /buildcache:/buildcache
+{%- else %}
     - make
 {% if MFEXT_ADDON == "0" %}
     - make doc
@@ -72,6 +83,7 @@ build_common: &build_common
     - make test
     - make RELEASE_BUILD=${DRONE_BUILD_NUMBER} rpm
     - mv /opt/metwork-{{FORCED_REPO}}-$${TARGET_DIR}/*.rpm .
+{%- endif %}
 {% endif %}
 
 publish_ci_common: &publish_ci_common
