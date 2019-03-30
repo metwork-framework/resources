@@ -20,6 +20,7 @@
 - introduce mfextaddon
 - new templates to execute integration tests directly from modules
 - optional auth
+- put build logs on public website for mfextaddon_scientific
 
 ### Fix
 - PR CI on release branches
