@@ -3,6 +3,7 @@
 
 ### Docs
 - Add missing language to block code
+- Update plugins_guide documentation
 
 ### Feat
 - add 0.5 support for mergify
