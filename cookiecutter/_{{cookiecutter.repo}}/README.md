@@ -16,6 +16,10 @@
 {%- if cookiecutter.integration_level|int >= 5 %}
 [![License](https://github.com/metwork-framework/resources/blob/master/badges/bsd.svg)]()
 {%- endif %}
+{%- if cookiecutter.integration_level|int >= 4 %}
+[![Gitter](https://github.com/metwork-framework/resources/blob/master/badges/community-en.svg)](https://gitter.im/metwork-framework/community-en?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
+[![Gitter](https://github.com/metwork-framework/resources/blob/master/badges/community-fr.svg)](https://gitter.im/metwork-framework/community-fr?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
+{%- endif %}
 {{ ("cat " + "REPO_HOME"|getenv + "/.metwork-framework/EXTRA_BADGES.md 2>/dev/null")|shell }}
 
 {{ ("cat " + "REPO_HOME"|getenv + "/.metwork-framework/README.md 2>/dev/null")|shell }}
