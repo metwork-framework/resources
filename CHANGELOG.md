@@ -11,6 +11,7 @@
 - add a new fnmatch extension and use it for docker-mfxxx-yyy-buildimage_drone.yml
 - add exact-level option
 - add first drone support
+- add gitter badges
 - add metwork_repos.py script
 - add mfcom support
 - add rename support
