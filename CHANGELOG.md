@@ -33,6 +33,7 @@
 - fix renaming feature in subdir
 - fix utf8 char
 - fix utf8 issues
+- install build dependency python3_scientific[@mfext](https://github.com/mfext) for mfextaddon_python3_ia
 - publish addons in /pub
 - remove doc publish for mfext addons
 - some fixes about mfext addon drone conf
