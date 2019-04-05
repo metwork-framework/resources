@@ -75,7 +75,7 @@ build_common: &build_common
     - /buildcache:/buildcache
 {%- else %}
 {%- if cookiecutter.repo == "mfextaddon_python3_ia" %}
-    - yum -y install metwork-mfext-layer-python3_scientific-${DRONE_BRANCH}
+    - yum -y install metwork-mfext-layer-python3_scientific-$${DEP_BRANCH}
 {%- endif %}
     - make
 {% if MFEXT_ADDON == "0" %}
@@ -188,6 +188,7 @@ pipeline:
     image: metwork/{{BUILD_IMAGE_NAME}}:integration
     environment:
       - TARGET_DIR=master
+      - DEP_BRANCH=integration
     when:
 {% if cookiecutter.repo == "mfext" %}
       event: push
@@ -200,6 +201,7 @@ pipeline:
     image: metwork/{{BUILD_IMAGE_NAME}}:${DRONE_BRANCH}
     environment:
       - TARGET_DIR=${DRONE_BRANCH##release_}
+      - DEP_BRANCH=${DRONE_BRANCH}
     when:
 {% if cookiecutter.repo == "mfext" %}
       event: push
@@ -212,6 +214,7 @@ pipeline:
     image: metwork/{{BUILD_IMAGE_NAME}}:${DRONE_BRANCH}
     environment:
       - TARGET_DIR=${DRONE_BRANCH##release_}
+      - DEP_BRANCH=${DRONE_BRANCH}
     when:
       event: tag
       ref: refs/tags/v*
