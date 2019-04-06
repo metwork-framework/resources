@@ -12,6 +12,7 @@
 - add exact-level option
 - add first drone support
 - add gitter badges
+- add integration tests for mfext addons
 - add metwork_repos.py script
 - add mfcom support
 - add rename support
@@ -29,6 +30,7 @@
 - directory integration_tests may no exist
 - don t try to execute tests on data directory
 - fix bad space
+- fix integration tests for mfext addons
 - fix latest commit
 - fix renaming feature in subdir
 - fix utf8 char
