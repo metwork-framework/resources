@@ -75,7 +75,7 @@ build_common: &build_common
     - /buildcache:/buildcache
 {%- else %}
 {%- if cookiecutter.repo == "mfextaddon_python3_ia" %}
-    - yum -y install metwork-mfext-layer-python3_scientific-${DRONE_BRANCH}
+    - yum -y install metwork-mfext-layer-python3_scientific-$${DEP_BRANCH}
 {%- endif %}
     - make
 {% if MFEXT_ADDON == "0" %}
@@ -105,19 +105,24 @@ publish_ci_common: &publish_ci_common
     - /private:/private
     - /buildcache:/buildcache
 
-{% if cookiecutter.repo != "mfcom" and MFEXT_ADDON == "0" %}
+{% if cookiecutter.repo != "mfcom" %}
 integration_tests_common: &integration_tests_common
   commands:
     - if test "$${FORCED_OS_VERSION}" != ""; then if test "$${FORCED_OS_VERSION}" != "${OS_VERSION}"; then echo "step bypass"; exit 0; fi; fi
     - if test "${DRONE_TAG}" = ""; then if ! test -f .drone_cache; then echo "step bypass"; exit 0; fi; fi
 {% if cookiecutter.repo == "mfext" %}
-    - yum -y localinstall metwork-{{cookiecutter.repo}}*.rpm
+    - yum -y localinstall metwork-mfext*.rpm
     - /opt/metwork-mfext/bin/mfext_wrapper ./run_integration_tests.sh
 {% else %}
     - echo -e "[metwork_${DRONE_BRANCH}]" >/etc/yum.repos.d/metwork.repo
     - echo -e "name=Metwork Continuous Integration Branch ${DRONE_BRANCH}" >> /etc/yum.repos.d/metwork.repo
     - echo -e "baseurl=http://metwork-framework.org/pub/metwork/continuous_integration/rpms/${DRONE_BRANCH}/${OS_VERSION}/" >> /etc/yum.repos.d/metwork.repo
     - echo -e "gpgcheck=0\n\enabled=1\n\metadata_expire=0\n" >>/etc/yum.repos.d/metwork.repo
+{%- if MFEXT_ADDON == "1" %}
+    - yum -y localinstall metwork-mfext*.rpm
+    - yum -y install metwork-mfext-minimal
+    - /opt/metwork-mfext/bin/mfext_wrapper ./run_integration_tests.sh
+{%- else %}
     - yum -y localinstall metwork-{{cookiecutter.repo}}*.rpm
     - su --command="{{cookiecutter.repo}}.init" - {{cookiecutter.repo}}
     - su --command="{{cookiecutter.repo}}.start" - {{cookiecutter.repo}}
@@ -125,6 +130,7 @@ integration_tests_common: &integration_tests_common
     - if test -d "integration_tests"; then chown -R {{cookiecutter.repo}} integration_tests; fi
     - su --command="cd `pwd`; ./run_integration_tests.sh" - {{cookiecutter.repo}}
     - su --command="{{cookiecutter.repo}}.stop" - {{cookiecutter.repo}}
+{%- endif %}
 {% endif %}
 {% endif %}
 
@@ -188,6 +194,7 @@ pipeline:
     image: metwork/{{BUILD_IMAGE_NAME}}:integration
     environment:
       - TARGET_DIR=master
+      - DEP_BRANCH=integration
     when:
 {% if cookiecutter.repo == "mfext" %}
       event: push
@@ -200,6 +207,7 @@ pipeline:
     image: metwork/{{BUILD_IMAGE_NAME}}:${DRONE_BRANCH}
     environment:
       - TARGET_DIR=${DRONE_BRANCH##release_}
+      - DEP_BRANCH=${DRONE_BRANCH}
     when:
 {% if cookiecutter.repo == "mfext" %}
       event: push
@@ -212,11 +220,12 @@ pipeline:
     image: metwork/{{BUILD_IMAGE_NAME}}:${DRONE_BRANCH}
     environment:
       - TARGET_DIR=${DRONE_BRANCH##release_}
+      - DEP_BRANCH=${DRONE_BRANCH}
     when:
       event: tag
       ref: refs/tags/v*
 
-{% if cookiecutter.repo != "mfcom" and MFEXT_ADDON == "0" %}
+{% if cookiecutter.repo != "mfcom" %}
   integration_tests:
     <<: *integration_tests_common
     image: centos:${OS_VERSION}
