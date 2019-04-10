@@ -3,6 +3,7 @@
 
 ### Docs
 - Add missing language to block code
+- Update configure_a_metwork_package documentation
 - Update plugins_guide documentation
 
 ### Feat
