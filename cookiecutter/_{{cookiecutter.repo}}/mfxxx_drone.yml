@@ -114,9 +114,9 @@ integration_tests_common: &integration_tests_common
     - yum -y localinstall metwork-mfext*.rpm
     - /opt/metwork-mfext/bin/mfext_wrapper ./run_integration_tests.sh
 {% else %}
-    - echo -e "[metwork_${DRONE_BRANCH}]" >/etc/yum.repos.d/metwork.repo
-    - echo -e "name=Metwork Continuous Integration Branch ${DRONE_BRANCH}" >> /etc/yum.repos.d/metwork.repo
-    - echo -e "baseurl=http://metwork-framework.org/pub/metwork/continuous_integration/rpms/${DRONE_BRANCH}/${OS_VERSION}/" >> /etc/yum.repos.d/metwork.repo
+    - echo -e "[metwork_$${DEP_BRANCH}]" >/etc/yum.repos.d/metwork.repo
+    - echo -e "name=Metwork Continuous Integration Branch $${DEP_BRANCH}" >> /etc/yum.repos.d/metwork.repo
+    - echo -e "baseurl=http://metwork-framework.org/pub/metwork/continuous_integration/rpms/$${DEP_BRANCH}/${OS_VERSION}/" >> /etc/yum.repos.d/metwork.repo
     - echo -e "gpgcheck=0\n\enabled=1\n\metadata_expire=0\n" >>/etc/yum.repos.d/metwork.repo
 {%- if MFEXT_ADDON == "1" %}
     - yum -y localinstall metwork-mfext*.rpm
@@ -209,7 +209,7 @@ pipeline:
       - TARGET_DIR=${DRONE_BRANCH##release_}
       - DEP_BRANCH=${DRONE_BRANCH}
     when:
-{% if cookiecutter.repo == "mfext" %}
+{% if cookiecutter.repo == "mfext" or cookiecutter.repo == "mfextaddon_scientific" %}
       event: push
 {% else %}
       event: [ push, pull_request ]
@@ -226,16 +226,26 @@ pipeline:
       ref: refs/tags/v*
 
 {% if cookiecutter.repo != "mfcom" %}
+  integration_tests_integration:
+    <<: *integration_tests_common
+    image: centos:${OS_VERSION}
+    environment:
+      - DEP_BRANCH=integration
+    when:
+      event: [push, pull_request]
+      branch: [ integration, ci_*, pci_* ]
   integration_tests:
     <<: *integration_tests_common
     image: centos:${OS_VERSION}
+    environment:
+      - DEP_BRANCH=${DRONE_BRANCH}
     when:
-{% if cookiecutter.repo == "mfext" %}
+{% if cookiecutter.repo == "mfext" or cookiecutter.repo == "mfextaddon_scientific" %}
       event: push
 {% else %}
       event: [push, pull_request]
 {% endif %}
-      branch: [ integration, master, ci_*, pci_*, release_*, experimental* ]
+      branch: [  master, release_*, experimental* ]
 {% endif %}
 
   publish_ci_integration:
