@@ -25,12 +25,14 @@ with {MODULE_RUNTIME_HOME} the Metwork module you are working with, e.g. mfdata.
 
 The configuration parameters are described and explained in the `${MODULE_RUNTIME_HOME}/config/config.ini` file.
 
+.. index:: plugins commands
 ## Plugins Commands
 
 This section sums up all the commands you will need to build, install a plugin.
 
 Use `-h` or `--help` option of the command to review all available options of the command.
 
+.. index:: plugins.list
 ### `plugins.list`
 
 List installed plugins.
@@ -41,14 +43,14 @@ plugins.list [options]
 Note: if you have a version named `dev_link`, the plugin is installed as a symbolic link to a source directory. 
 It's a kind of "development mode".
 
-
+.. index:: plugins.install
 ### `plugins.install`
 
 Install a given plugin from a `.plugin` file.
 ```bash
 plugins.install {plugin file path} [options]
 ```
-
+.. index:: plugins.uninstall
 ### `plugins.uninstall`
 
 Uninstall a given plugin **name** (not file). The name corresponds to the first column of `plugins.list` output.
@@ -56,13 +58,14 @@ Uninstall a given plugin **name** (not file). The name corresponds to the first 
 plugins.uninstall {plugin name} [options]
 ```
 
+.. index:: plugins.info
 ### `plugins.info`
 
 Get more infomation about a  plugin.
 ```bash
 plugins.info {plugin_name}
 ```
-
+.. index:: plugin_env, virtualenv
 ### `plugin_env`
 
 If you have a virtualenv in your plugin or if you want to simulate the exact environment your code will run in the context of your plugin, you can use the `plugin_env` interactive command.
@@ -84,6 +87,7 @@ MFDATA_CURRENT_PLUGIN_LABEL=plugin_my_plugin@mfdata
 
 And of course, paths of your plugin "layer" (kind of virtualenv generalization) are loaded before system paths.
 
+.. index:: plugin_wrapper
 ### `plugin_wrapper`
 
 This command follows the same idea than `plugin_env` but in a non-interactive way. Use it for example for `crontabs` or if you want to execute a command in a given plugin environment without changing anything to the current shell.
@@ -94,8 +98,10 @@ plugin_wrapper {PLUGIN_NAME} {COMMAND} [{COMMAND_ARG1}] [{COMMAND_ARG2}] [...]
 
 Note: the plugin {PLUGIN_NAME} must be installed.
 
+.. index:: make commands
 ## Make Commands
 
+.. index:: make develop
 ### make develop
 
 Install your plugin in "development mode" (you don't need to release and install each time you make a modification), the plugin installed through a symlink.
@@ -103,6 +109,7 @@ Install your plugin in "development mode" (you don't need to release and install
 make develop
 ```
 
+.. index:: make release
 ### make release
 
 Release your plugin as a `.plugin` file.
@@ -110,6 +117,7 @@ Release your plugin as a `.plugin` file.
 make release
 ```
 
+.. index:: make clean
 ### make clean
 
 Clean (before release)
@@ -117,19 +125,22 @@ Clean (before release)
 make clean
 ```
 
+.. index:: make superclean
 ### make superclean
 
 Hard-clean, can be useful when you have error with your virtualenv
 ```bash
 make superclean
 ```
-
+.. index:: make
 ### make
 
 Build your virtualenv from sources
 ```bash
 make
 ```
+
+.. index:: virtualenv, requirements file, requirements-to-freeze file, 
 ## Python virtualenv
 
 When developing Python applications, it’s standard practice to have a `requirements.txt` file.
