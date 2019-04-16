@@ -2,6 +2,7 @@
 
 [//]: # (automatically generated from https://github.com/metwork-framework/resources/blob/master/cookiecutter/_%7B%7Bcookiecutter.repo%7D%7D/.metwork-framework/plugins_guide.md)
 
+.. index:: plugins configuration, config.ini
 ## Plugins Configuration
 A plugin has its own configuration in `config.ini` file stored in the root directory of the plugin.
 
