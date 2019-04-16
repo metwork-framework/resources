@@ -5,6 +5,7 @@
 - Add missing language to block code
 - Update configure_a_metwork_package documentation
 - Update plugins_guide documentation
+- change mfext install documentation with suppression of metapackages python2, scientific and devtools
 
 ### Feat
 - add 0.5 support for mergify
