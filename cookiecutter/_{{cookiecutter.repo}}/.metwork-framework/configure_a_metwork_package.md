@@ -121,7 +121,7 @@ key2=value2
 key3=value3
 ```
 
-After restarting your terminal to force a profile loading, you will get some new environement variables:
+After restarting your terminal to force a profile loading, you will get some new environment variables:
 
 ```bash
 $ env |grep "^MFSERV_PLUGIN_FOO_"
