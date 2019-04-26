@@ -13,11 +13,13 @@ You can change some of the configuration parameters and/or add configuration spe
 Every time you change the configuration file, you have to stop and start the Metwork module to reload the configuration, by entering the commands :
 
 - either
+
 ```bash
 {MODULE_RUNTIME_HOME}.stop
 {MODULE_RUNTIME_HOME}.start
 ```
 - or (as root user)
+
 ```bash
 service metwork restart {MODULE_RUNTIME_HOME}
 ```
