@@ -62,7 +62,7 @@ plugins.uninstall {plugin name} [options]
 .. index:: plugins.info
 ### `plugins.info`
 
-Get more infomation about a  plugin.
+Get more information about a  plugin.
 ```bash
 plugins.info {plugin_name}
 ```
@@ -71,7 +71,7 @@ plugins.info {plugin_name}
 
 If you have a virtualenv in your plugin or if you want to simulate the exact environment your code will run in the context of your plugin, you can use the `plugin_env` interactive command.
 
-If you are developping, the best way is to go in the root directory of your plugin and use `plugin_env` without argument.
+If you are developing, the best way is to go in the root directory of your plugin and use `plugin_env` without argument.
 
 If you have a "normal" installed plugin, you can use `plugin_env {PLUGIN_NAME}`.
 
