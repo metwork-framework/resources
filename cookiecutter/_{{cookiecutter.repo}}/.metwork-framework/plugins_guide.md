@@ -68,7 +68,7 @@ Get more information about a  plugin.
 ```bash
 plugins.info {plugin_name}
 ```
-.. index:: plugin_env, virtualenv
+
 ### `plugin_env`
 
 If you have a virtualenv in your plugin or if you want to simulate the exact environment your code will run in the context of your plugin, you can use the `plugin_env` interactive command.
@@ -104,6 +104,7 @@ Note: the plugin {PLUGIN_NAME} must be installed.
 .. index:: make commands
 ## Make Commands
 
+{% if cookiecutter.repo != "mfbase" -%}
 .. index:: make develop
 ### make develop
 
@@ -111,6 +112,7 @@ Install your plugin in "development mode" (you don't need to release and install
 ```bash
 make develop
 ```
+{% endif -%}
 
 .. index:: make release
 ### make release
@@ -119,7 +121,7 @@ Release your plugin as a `.plugin` file.
 ```bash
 make release
 ```
-
+{% if cookiecutter.repo != "mfbase" -%}
 .. index:: make clean
 ### make clean
 
@@ -142,6 +144,7 @@ Build your virtualenv from sources
 ```bash
 make
 ```
+{% endif -%}
 
 .. index:: virtualenv, requirements file, requirements-to-freeze file, 
 ## Python virtualenv
