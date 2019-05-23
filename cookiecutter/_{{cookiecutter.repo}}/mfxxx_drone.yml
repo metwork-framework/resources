@@ -75,7 +75,7 @@ build_common: &build_common
     - /buildcache:/buildcache
 {%- else %}
 {%- if cookiecutter.repo == "mfextaddon_python3_ia" %}
-    - yum -y install metwork-mfext-layer-python3_scientific-$${DEP_BRANCH}
+    - yum -y install metwork-mfext-layer-python3_scientific
 {%- endif %}
     - make
 {% if MFEXT_ADDON == "0" %}
