@@ -4,6 +4,7 @@
 ## [Unreleased]
 
 ### New Features
+- prepare 0.7 release
 - add logo
 - add png logos
 - add new logos
