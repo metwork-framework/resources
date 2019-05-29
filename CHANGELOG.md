@@ -4,6 +4,8 @@
 ## [Unreleased]
 
 ### New Features
+- add favicon
+- better run_integration_tests
 - prepare 0.7 release
 - add logo
 - add png logos
