@@ -270,7 +270,7 @@ pipeline:
       - mkdir -p {{PUB_ROOT}}/releases/rpms/${DRONE_BRANCH}/${OS_VERSION}/
       - cp *.rpm {{PUB_ROOT}}/releases/rpms/${DRONE_BRANCH}/${OS_VERSION}/
       - createrepo --update {{PUB_ROOT}}/releases/rpms/${DRONE_BRANCH}/${OS_VERSION}
-      - if test "${OS_VERSION}" = "centos6"; then rm -Rf {{PUB_ROOT}}/releases/docs/${DRONE_BRANCH}/{{cookiecutter.repo}}; mkdir -p {{PUB_ROOT}}/releases/docs/${DRONE_BRANCH}/{{cookiecutter.repo}} ; cp -Rf html_doc/* {{PUB_ROOT}}/releases/docs/${DRONE_BRANCH}/{{cookiecutter.repo}}/ ; fi
+      - if test "${OS_VERSION}" = "centos6"; then rm -Rf {{PUB_ROOT}}/releases/docs/${DRONE_BRANCH}/{{cookiecutter.repo}}; mkdir -p {{PUB_ROOT}}/releases/docs/${DRONE_BRANCH}/{{cookiecutter.repo}} ; if test -d html_doc; then cp -Rf html_doc/* {{PUB_ROOT}}/releases/docs/${DRONE_BRANCH}/{{cookiecutter.repo}}/ ; fi ; fi
     when:
       event: tag
       ref: refs/tags/v*
