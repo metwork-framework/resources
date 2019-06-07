@@ -33,6 +33,7 @@
 
 
 ### Bug Fixes
+- fix tag for mfext addons
 - fix integration tests for mfext addons
 - install build dependency python3_scientific@mfext for mfextaddon_python3_ia
 - PR CI on release branches
