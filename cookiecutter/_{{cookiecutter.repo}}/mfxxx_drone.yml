@@ -1,4 +1,4 @@
-# automatically generated from https://github.com/metwork-framework/resources/blob/master/cookiecutter/_%7B%7Bcookiecutter.repo%7D%7D/mfxxx_drone.yml template
+nrt# automatically generated from https://github.com/metwork-framework/resources/blob/master/cookiecutter/_%7B%7Bcookiecutter.repo%7D%7D/mfxxx_drone.yml template
 
 {% set PUB_ROOT = "/pub/metwork" %}
 {% if "mfext-addon" in "REPO_TOPICS"|getenv|from_json %}
@@ -124,6 +124,7 @@ integration_tests_common: &integration_tests_common
     - /opt/metwork-mfext/bin/mfext_wrapper ./run_integration_tests.sh
 {%- else %}
     - yum -y localinstall metwork-{{cookiecutter.repo}}*.rpm
+    - yum -y install make
     - su --command="{{cookiecutter.repo}}.init" - {{cookiecutter.repo}}
     - su --command="{{cookiecutter.repo}}.start" - {{cookiecutter.repo}}
     - su --command="{{cookiecutter.repo}}.status" - {{cookiecutter.repo}}
