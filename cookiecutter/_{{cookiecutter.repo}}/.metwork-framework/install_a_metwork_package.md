@@ -11,7 +11,7 @@ You must:
 
 ## Install {{cookiecutter.repo}} metwork module
 
-## Full installation
+### Full installation
 
 You just have to execute the following command (as `root` user):
 
@@ -19,7 +19,7 @@ You just have to execute the following command (as `root` user):
 yum install metwork-{{cookiecutter.repo}}
 ```
 
-## Minimal installation
+### Minimal installation
 
 If you prefer to start with a minimal installation, you have to execute the following command
 (as `root` user):
