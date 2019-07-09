@@ -6,7 +6,7 @@
 
 You must:
 
-- have configured the metwork yum repository. Please see [the corresponding document](configure_metwork_repo.md) document to do that.
+- have configured the metwork yum repository. Please see [the corresponding document](configure_metwork_repo) document to do that.
 - have an internet access on this computer
 
 ## Install {{cookiecutter.repo}} metwork module
