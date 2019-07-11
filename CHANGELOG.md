@@ -4,6 +4,7 @@
 ## [Unreleased]
 
 ### New Features
+- Python3 version is now 3.7
 - add favicon
 - better run_integration_tests
 - prepare 0.7 release
