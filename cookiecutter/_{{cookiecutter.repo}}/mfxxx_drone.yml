@@ -79,7 +79,16 @@ build_common: &build_common
     - wget https://github.com/bazelbuild/bazel/releases/download/0.25.2/bazel-0.25.2-installer-linux-x86_64.sh
     - chmod +x bazel-0.25.2-installer-linux-x86_64.sh
     - ./bazel-0.25.2-installer-linux-x86_64.sh
-{%- endif %}
+    - mkdir -p /pub/metwork/continuous_integration/buildlogs/${DRONE_BRANCH}/mfextaddon_python3_ia/${OS_VERSION}/${DRONE_BUILD_NUMBER}
+    - make >/pub/metwork/continuous_integration/buildlogs/${DRONE_BRANCH}/mfextaddon_python3_ia/${OS_VERSION}/${DRONE_BUILD_NUMBER}/make.log 2>&1
+    - make test >>/pub/metwork/continuous_integration/buildlogs/${DRONE_BRANCH}/mfextaddon_python3_ia/${OS_VERSION}/${DRONE_BUILD_NUMBER}/make.log 2>&1
+    - make RELEASE_BUILD=${DRONE_BUILD_NUMBER} rpm >>/pub/metwork/continuous_integration/buildlogs/${DRONE_BRANCH}/mfextaddon_python3_ia/${OS_VERSION}/${DRONE_BUILD_NUMBER}/make.log 2>&1
+    - mv /opt/metwork-{{FORCED_REPO}}-$${TARGET_DIR}/*.rpm .
+  volumes:
+    - /pub:/pub
+    - /private:/private
+    - /buildcache:/buildcache
+{%- else %}
     - make
 {% if MFEXT_ADDON == "0" %}
     - make doc
@@ -89,6 +98,7 @@ build_common: &build_common
     - make test
     - make RELEASE_BUILD=${DRONE_BUILD_NUMBER} rpm
     - mv /opt/metwork-{{FORCED_REPO}}-$${TARGET_DIR}/*.rpm .
+{%- endif %}
 {%- endif %}
 {% endif %}
 
