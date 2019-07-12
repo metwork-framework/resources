@@ -4,6 +4,8 @@
 ## [Unreleased]
 
 ### New Features
+- remove typo
+- add some changes from mfextaddon_scientific
 - Python3 version is now 3.7
 - add favicon
 - better run_integration_tests
