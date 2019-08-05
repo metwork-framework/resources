@@ -234,7 +234,11 @@ pipeline:
     environment:
       - DEP_BRANCH=integration
     when:
+{% if cookiecutter.repo == "mfext" or cookiecutter.repo == "mfextaddon_scientific" or cookiecutter.repo == "mfextaddon_python3_ia" %}
+      event: push
+{% else %}
       event: [push, pull_request]
+{% endif %}
       branch: [ integration, ci_*, pci_* ]
   integration_tests:
     <<: *integration_tests_common
@@ -242,7 +246,7 @@ pipeline:
     environment:
       - DEP_BRANCH=${DRONE_BRANCH}
     when:
-{% if cookiecutter.repo == "mfext" or cookiecutter.repo == "mfextaddon_scientific" %}
+{% if cookiecutter.repo == "mfext" or cookiecutter.repo == "mfextaddon_scientific"  or cookiecutter.repo == "mfextaddon_python3_ia" %}
       event: push
 {% else %}
       event: [push, pull_request]
