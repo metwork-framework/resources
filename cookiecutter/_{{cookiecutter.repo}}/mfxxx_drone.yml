@@ -18,7 +18,11 @@
 {% else %}
     {% if MFEXT_ADDON == "1" %}
         {% set DEP_MODULE = "" %}
-        {% set BUILD_IMAGE_NAME = "mfcom-${OS_VERSION}-buildimage" %}
+        {% if cookiecutter.repo == "mfextaddon_python3_ia" %}
+            {% set BUILD_IMAGE_NAME = "mfextaddon_python3_ia-${OS_VERSION}-buildimage" %}
+        {% else %}
+            {% set BUILD_IMAGE_NAME = "mfcom-${OS_VERSION}-buildimage" %}
+        {% endif %}
     {% else %}
         {% set DEP_MODULE = "mfcom" %}
         {% set BUILD_IMAGE_NAME = "mfxxx-${OS_VERSION}-buildimage" %}
@@ -35,84 +39,44 @@ bootstrap_common: &bootstrap_common
     - ./bootstrap.sh /opt/metwork-{{FORCED_REPO}}-$${TARGET_DIR} /opt/metwork-{{DEP_MODULE}}-$${DEP_DIR}
 {% endif %}
     - cat adm/root.mk
-{% if cookiecutter.repo == "mfext" %}
-    - CACHE_HASH=`./adm2/_build_cache_hash.sh .`
-{% else %}
-    - CACHE_HASH=`/opt/metwork-mfext/bin/_build_cache_hash.sh .`
-{% endif %}
-    - if ! test -f /buildcache/build_{{cookiecutter.repo}}_${DRONE_BRANCH}_$${CACHE_HASH}; then echo $${CACHE_HASH} >.drone_cache; fi
+    - env |sort
 
 build_common: &build_common
   commands:
     - if test "$${FORCED_OS_VERSION}" != ""; then if test "$${FORCED_OS_VERSION}" != "${OS_VERSION}"; then echo "step bypass"; exit 0; fi; fi
-    - if test "${DRONE_TAG}" = ""; then if ! test -f .drone_cache; then echo "step bypass"; exit 0; fi; fi
     - export METWORK_BUILD_OS=${OS_VERSION}
-{% if cookiecutter.repo == "mfext" %}
-    - mkdir -p /opt/metwork-mfext-$${TARGET_DIR}
-    - mkdir -p /pub/metwork/continuous_integration/buildlogs/${DRONE_BRANCH}/mfext/${OS_VERSION}/${DRONE_BUILD_NUMBER}
-    - make >/pub/metwork/continuous_integration/buildlogs/${DRONE_BRANCH}/mfext/${OS_VERSION}/${DRONE_BUILD_NUMBER}/make.log 2>&1
-    - make doc >>/pub/metwork/continuous_integration/buildlogs/${DRONE_BRANCH}/mfext/${OS_VERSION}/${DRONE_BUILD_NUMBER}/make.log 2>&1
-    - rm -Rf html_doc
-    - cp -Rf /opt/metwork-mfext-$${TARGET_DIR}/html_doc .
-    - make test >>/pub/metwork/continuous_integration/buildlogs/${DRONE_BRANCH}/mfext/${OS_VERSION}/${DRONE_BUILD_NUMBER}/make.log 2>&1
-    - make RELEASE_BUILD=${DRONE_BUILD_NUMBER} rpm >>/pub/metwork/continuous_integration/buildlogs/${DRONE_BRANCH}/mfext/${OS_VERSION}/${DRONE_BUILD_NUMBER}/make.log 2>&1
-    - mv /opt/metwork-mfext-$${TARGET_DIR}/*.rpm .
-  volumes:
-    - /pub:/pub
-    - /private:/private
-    - /buildcache:/buildcache
-{% else %}
+    - if test -d /buildcache; then export BUILDCACHE=/buildcache; fi
     - mkdir -p /opt/metwork-{{FORCED_REPO}}-$${TARGET_DIR}
-{%- if cookiecutter.repo == "mfextaddon_scientific" %}
-    - mkdir -p /pub/metwork/continuous_integration/buildlogs/${DRONE_BRANCH}/mfextaddon_scientific/${OS_VERSION}/${DRONE_BUILD_NUMBER}
-    - make >/pub/metwork/continuous_integration/buildlogs/${DRONE_BRANCH}/mfextaddon_scientific/${OS_VERSION}/${DRONE_BUILD_NUMBER}/make.log 2>&1
-    - make test >>/pub/metwork/continuous_integration/buildlogs/${DRONE_BRANCH}/mfextaddon_scientific/${OS_VERSION}/${DRONE_BUILD_NUMBER}/make.log 2>&1
-    - make RELEASE_BUILD=${DRONE_BUILD_NUMBER} rpm >>/pub/metwork/continuous_integration/buildlogs/${DRONE_BRANCH}/mfextaddon_scientific/${OS_VERSION}/${DRONE_BUILD_NUMBER}/make.log 2>&1
-    - mv /opt/metwork-{{FORCED_REPO}}-$${TARGET_DIR}/*.rpm .
-  volumes:
-    - /pub:/pub
-    - /private:/private
-    - /buildcache:/buildcache
-{%- else %}
-{%- if cookiecutter.repo == "mfextaddon_python3_ia" %}
-    - yum -y install metwork-mfext-layer-python3_scientific
-    - wget https://github.com/bazelbuild/bazel/releases/download/0.25.2/bazel-0.25.2-installer-linux-x86_64.sh
-    - chmod +x bazel-0.25.2-installer-linux-x86_64.sh
-    - ./bazel-0.25.2-installer-linux-x86_64.sh
-    - mkdir -p /pub/metwork/continuous_integration/buildlogs/${DRONE_BRANCH}/mfextaddon_python3_ia/${OS_VERSION}/${DRONE_BUILD_NUMBER}
-    - make >/pub/metwork/continuous_integration/buildlogs/${DRONE_BRANCH}/mfextaddon_python3_ia/${OS_VERSION}/${DRONE_BUILD_NUMBER}/make.log 2>&1
-    - make test >>/pub/metwork/continuous_integration/buildlogs/${DRONE_BRANCH}/mfextaddon_python3_ia/${OS_VERSION}/${DRONE_BUILD_NUMBER}/make.log 2>&1
-    - make RELEASE_BUILD=${DRONE_BUILD_NUMBER} rpm >>/pub/metwork/continuous_integration/buildlogs/${DRONE_BRANCH}/mfextaddon_python3_ia/${OS_VERSION}/${DRONE_BUILD_NUMBER}/make.log 2>&1
-    - mv /opt/metwork-{{FORCED_REPO}}-$${TARGET_DIR}/*.rpm .
-  volumes:
-    - /pub:/pub
-    - /private:/private
-    - /buildcache:/buildcache
-{%- else %}
-    - make
-{% if MFEXT_ADDON == "0" %}
-    - make doc
+    - if test -d /pub; then mkdir -p /pub/metwork/continuous_integration/buildlogs/${DRONE_BRANCH}/{{cookiecutter.repo}}/${OS_VERSION}/${DRONE_BUILD_NUMBER}; fi
+    - if test -d /pub; then make >/pub/metwork/continuous_integration/buildlogs/${DRONE_BRANCH}/{{cookiecutter.repo}}/${OS_VERSION}/${DRONE_BUILD_NUMBER}/make.log 2>&1 || ( tail -200 /pub/metwork/continuous_integration/buildlogs/${DRONE_BRANCH}/{{cookiecutter.repo}}/${OS_VERSION}/${DRONE_BUILD_NUMBER}/make.log ; exit 1 ) else make; fi
+    - MODULEHASH=`/opt/metwork-{{FORCED_REPO}}-$${TARGET_DIR}/bin/{{FORCED_REPO}}_wrapper module_hash 2>module_hash.debug` # FIXME: module_hash for addons ?
+    - if test -f /opt/metwork-{{FORCED_REPO}}-$${TARGET_DIR}/.dhash; then cat /opt/metwork-{{FORCED_REPO}}-$${TARGET_DIR}/.dhash; fi
+    - cat module_hash.debug |sort |uniq ; rm -f module_hash.debug
+    - echo "$${MODULEHASH}${DRONE_TAG}${DRONE_BRANCH}" |md5sum |cut -d ' ' -f1 >.build_hash
+    - if test -f "$${BUILDCACHE}/build_hash_`cat .build_hash`"; then echo "next bypass"; touch .drone_downstream_bypass; exit 0; fi
+    - if test -d doc; then if test -d /pub; then make doc >/pub/metwork/continuous_integration/buildlogs/${DRONE_BRANCH}/{{cookiecutter.repo}}/${OS_VERSION}/${DRONE_BUILD_NUMBER}/make_doc.log 2>&1 || ( tail -200 /pub/metwork/continuous_integration/buildlogs/${DRONE_BRANCH}/{{cookiecutter.repo}}/${OS_VERSION}/${DRONE_BUILD_NUMBER}/make_doc.log ; exit 1 ) else make doc; fi; fi
     - rm -Rf html_doc
-    - cp -Rf /opt/metwork-{{FORCED_REPO}}-$${TARGET_DIR}/html_doc .
-{% endif %}
-    - make test
-    - make RELEASE_BUILD=${DRONE_BUILD_NUMBER} rpm
+    - if test -d /opt/metwork-{{FORCED_REPO}}-$${TARGET_DIR}/html_doc; then cp -Rf /opt/metwork-{{FORCED_REPO}}-$${TARGET_DIR}/html_doc . ; fi
+    - if test -d /pub; then make test >/pub/metwork/continuous_integration/buildlogs/${DRONE_BRANCH}/{{cookiecutter.repo}}/${OS_VERSION}/${DRONE_BUILD_NUMBER}/make_test.log 2>&1 || ( tail -200 /pub/metwork/continuous_integration/buildlogs/${DRONE_BRANCH}/{{cookiecutter.repo}}/${OS_VERSION}/${DRONE_BUILD_NUMBER}/make_test.log ; exit 1 ) else make test; fi
+    - if test -d /pub; then make RELEASE_BUILD=${DRONE_BUILD_NUMBER} rpm >/pub/metwork/continuous_integration/buildlogs/${DRONE_BRANCH}/{{cookiecutter.repo}}/${OS_VERSION}/${DRONE_BUILD_NUMBER}/make_rpm.log 2>&1 || ( tail -200 /pub/metwork/continuous_integration/buildlogs/${DRONE_BRANCH}/{{cookiecutter.repo}}/${OS_VERSION}/${DRONE_BUILD_NUMBER}/make_rpm.log ; exit 1 ) else make RELEASE_BUILD=${DRONE_BUILD_NUMBER} rpm; fi
     - mv /opt/metwork-{{FORCED_REPO}}-$${TARGET_DIR}/*.rpm .
-{%- endif %}
-{%- endif %}
-{% endif %}
+  volumes:
+    - /pub:/pub
+    - /private:/private
+    - /buildcache:/buildcache
 
 publish_ci_common: &publish_ci_common
   commands:
     - if test "$${FORCED_OS_VERSION}" != ""; then if test "$${FORCED_OS_VERSION}" != "${OS_VERSION}"; then echo "step bypass"; exit 0; fi; fi
-    - if test "${DRONE_TAG}" = ""; then if ! test -f .drone_cache; then echo "step bypass"; touch .drone_downstream_bypass; exit 0; fi; fi
+    - if test -d /buildcache; then export BUILDCACHE=/buildcache; fi
+    - if test -f .drone_downstream_bypass; then echo "step bypass"; exit 0; fi
     - mkdir -p {{PUB_ROOT}}/continuous_integration/rpms/${DRONE_BRANCH}/${OS_VERSION}/
     - cp *.rpm {{PUB_ROOT}}/continuous_integration/rpms/${DRONE_BRANCH}/${OS_VERSION}/
     - createrepo --update {{PUB_ROOT}}/continuous_integration/rpms/${DRONE_BRANCH}/${OS_VERSION}
 {% if MFEXT_ADDON == "0" %}
     - if test "${OS_VERSION}" = "centos6"; then rm -Rf {{PUB_ROOT}}/continuous_integration/docs/${DRONE_BRANCH}/{{cookiecutter.repo}}; mkdir -p {{PUB_ROOT}}/continuous_integration/docs/${DRONE_BRANCH}/{{cookiecutter.repo}} ; cp -Rf html_doc/* {{PUB_ROOT}}/continuous_integration/docs/${DRONE_BRANCH}/{{cookiecutter.repo}}/ ; fi
 {% endif %}
-    - touch /buildcache/build_{{cookiecutter.repo}}_${DRONE_BRANCH}_`cat .drone_cache`
+    - touch "$${BUILDCACHE}/build_hash_`cat .build_hash`"
   volumes:
     - /pub:/pub
     - /private:/private
@@ -122,7 +86,7 @@ publish_ci_common: &publish_ci_common
 integration_tests_common: &integration_tests_common
   commands:
     - if test "$${FORCED_OS_VERSION}" != ""; then if test "$${FORCED_OS_VERSION}" != "${OS_VERSION}"; then echo "step bypass"; exit 0; fi; fi
-    - if test "${DRONE_TAG}" = ""; then if ! test -f .drone_cache; then echo "step bypass"; exit 0; fi; fi
+    - if test -f .drone_downstream_bypass; then echo "step bypass"; exit 0; fi
 {% if cookiecutter.repo == "mfext" %}
     - yum -y localinstall metwork-mfext*.rpm
     - /opt/metwork-mfext/bin/mfext_wrapper ./run_integration_tests.sh
@@ -155,8 +119,6 @@ pipeline:
       - DEP_DIR=master
       - TARGET_DIR=master
     <<: *bootstrap_common
-    volumes:
-      - /buildcache:/buildcache
     when:
       event: push
       branch: [ integration, ci_*, pci_* ]
@@ -186,8 +148,6 @@ pipeline:
       - DEP_DIR=${DRONE_BRANCH##release_}
       - TARGET_DIR=${DRONE_BRANCH##release_}
     <<: *bootstrap_common
-    volumes:
-      - /buildcache:/buildcache
     when:
       event: push
       branch: [ master, experimental*, release_* ]
@@ -197,11 +157,21 @@ pipeline:
       - DEP_DIR=${DRONE_BRANCH##release_}
       - TARGET_DIR=${DRONE_BRANCH##release_}
     <<: *bootstrap_common
-    volumes:
-      - /buildcache:/buildcache
     when:
       event: tag
       ref: refs/tags/v*
+
+{% if cookiecutter.repo != "mfext" and cookiecutter.repo != "mfextaddon_scientific" and cookiecutter.repo != "mfextaddon_python3_ia" %}
+  build_integration_pr:
+    <<: *build_common
+    image: metwork/{{BUILD_IMAGE_NAME}}:integration
+    environment:
+      - TARGET_DIR=master
+      - DEP_BRANCH=integration
+    when:
+      event: pull_request
+      branch: [ integration, ci_*, pci_* ]
+{% endif %}
 
   build_integration:
     <<: *build_common
@@ -209,32 +179,50 @@ pipeline:
     environment:
       - TARGET_DIR=master
       - DEP_BRANCH=integration
+    volumes:
+      - /pub:/pub
+      - /private:/private
+      - /buildcache:/buildcache
     when:
-{% if cookiecutter.repo == "mfext" %}
       event: push
-{% else %}
-      event: [push, pull_request]
-{% endif %}
       branch: [ integration, ci_*, pci_* ]
+
+{% if cookiecutter.repo != "mfext" and cookiecutter.repo != "mfextaddon_scientific" and cookiecutter.repo != "mfextaddon_python3_ia" %}
+  build_pr:
+    <<: *build_common
+    image: metwork/{{BUILD_IMAGE_NAME}}:${DRONE_BRANCH}
+    environment:
+      - TARGET_DIR=${DRONE_BRANCH##release_}
+      - DEP_BRANCH=${DRONE_BRANCH}
+    when:
+      event: pull_request
+      branch: [ master, experimental*, release_* ]
+{% endif %}
+
   build:
     <<: *build_common
     image: metwork/{{BUILD_IMAGE_NAME}}:${DRONE_BRANCH}
     environment:
       - TARGET_DIR=${DRONE_BRANCH##release_}
       - DEP_BRANCH=${DRONE_BRANCH}
+    volumes:
+      - /pub:/pub
+      - /private:/private
+      - /buildcache:/buildcache
     when:
-{% if cookiecutter.repo == "mfext" or cookiecutter.repo == "mfextaddon_scientific" %}
       event: push
-{% else %}
-      event: [ push, pull_request ]
-{% endif %}
       branch: [ master, experimental*, release_* ]
+
   build_tag:
     <<: *build_common
     image: metwork/{{BUILD_IMAGE_NAME}}:${DRONE_BRANCH}
     environment:
       - TARGET_DIR=${DRONE_BRANCH##release_}
       - DEP_BRANCH=${DRONE_BRANCH}
+    volumes:
+      - /pub:/pub
+      - /private:/private
+      - /buildcache:/buildcache
     when:
       event: tag
       ref: refs/tags/v*
