@@ -4,6 +4,11 @@
 ## [Unreleased]
 
 ### New Features
+- add 0.8 version
+- add sponsors
+- add small mf logo
+- add mf logo
+- use new build cache
 - remove typo
 - add some changes from mfextaddon_scientific
 - Python3 version is now 3.7
