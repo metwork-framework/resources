@@ -1,0 +1,5 @@
+{% if cookiecutter.repo|fnmatch('docker-mf*-*-testimage') %}
+    {% if not cookiecutter.repo|fnmatch('docker-mfext*') %}
+        Dockerfile
+    {% endif %}
+{% endif %}
