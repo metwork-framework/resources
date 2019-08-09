@@ -4,7 +4,7 @@
 {% set OS = LIST[2] %}
 
 ARG BRANCH=master
-FROM centos:{{OS}}
+FROM centos:{{OS}} as yum_cache
 ARG BRANCH
 RUN echo -e "[metwork_${BRANCH}]\n\
 name=Metwork Continuous Integration Branch ${BRANCH}\n\

@@ -4,6 +4,7 @@
 ## [Unreleased]
 
 ### New Features
+- introduce test image
 - add 0.8 version
 - add sponsors
 - add small mf logo
