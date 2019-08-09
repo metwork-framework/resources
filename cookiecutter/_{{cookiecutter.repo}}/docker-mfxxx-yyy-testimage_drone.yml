@@ -1,8 +1,13 @@
 # automatically generated from https://github.com/metwork-framework/resources/blob/master/cookiecutter/%7B%7Bcookiecutter.repo%7D%7D/docker-mfxxx-yyy-testimage_drone.yml)
 
-{% set LIST = cookiecutter.repo.split("-") %}
-{% set MODULE = LIST[1] %}
-{% set OS = LIST[2] %}
+{% if cookiecutter.repo|fnmatch('docker-mf*-*-testimage') %}
+    {% set LIST = cookiecutter.repo.split("-") %}
+    {% set MODULE = LIST[1] %}
+    {% set OS = LIST[2] %}
+{% else %}
+    {% set MODULE = "" %}
+    {% set OS = "" %}
+{% endif %}
 
 pipeline:
   docker:

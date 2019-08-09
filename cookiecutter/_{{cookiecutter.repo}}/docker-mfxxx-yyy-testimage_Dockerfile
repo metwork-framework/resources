@@ -1,7 +1,11 @@
 # automatically generated from https://github.com/metwork-framework/resources/blob/master/cookiecutter/%7B%7Bcookiecutter.repo%7D%7D/docker-mfxxx-yyy-testimage_Dockerfile)
 
-{% set LIST = cookiecutter.repo.split("-") %}
-{% set OS = LIST[2] %}
+{% if cookiecutter.repo|fnmatch('docker-mf*-*-testimage') %}
+    {% set LIST = cookiecutter.repo.split("-") %}
+    {% set OS = LIST[2] %}
+{% else %}
+    {% set OS = "" %}
+{% endif %}
 
 ARG BRANCH=master
 FROM centos:{{OS}} as yum_cache
