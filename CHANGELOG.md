@@ -4,6 +4,7 @@
 ## [Unreleased]
 
 ### New Features
+- introduce testimage
 - introduce test image
 - add 0.8 version
 - add sponsors
