@@ -53,6 +53,19 @@ Install a given plugin from a `.plugin` file.
 ```bash
 plugins.install {plugin file path} [options]
 ```
+
+{% if cookiecutter.repo == "mfserv" %} 
+.. index:: plugins.hotswap
+### `plugins.hotswap`
+
+'Hot swap' (update/reinstall) an already installed plugin with a newer version of this plugin from a `.plugin` file without any service interruption within a single mfserv instance.
+```bash
+plugins.hotswap {plugin file path} [options]
+```
+
+Check the [demo](https://asciinema.org/a/GzdPdxT1z5XS30rOB3zFRrHe2?source=post_page-----1852ccb4c041----------------------=) for further details
+{% endif %}
+
 .. index:: plugins.uninstall
 ### `plugins.uninstall`
 
