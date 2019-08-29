@@ -63,7 +63,7 @@ plugins.install {plugin file path} [options]
 plugins.hotswap {plugin file path} [options]
 ```
 
-Check the [demo](https://asciinema.org/a/GzdPdxT1z5XS30rOB3zFRrHe2?source=post_page-----1852ccb4c041----------------------=) for further details
+Check the [demo](https://asciinema.org/a/gyHVaP2YLPOLKikLPqiozmeV2) for further details
 {% endif %}
 
 .. index:: plugins.uninstall
