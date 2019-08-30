@@ -4,6 +4,7 @@
 ## [Unreleased]
 
 ### New Features
+- new mfext bootstrap
 - new packaging
 - introduce testimage
 - introduce test image
