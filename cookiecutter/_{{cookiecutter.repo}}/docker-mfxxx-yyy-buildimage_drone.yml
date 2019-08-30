@@ -37,6 +37,10 @@ pipeline:
             docker push metwork/{{MODULE}}-{{OS}}-buildimage:latest;
           elif test "${DRONE_BRANCH}" = "integration"; then
             docker push metwork/{{MODULE}}-{{OS}}-buildimage:${DRONE_BRANCH};
+          elif test "${DRONE_BRANCH}" = "release_0.7"; then
+            docker push metwork/{{MODULE}}-{{OS}}-buildimage:${DRONE_BRANCH};
+          elif test "${DRONE_BRANCH}" = "release_0.8"; then
+            docker push metwork/{{MODULE}}-{{OS}}-buildimage:${DRONE_BRANCH};
           fi;
         fi
     when:
