@@ -87,7 +87,7 @@ integration_tests_common: &integration_tests_common
     - if test -f .drone_downstream_bypass; then echo "step bypass"; exit 0; fi
 {% if cookiecutter.repo == "mfext" %}
     - yum -y localinstall metwork-mfext*.rpm
-    - /opt/metwork-mfext/bin/mfext_wrapper ./run_integration_tests.sh
+    - if test -d "integration_tests"; then cd integration_tests; /opt/metwork-mfext/bin/mfext_wrapper ./run_integration_tests.sh; cd ..; fi
 {% else %}
     - echo -e "[metwork_$${DEP_BRANCH}]" >/etc/yum.repos.d/metwork.repo
     - echo -e "name=Metwork Continuous Integration Branch $${DEP_BRANCH}" >> /etc/yum.repos.d/metwork.repo
@@ -95,15 +95,14 @@ integration_tests_common: &integration_tests_common
     - echo -e "gpgcheck=0\n\enabled=1\n\metadata_expire=0\n" >>/etc/yum.repos.d/metwork.repo
 {%- if MFEXT_ADDON == "1" %}
     - yum -y localinstall metwork-mfext*.rpm
-    - /opt/metwork-mfext/bin/mfext_wrapper ./run_integration_tests.sh
+    - if test -d "integration_tests"; then cd integration_tests; /opt/metwork-mfext/bin/mfext_wrapper ./run_integration_tests.sh; cd ..; fi
 {%- else %}
     - yum -y localinstall metwork-{{cookiecutter.repo}}*.rpm
     - yum -y install make
     - su --command="{{cookiecutter.repo}}.init" - {{cookiecutter.repo}}
     - su --command="{{cookiecutter.repo}}.start" - {{cookiecutter.repo}}
     - su --command="{{cookiecutter.repo}}.status" - {{cookiecutter.repo}}
-    - if test -d "integration_tests"; then chown -R {{cookiecutter.repo}} integration_tests; fi
-    - su --command="cd `pwd`; ./run_integration_tests.sh" - {{cookiecutter.repo}}
+    - if test -d "integration_tests"; then chown -R {{cookiecutter.repo}} integration_tests; cd integration_tests; su --command="cd `pwd`; ./run_integration_tests.sh" - {{cookiecutter.repo}}; cd ..; fi
     - su --command="{{cookiecutter.repo}}.stop" - {{cookiecutter.repo}}
 {%- endif %}
 {% endif %}
