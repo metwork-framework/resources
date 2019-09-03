@@ -5,7 +5,7 @@
 
 [//]: # (automatically generated from https://github.com/metwork-framework/resources/blob/master/cookiecutter/_%7B%7Bcookiecutter.repo%7D%7D/README.md)
 
-## Status (master branch)
+**Status (master branch)**
 
 {%- if cookiecutter.integration_level|int >= 1 %}
 [![Drone CI](http://metwork-framework.org:8000/api/badges/metwork-framework/{{cookiecutter.repo}}/status.svg)](http://metwork-framework.org:8000/metwork-framework/{{cookiecutter.repo}})
@@ -25,9 +25,17 @@
 {%- endif %}
 {{ ("cat " + "REPO_HOME"|getenv + "/.metwork-framework/EXTRA_BADGES.md 2>/dev/null")|shell }}
 
+[//]: # TABLE_OF_CONTENTS_PLACEHOLDER
+
 {{ ("cat " + "REPO_HOME"|getenv + "/.metwork-framework/README.md 2>/dev/null")|shell }}
 
 {% if cookiecutter.integration_level|int >= 5 %}
+
+## Reference documentation
+
+- (for **master** version), see [this dedicated site](http://metwork-framework.org/pub/metwork/continuous_integration/docs/master/{{cookiecutter.repo}}/) for reference documentation.
+- (for **release_0.8** version), see [this dedicated site](http://metwork-framework.org/pub/metwork/releases/docs/release_0.8/{{cookiecutter.repo}}/) for reference documentation.
+
 ## Installation guide
 
 See [this document](.metwork-framework/install_a_metwork_package.md).
