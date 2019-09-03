@@ -7,6 +7,7 @@
 
 **Status (master branch)**
 
+
 {%- if cookiecutter.integration_level|int >= 1 %}
 [![Drone CI](http://metwork-framework.org:8000/api/badges/metwork-framework/{{cookiecutter.repo}}/status.svg)](http://metwork-framework.org:8000/metwork-framework/{{cookiecutter.repo}})
 {%- endif %}
@@ -25,7 +26,7 @@
 {%- endif %}
 {{ ("cat " + "REPO_HOME"|getenv + "/.metwork-framework/EXTRA_BADGES.md 2>/dev/null")|shell }}
 
-[//]: # TABLE_OF_CONTENTS_PLACEHOLDER
+[//]: # (TABLE_OF_CONTENTS_PLACEHOLDER)
 
 {{ ("cat " + "REPO_HOME"|getenv + "/.metwork-framework/README.md 2>/dev/null")|shell }}
 
