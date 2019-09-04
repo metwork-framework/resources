@@ -34,8 +34,13 @@
 
 ## Reference documentation
 
-- (for **master** version), see [this dedicated site](http://metwork-framework.org/pub/metwork/continuous_integration/docs/master/{{cookiecutter.repo}}/) for reference documentation.
-- (for **release_0.8** version), see [this dedicated site](http://metwork-framework.org/pub/metwork/releases/docs/release_0.8/{{cookiecutter.repo}}/) for reference documentation.
+- (for **master (development)** version), see [this dedicated site](http://metwork-framework.org/pub/metwork/continuous_integration/docs/master/{{cookiecutter.repo}}/) for reference documentation.
+- (for **latest released stable** version), see [this dedicated site](http://metwork-framework.org/pub/metwork/releases/docs/stable/{{cookiecutter.repo}}/) for reference documentation.
+
+For very specific use cases, you might be interested in
+[reference documentation for integration branch](http://metwork-framework.org/pub/metwork/continuous_integration/docs/integration/{{cookiecutter.repo}}/).
+
+And if you are looking for an old released version, you can search [here](http://metwork-framework.org/pub/metwork/releases/docs/).
 
 ## Installation guide
 
