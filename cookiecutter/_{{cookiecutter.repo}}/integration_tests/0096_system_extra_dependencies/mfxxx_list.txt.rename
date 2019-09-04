@@ -1,0 +1,5 @@
+{% if cookiecutter.integration_level|int == 5 or "mfext-addon" in "REPO_TOPICS"|getenv|from_json %}
+{% if cookiecutter.repo != "mfcom" -%}
+list.txt
+{% endif %}
+{% endif %}
