@@ -60,3 +60,11 @@ for source, target in paths_to_rename:
 for path in paths_to_delete:
     print("remove %s" % path)
     os.unlink(path)
+
+if os.path.exists("README.md.improve") and os.path.exists("README.md"):
+    print("improving README.md...")
+    os.system("improve_readme.sh ./README.md")
+try:
+    os.unlink("README.md.improve")
+except Exception:
+    pass
