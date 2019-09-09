@@ -30,6 +30,18 @@
 
 {{ ("cat " + "REPO_HOME"|getenv + "/.metwork-framework/README.md 2>/dev/null")|shell }}
 
+{% set components=("cat " + "REPO_HOME"|getenv + "/.metwork-framework/components.md 2>/dev/null")|shell %}
+
+{% if components != "" %}
+{% if "(0 component)" not in components %}
+
+## Full list of components
+
+{{ components }}
+
+{% endif %}
+{% endif %}
+
 {% if cookiecutter.integration_level|int >= 5 %}
 
 ## Reference documentation
