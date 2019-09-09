@@ -59,7 +59,14 @@ for source, target in paths_to_rename:
 
 for path in paths_to_delete:
     print("remove %s" % path)
-    os.unlink(path)
+    try:
+        os.unlink(path)
+    except Exception:
+        pass
+    try:
+        shutil.rmtree(path, ignore_errors=True)
+    except Exception:
+        pass
 
 if os.path.exists("README.md.improve") and os.path.exists("README.md"):
     print("improving README.md...")

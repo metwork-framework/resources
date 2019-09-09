@@ -1,5 +1,7 @@
 {% if cookiecutter.integration_level|int == 5 or "mfext-addon" in "REPO_TOPICS"|getenv|from_json %}
 {% if cookiecutter.repo != "mfcom" -%}
-test.sh
+{% if cookiecutter.repo != "mfextaddon_template" -%}
+revert_ldd.sh
+{% endif %}
 {% endif %}
 {% endif %}
