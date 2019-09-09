@@ -29,9 +29,13 @@ for path in [os.path.join(x[0], y) for x in os.walk('.') for y in x[2]]:
 for path in paths_to_delete:
     if os.path.basename(path) in ['__init__.py']:
         continue
+    print("remove %s" % path)
     try:
-        print("remove %s" % path)
         os.unlink(path)
+    except Exception:
+        pass
+    try:
+        shutil.rmtree(path, ignore_errors=True)
     except Exception:
         pass
 
