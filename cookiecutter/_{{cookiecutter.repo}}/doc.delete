@@ -1,4 +1,4 @@
-{% if cookiecutter.repo != "mfext" and cookiecutter.repo != "mfcom" and "mfextaddon_" not in cookiecutter.repo%}
+{% if cookiecutter.repo != "mfext" and cookiecutter.repo != "mfcom" and "mfextaddon_" not in cookiecutter.repo and cookiecutter.repo != "mfdata" %}
 yes
 {% endif %}
 {% if cookiecutter.repo == "mfextaddon_template" %}
