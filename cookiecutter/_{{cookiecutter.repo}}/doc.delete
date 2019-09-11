@@ -1,3 +1,6 @@
-{% if cookiecutter.repo != "mfext" and cookiecutter.repo != "mfcom" %}
+{% if cookiecutter.repo != "mfext" and cookiecutter.repo != "mfcom" and "mfextaddon_" not in cookiecutter.repo%}
+yes
+{% endif %}
+{% if cookiecutter.repo == "mfextaddon_template" %}
 yes
 {% endif %}
