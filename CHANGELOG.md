@@ -4,6 +4,7 @@
 ## [Unreleased]
 
 ### New Features
+- add doc files
 - add installation guide
 - new mfext bootstrap
 - new packaging
