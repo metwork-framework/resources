@@ -6,7 +6,7 @@ export PATH=${PATH}:${PWD}/..
 RET=0
 FIC_DEPS=`pwd`/deps
 {% if "mfext-addon" not in "REPO_TOPICS"|getenv|from_json %}
-cd "${MODULE_HOME}" || exit 1
+cd "${MFMODULE_HOME}" || exit 1
 external_dependencies.sh >${FIC_DEPS}
 for F in $(cat ${FIC_DEPS}); do
     N=$(ldd "${F}" 2>/dev/null |grep -c metwork)
