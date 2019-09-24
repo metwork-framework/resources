@@ -4,6 +4,7 @@
 ## [Unreleased]
 
 ### New Features
+- we move to portable builds
 - replace MODULE* environment variables names by MFMODULE* (MODULE_HOME becomes MFMODULE_HOME and so on)
 - add doc files
 - add installation guide
