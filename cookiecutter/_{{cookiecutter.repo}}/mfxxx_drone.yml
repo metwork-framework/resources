@@ -9,10 +9,7 @@
     {% set FORCED_REPO = cookiecutter.repo %}
 {% endif %}
 
-{% if cookiecutter.repo == "mfcom" %}
-    {% set DEP_MODULE = "mfext" %}
-    {% set BUILD_IMAGE_NAME = "mfcom-${OS_VERSION}-buildimage" %}
-{% elif cookiecutter.repo == "mfext" %}
+{% if cookiecutter.repo == "mfext" %}
     {% set DEP_MODULE = "" %}
     {% set BUILD_IMAGE_NAME = "mfext-${OS_VERSION}-buildimage" %}
 {% else %}
@@ -21,10 +18,10 @@
         {% if cookiecutter.repo == "mfextaddon_python3_ia" %}
             {% set BUILD_IMAGE_NAME = "mfextaddon_python3_ia-${OS_VERSION}-buildimage" %}
         {% else %}
-            {% set BUILD_IMAGE_NAME = "mfcom-${OS_VERSION}-buildimage" %}
+            {% set BUILD_IMAGE_NAME = "mfxxx-${OS_VERSION}-buildimage" %}
         {% endif %}
     {% else %}
-        {% set DEP_MODULE = "mfcom" %}
+        {% set DEP_MODULE = "mfext" %}
         {% set BUILD_IMAGE_NAME = "mfxxx-${OS_VERSION}-buildimage" %}
     {% endif %}
 {% endif %}
@@ -87,7 +84,6 @@ publish_ci_common: &publish_ci_common
     - /private:/private
     - /buildcache:/buildcache
 
-{% if cookiecutter.repo != "mfcom" %}
 integration_tests_common: &integration_tests_common
   commands:
     - if test "$${FORCED_OS_VERSION}" != ""; then if test "$${FORCED_OS_VERSION}" != "${OS_VERSION}"; then echo "step bypass"; exit 0; fi; fi
@@ -112,7 +108,6 @@ integration_tests_common: &integration_tests_common
     - if test -d "integration_tests"; then chown -R {{cookiecutter.repo}} integration_tests; cd integration_tests; su --command="cd `pwd`; ./run_integration_tests.sh" - {{cookiecutter.repo}}; cd ..; fi
     - su --command="{{cookiecutter.repo}}.stop" - {{cookiecutter.repo}}
 {%- endif %}
-{% endif %}
 {% endif %}
 
 pipeline:
@@ -230,7 +225,6 @@ pipeline:
       event: tag
       ref: refs/tags/v*
 
-{% if cookiecutter.repo != "mfcom" %}
   integration_tests_integration:
     <<: *integration_tests_common
     {% if cookiecutter.repo != "mfext" %}
@@ -263,7 +257,6 @@ pipeline:
       event: [push, pull_request]
 {% endif %}
       branch: [  master, release_*, experimental* ]
-{% endif %}
 
   publish_ci_integration:
     <<: *publish_ci_common
@@ -315,17 +308,6 @@ pipeline:
       event: tag
       ref: refs/tags/v*
 
-{% if cookiecutter.repo == "mfcom" %}
-  trigger_mfxxxbuildimage:
-    image: metwork/drone-downstream-specific-image:latest
-    secrets: [ downstream_server, downstream_token ]
-    repositories:
-      - metwork-framework/docker-mfxxx-${OS_VERSION}-buildimage@${DRONE_BRANCH}
-    when:
-      status: success
-      event: push
-      branch: [ master, integration, experimental*, release_* ]
-{% endif %}
 {% if cookiecutter.repo == "mfext" %}
   trigger_mfxxxtestimage:
     image: metwork/drone-downstream-specific-image:latest
@@ -336,10 +318,10 @@ pipeline:
       status: [ success ]
       event: push
       branch: [ master, integration, experimental*, release_* ]
-  trigger_mfcombuildimage:
+  trigger_mfxxxbuildimage:
     image: metwork/drone-downstream-specific-image:latest
     repositories:
-      - metwork-framework/docker-mfcom-${OS_VERSION}-buildimage@${DRONE_BRANCH}
+      - metwork-framework/docker-mfxxx-${OS_VERSION}-buildimage@${DRONE_BRANCH}
     secrets: [ downstream_token, downstream_server ]
     when:
       status: [ success ]
