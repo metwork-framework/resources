@@ -301,6 +301,7 @@ pipeline:
     volumes:
       - /pub:/pub
     commands:
+      - if test -f .drone_downstream_bypass; then echo "step bypass"; exit 0; fi
       - cd {{PUB_ROOT}}/continuous_integration/rpms/${DRONE_BRANCH}/${OS_VERSION} && genhdlist2 --allow-empty-media .
     when:
       event: push
