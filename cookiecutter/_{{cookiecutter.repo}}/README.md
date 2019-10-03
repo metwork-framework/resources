@@ -61,7 +61,7 @@ And if you are looking for an old released version, you can search [here](http:/
 
 See [this document](.metwork-framework/install_a_metwork_package.md).
 
-{% if cookiecutter.repo != "mfext" and cookiecutter.repo != "mfcom" %}
+{% if cookiecutter.repo != "mfext" %}
 ## Configuration guide
 
 See [this document](.metwork-framework/configure_a_metwork_package.md).
