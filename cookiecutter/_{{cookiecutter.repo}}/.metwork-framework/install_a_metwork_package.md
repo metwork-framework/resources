@@ -70,7 +70,7 @@ yum install metwork-mfdata-layer-python2
 ```
 {% endif %}
 
-{% if cookiecutter.repo != "mfcom" and cookiecutter.repo != "mfext" %}
+{% if cookiecutter.repo != "mfext" %}
 ## Services
 
 You can start corresponding services with the root command:
@@ -85,7 +85,7 @@ Or you can also reboot your computer (because metwork services are started autom
 
 ## Uninstall {{cookiecutter.repo}} metwork module
 
-{% if cookiecutter.repo != "mfcom" and cookiecutter.repo != "mfext" %}
+{% if cookiecutter.repo != "mfext" %}
 To uninstall {{cookiecutter.repo}} metwork module, please stop corresponding metwork services with the `root` command:
 
 ```bash
@@ -106,7 +106,7 @@ yum remove "metwork-{{cookiecutter.repo}}*"
 
 To upgrade {{cookiecutter.repo}} metwork module, use the following commands (still as `root` user):
 
-{% if cookiecutter.repo != 'mfcom' and cookiecutter.repo != 'mfext' %}
+{% if cookiecutter.repo != 'mfext' %}
 ```bash
 # We stop {{cookiecutter.repo}} services
 service metwork stop {{cookiecutter.repo}}
@@ -118,7 +118,7 @@ service metwork stop {{cookiecutter.repo}}
 yum upgrade "metwork-{{cookiecutter.repo}}*"
 ```
 
-{% if cookiecutter.repo != 'mfcom' and cookiecutter.repo != 'mfext' %}
+{% if cookiecutter.repo != 'mfext' %}
 ```bash
 # We start {{cookiecutter.repo}} services
 service metwork start {{cookiecutter.repo}}

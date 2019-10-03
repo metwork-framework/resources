@@ -9,12 +9,9 @@
     {% set OS = "" %}
 {% endif %}
 
-{% if MODULE == 'mfcom' %}
+{% if MODULE == 'mfxxx' %}
     {% set DEP1 = "mfext" %}
     {% set DEP2 = "mfext-full" %}
-{% elif MODULE == 'mfxxx' %}
-    {% set DEP1 = "mfcom" %}
-    {% set DEP2 = "mfcom-full" %}
 {% elif MODULE == "mfservplugins" %}
     {% set DEP1 = "mfxxx" %}
     {% set DEP2 = "mfserv-full" %}

@@ -1,9 +1,7 @@
 {%- if cookiecutter.integration_level|int >= 5 -%}
     {% if cookiecutter.repo|fnmatch('mf*') %}
-        {% if cookiecutter.repo != "mfcom" %}
-            {% if not cookiecutter.repo|fnmatch('mfext*') %}
-                bootstrap.sh
-            {% endif %}
+        {% if not cookiecutter.repo|fnmatch('mfext*') %}
+            bootstrap.sh
         {% endif %}
     {% endif %}
 {% endif %}
