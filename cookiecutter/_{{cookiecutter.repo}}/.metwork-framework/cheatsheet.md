@@ -1,4 +1,4 @@
-# MetWork/{{cookiecutter.name}} cheatsheet
+# MetWork/{{cookiecutter.repo}} cheatsheet
 
 ## `root` service commands
 
