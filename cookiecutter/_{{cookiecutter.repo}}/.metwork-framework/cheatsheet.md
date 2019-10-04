@@ -30,8 +30,6 @@ As `root` unix user:
 {% endif -%}
 {% endif %}
 
-{% if cookiecutter.repo != "mfext" %}
-
 ## "load environment" commands
 
 As a "not metwork" unix user:
@@ -45,11 +43,13 @@ As a "not metwork" unix user:
 
 > Note: if you don't have `/opt/metwork-{{cookiecutter.repo}}` symbolic link, use `/opt/metwork-{{cookiecutter.repo}}-{BRANCH}` instead.
 
-{% endif %}
-
 ## module commands
 
+{% if cookiecutter.repo == "mfext" %}
+*(with the `mfext` environment loaded)*
+{% else %}
 As `{{cookiecutter.repo}}` user:
+{% endif %}
 
 | Command | Description |
 | --- | --- |
