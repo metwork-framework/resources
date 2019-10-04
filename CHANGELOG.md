@@ -4,6 +4,7 @@
 ## [Unreleased]
 
 ### New Features
+- remove mfcom (now integrated into mfext)
 - we move to portable builds
 - replace MODULE* environment variables names by MFMODULE* (MODULE_HOME becomes MFMODULE_HOME and so on)
 - add doc files
@@ -49,6 +50,7 @@
 
 
 ### Bug Fixes
+- fix cheatsheet.md
 - fix tag for mfext addons
 - fix integration tests for mfext addons
 - install build dependency python3_scientific@mfext for mfextaddon_python3_ia
