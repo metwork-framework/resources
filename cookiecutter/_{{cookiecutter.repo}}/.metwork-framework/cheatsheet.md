@@ -1,5 +1,7 @@
 # MetWork/{{cookiecutter.repo}} cheatsheet
 
+{% if cookiecutter.repo != "mfext" %}
+
 ## `root` service commands
 
 As `root` unix user:
@@ -9,24 +11,25 @@ As `root` unix user:
 | `service metwork start` | start all installed metwork services |
 | `service metwork stop` | stop all installed metwork services |
 | `service metwork status` | check all installed metwork services |
-{% if cookiecutter.repo not in ['mfext', 'mfcom'] %}
 | `service metwork start {{cookiecutter.repo}}` | start {{cookiecutter.repo}} metwork services |
 | `service metwork stop {{cookiecutter.repo}}` | stop {{cookiecutter.repo}} metwork services |
 | `service metwork status {{cookiecutter.repo}}` | check {{cookiecutter.repo}} metwork services |
-{% endif %}
 
 > Note: if you don't have `service` command on your Linux distribution, you can use `/etc/rc.d/init.d/metwork` instead of `service metwork`. For example: `/etc/rc.d/init.d/metwork start` instead of `service metwork start`. If your Linux distribution uses `systemd`component, you can also start metwork services with classic `systemctl` commands.
+{% endif %}
 
-{% if cookiecutter.repo not in ['mfext', 'mfcom'] %}
+{% if cookiecutter.repo != "mfext"] %}
 ## root files or directories
 
 | Path | Description |
 | --- | --- |
 | `/etc/metwork.config.d/{{cookiecutter.repo}}/config.ini` | override the `mfdata` module configuration at system level |
+{% if cookiecutter.repo in ["mfserv", "mfdata", "mfbase"] -%}
 | `/etc/metwork.config.d/{{cookiecutter.repo}}/external_plugins/` | put some `.plugin` files here and they will be installed during `mfserv` service startup |
+{% endif -%}
 {% endif %}
 
-{% if cookiecutter.repo in ['mfext', 'mfcom'] %}
+{% if cookiecutter.repo != "mfext" %}
 
 ## "load environment" commands
 
@@ -49,11 +52,11 @@ As `{{cookiecutter.repo}}` user:
 
 | Command | Description |
 | --- | --- |
-{% if cookiecutter.repo not in ['mfext', 'mfcom'] %}
+{% if cookiecutter.repo != "mfext" -%}
 | `{{cookiecutter.repo}}.start` | start {{cookiecutter.repo}} services |
 | `{{cookiecutter.repo}}.stop` | stop {{cookiecutter.repo}} services |
 | `{{cookiecutter.repo}}.status` | check {{cookiecutter.repo}} services |
-{% endif %}
+{% endif -%}
 | `layers`| FIXME |
 | `components` | FIXME | 
 
