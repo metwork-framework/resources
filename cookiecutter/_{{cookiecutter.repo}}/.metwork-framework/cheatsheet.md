@@ -58,7 +58,7 @@ As `{{cookiecutter.repo}}` user:
 | `{{cookiecutter.repo}}.stop` | stop {{cookiecutter.repo}} services |
 | `{{cookiecutter.repo}}.status` | check {{cookiecutter.repo}} services |
 {% endif -%}
-| `layers`| FIXME |
+| `layers` | FIXME |
 | `layer_load` | FIXME |
 | `layer_unload` | FIXME | 
 | `components` | FIXME | 
