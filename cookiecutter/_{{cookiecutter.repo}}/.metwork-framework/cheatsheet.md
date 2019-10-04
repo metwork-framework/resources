@@ -18,7 +18,7 @@ As `root` unix user:
 > Note: if you don't have `service` command on your Linux distribution, you can use `/etc/rc.d/init.d/metwork` instead of `service metwork`. For example: `/etc/rc.d/init.d/metwork start` instead of `service metwork start`. If your Linux distribution uses `systemd`component, you can also start metwork services with classic `systemctl` commands.
 {% endif %}
 
-{% if cookiecutter.repo != "mfext"] %}
+{% if cookiecutter.repo != "mfext" %}
 ## root files or directories
 
 | Path | Description |
