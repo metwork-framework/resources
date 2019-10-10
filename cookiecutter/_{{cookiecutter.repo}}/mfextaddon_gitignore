@@ -6,7 +6,9 @@
 /layers/layer*/*_extra_python_packages/src
 /layers/layer*/*_extra_python_packages/tempolayer*
 /layers/layer*/cache
+{% if cookiecutter.repo == "mfextaddon_python3_ia" %}
 layers/layer5_python3_ia/0600_tensorflow/requirements3.txt
+{% endif %}
 doc/_build
 doc/layer_*.md
 doc/api
