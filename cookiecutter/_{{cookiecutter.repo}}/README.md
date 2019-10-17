@@ -45,9 +45,13 @@
 {% if cookiecutter.integration_level|int >= 5  or "mfextaddon_" in cookiecutter.repo %}
 {% if cookiecutter.repo != "mfextaddon_template" %}
 
+{% if "mfextaddon_" not in cookiecutter.repo %}
+
 ## Cheatsheet
 
 A cheatsheet for this module is available [here](.metwork-framework/cheatsheet.md)
+
+{% endif %}
 
 ## Reference documentation
 
