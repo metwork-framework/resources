@@ -4,6 +4,7 @@
 ## [Unreleased]
 
 ### New Features
+- add cheatsheet link
 - remove mfcom (now integrated into mfext)
 - we move to portable builds
 - replace MODULE* environment variables names by MFMODULE* (MODULE_HOME becomes MFMODULE_HOME and so on)
