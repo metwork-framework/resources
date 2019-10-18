@@ -1,0 +1,3 @@
+{% if "docker-mfextaddon_" in cookiecutter.repo %}
+yes
+{% endif %}
