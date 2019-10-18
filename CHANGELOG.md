@@ -4,6 +4,7 @@
 ## [Unreleased]
 
 ### New Features
+- introduce 0.9
 - add cheatsheet link
 - remove mfcom (now integrated into mfext)
 - we move to portable builds
