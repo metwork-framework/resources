@@ -52,6 +52,8 @@
 
 
 ### Bug Fixes
+- force delete doc directory from repo docker-mfextaddon_python3_ia-centos7-buildimage
+- remove doc directory from repo docker-mfextaddon_python3_ia-centos7-buildimage
 - fix cheatsheet.md
 - fix tag for mfext addons
 - fix integration tests for mfext addons
