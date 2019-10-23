@@ -278,7 +278,7 @@ pipeline:
     commands:
       - if test "$${FORCED_OS_VERSION}" != ""; then if test "$${FORCED_OS_VERSION}" != "${OS_VERSION}"; then echo "step bypass"; exit 0; fi; fi
       - mkdir -p {{PUB_ROOT}}/releases/rpms/${DRONE_BRANCH}/${OS_VERSION}/
-       - if ! test -L {{PUB_ROOT}}/releases/rpms/${DRONE_BRANCH}/portable; then ln -s centos6 {{PUB_ROOT}}/releases/rpms/${DRONE_BRANCH}/portable; fi
+      - if ! test -L {{PUB_ROOT}}/releases/rpms/${DRONE_BRANCH}/portable; then ln -s centos6 {{PUB_ROOT}}/releases/rpms/${DRONE_BRANCH}/portable; fi
 {%- if cookiecutter.repo != "mfextaddon_python3_ia" %}
       - cp *.rpm {{PUB_ROOT}}/releases/rpms/${DRONE_BRANCH}/${OS_VERSION}/
 {% else %}
