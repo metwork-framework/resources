@@ -52,6 +52,8 @@
 
 
 ### Bug Fixes
+- fix integration tests for ci_* branches on mfext addons
+- add libform.so.5 as allowed extra dependencies
 - typo
 - force delete doc directory from repo docker-mfextaddon_python3_ia-centos7-buildimage
 - remove doc directory from repo docker-mfextaddon_python3_ia-centos7-buildimage
