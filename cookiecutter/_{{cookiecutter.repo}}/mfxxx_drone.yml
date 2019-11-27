@@ -92,11 +92,18 @@ integration_tests_common: &integration_tests_common
     - yum -y localinstall metwork-mfext*.rpm
     - if test -d "integration_tests"; then cd integration_tests; /opt/metwork-mfext/bin/mfext_wrapper ./run_integration_tests.sh; cd ..; fi
 {% else %}
+{%- if MFEXT_ADDON == "1" %}
+{% if cookiecutter.repo == "mfextaddon_python3_ia" %}
+    - echo -e "[metwork_$${DEP_BRANCH}]" >/etc/yum.repos.d/metwork.repo
+    - echo -e "name=Metwork Continuous Integration Branch $${DEP_BRANCH}" >> /etc/yum.repos.d/metwork.repo
+    - echo -e "baseurl=http://metwork-framework.org/pub/metwork/continuous_integration/rpms/$${DEP_BRANCH}/portable/" >> /etc/yum.repos.d/metwork.repo
+    - echo -e "gpgcheck=0\n\enabled=1\n\metadata_expire=0\n" >>/etc/yum.repos.d/metwork.repo
+{% else %}
     - echo -e "[metwork_$${DEP_BRANCH}]" >/etc/yum.repos.d/metwork.repo
     - echo -e "name=Metwork Continuous Integration Branch $${DEP_BRANCH}" >> /etc/yum.repos.d/metwork.repo
     - echo -e "baseurl=http://metwork-framework.org/pub/metwork/continuous_integration/rpms/$${DEP_BRANCH}/${OS_VERSION}/" >> /etc/yum.repos.d/metwork.repo
     - echo -e "gpgcheck=0\n\enabled=1\n\metadata_expire=0\n" >>/etc/yum.repos.d/metwork.repo
-{%- if MFEXT_ADDON == "1" %}
+{% endif %}
     - for rpm in metwork-mfext*.rpm; do rpm -qp --requires ./$rpm | grep metwork | grep -v "=" >> liste_dep; done
     - cat liste_dep | sort -u > liste_dep2
     - yum -y install `cat liste_dep2`
@@ -105,6 +112,10 @@ integration_tests_common: &integration_tests_common
     - yum -y localinstall metwork-mfext*.rpm
     - if test -d "integration_tests"; then cd integration_tests; /opt/metwork-mfext/bin/mfext_wrapper ./run_integration_tests.sh; cd ..; fi
 {%- else %}
+    - echo -e "[metwork_$${DEP_BRANCH}]" >/etc/yum.repos.d/metwork.repo
+    - echo -e "name=Metwork Continuous Integration Branch $${DEP_BRANCH}" >> /etc/yum.repos.d/metwork.repo
+    - echo -e "baseurl=http://metwork-framework.org/pub/metwork/continuous_integration/rpms/$${DEP_BRANCH}/${OS_VERSION}/" >> /etc/yum.repos.d/metwork.repo
+    - echo -e "gpgcheck=0\n\enabled=1\n\metadata_expire=0\n" >>/etc/yum.repos.d/metwork.repo
     - yum -y localinstall metwork-{{cookiecutter.repo}}*.rpm
     - yum -y install make
     - su --command="{{cookiecutter.repo}}.init" - {{cookiecutter.repo}}
