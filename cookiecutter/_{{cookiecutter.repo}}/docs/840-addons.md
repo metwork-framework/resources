@@ -19,7 +19,7 @@ In all cases, an *add-on* contain one or several extra layers and so plenty of c
 
 ## Official add-ons
 
-{% if MFMODULE == "MFEXT" %}
+{% if cookiecutter.repo == "mfext" %}
 | Addon | Description |
 | --- | --- |
 | [mfextaddon_scientific](https://github.com/metwork-framework/mfextaddon_scientific) | mfext Add-on for scientific libraries and tools |
