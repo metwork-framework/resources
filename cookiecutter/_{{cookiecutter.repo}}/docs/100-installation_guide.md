@@ -151,7 +151,7 @@ zypper install metwork-{{cookiecutter.repo}}
 {% endif %}
 
 {% if cookiecutter.repo == "mfext" %}
-### Full installation (all {{cookiecutter.repo}} layers, except [add-ons]({{addons}}))
+### Full installation (all {{cookiecutter.repo}} layers, except [add-ons]({% raw %}{{addons}}{% endraw %}))
 {% else %}
 ### Full installation (all {{cookiecutter.repo}} layers)
 {% endif %}
@@ -304,10 +304,10 @@ zypper install metwork-mfext-layer-nodejs
 zypper install metwork-mfext-layer-java
 ```
 
-### Optional mfext layers (from mfext [add-ons]({{addons}}))
+### Optional mfext layers (from mfext [add-ons]({% raw %}{{addons}}{% endraw %}))
 
-You can also install some optional layers (provided by some mfext [add-ons]({{addons}}))
-in the same way and with the same repository (for official [add-ons]({{addons}})).
+You can also install some optional layers (provided by some mfext [add-ons]({% raw %}{{addons}}{% endraw %}))
+in the same way and with the same repository (for official [add-ons]({% raw %}{{addons}}{% endraw %})).
 
 For example (please refer to corresponding add-on documentation)
 
