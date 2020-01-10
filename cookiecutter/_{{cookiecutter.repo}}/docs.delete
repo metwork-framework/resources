@@ -1,3 +1,6 @@
 {% if cookiecutter.repo != "mfext" %}
 1
 {% endif %}
+{% if cookiecutter.repo != "mfextaddon_mapserver" %}
+1
+{% endif %}

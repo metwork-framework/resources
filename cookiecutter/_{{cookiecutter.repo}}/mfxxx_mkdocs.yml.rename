@@ -1,3 +1,6 @@
 {% if cookiecutter.repo == "mfext" %}
 mkdocs.yml
 {% endif %}
+{% if cookiecutter.repo == "mfextaddon_mapserver" %}
+mkdocs.yml
+{% endif %}
