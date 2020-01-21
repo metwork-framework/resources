@@ -30,6 +30,7 @@
 
 {{ ("cat " + "REPO_HOME"|getenv + "/.metwork-framework/README.md 2>/dev/null")|shell }}
 
+{% if cookiecutter.repo not in ['mfext', 'mfsysmon'] %}
 {% set components=("cat " + "REPO_HOME"|getenv + "/.metwork-framework/components.md 2>/dev/null")|shell %}
 
 {% if components != "" %}
@@ -37,7 +38,7 @@
 
 ## Full list of components
 
-{{ components }}
+{{ components }}
 
 {% endif %}
 {% endif %}
@@ -73,6 +74,7 @@ See [this document](.metwork-framework/install_a_metwork_package.md).
 ## Configuration guide
 
 See [this document](.metwork-framework/configure_a_metwork_package.md).
+{% endif %}
 {% endif %}
 {% endif %}
 
