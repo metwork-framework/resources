@@ -30,7 +30,7 @@
 
 {{ ("cat " + "REPO_HOME"|getenv + "/.metwork-framework/README.md 2>/dev/null")|shell }}
 
-{% if cookiecutter.repo not in ['mfext', 'mfsysmon'] %}
+{% if cookiecutter.repo not in ['mfext', 'mfsysmon'] and "mfextaddon" not in cookiecutter.repo %}
 {% set components=("cat " + "REPO_HOME"|getenv + "/.metwork-framework/components.md 2>/dev/null")|shell %}
 
 {% if components != "" %}
