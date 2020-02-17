@@ -108,6 +108,11 @@ integration_tests_common: &integration_tests_common
 {%- else %}
     - yum -y localinstall metwork-{{cookiecutter.repo}}*.rpm
     - yum -y install make
+{% if cookiecutter.repo == "mfdata" %}
+    - yum -y install vsftpd ftp
+    - service vsftpd start
+    - echo -e "mfdata\nmfdata" | passwd mfdata
+{% endif %}
     - su --command="{{cookiecutter.repo}}.init" - {{cookiecutter.repo}}
     - su --command="{{cookiecutter.repo}}.start" - {{cookiecutter.repo}}
     - su --command="{{cookiecutter.repo}}.status" - {{cookiecutter.repo}}
