@@ -1,19 +1,28 @@
 # Uninstallation guide
 
-## How to uninstall mfext module
+## How to uninstall {{cookiecutter.repo}} module
 
-To uninstall mfext metwork module, use the following command (as `root` user):
+To uninstall {{cookiecutter.repo}} metwork module, use the following command (as `root` user):
 
 ```console tab="CentOS/Fedora"
-yum remove "metwork-mfext*"
+{% if cookiecutter.repo != "mfext" %}
+service metwork stop {{cookiecutter.repo}}
+{% endif %}
+yum remove "metwork-{{cookiecutter.repo}}*"
 ```
 
 ```console tab="Mageia"
-urpme "metwork-mfext*"
+{% if cookiecutter.repo != "mfext" %}
+service metwork stop {{cookiecutter.repo}}
+{% endif %}
+urpme "metwork-{{cookiecutter.repo}}*"
 ```
 
 ```console tab="SUSE"
-zypper remove "metwork-mfext*"
+{% if cookiecutter.repo != "mfext" %}
+service metwork stop {{cookiecutter.repo}}
+{% endif %}
+zypper remove "metwork-{{cookiecutter.repo}}*"
 ```
 
 ## How to uninstall all metwork modules

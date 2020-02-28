@@ -383,6 +383,7 @@ Sorry, but it's our packaging choice in it is coherent with [Linux FHS](https://
 If you are really not happy with that, you can install MetWork
 where you want by recompiling it.
 
+{% if cookiecutter.repo == "mfext" %}
 ### I don't have enough free space on `/opt`!
 
 Let's say for example you have plenty of free space on `/data` but not in `/opt`, the recommended
@@ -444,3 +445,4 @@ port collision during module startup
 !!! warning
     This setup is not well tested but we are interested in. Please contact us
     if you want to share some experiences about that.
+{% endif %}
