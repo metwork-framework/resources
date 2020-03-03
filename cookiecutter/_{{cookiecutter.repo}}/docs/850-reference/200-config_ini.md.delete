@@ -1,0 +1,3 @@
+{% if cookiecutter.repo not in ("mfadmin", "mfsysmon") %}
+1
+{% endif %}

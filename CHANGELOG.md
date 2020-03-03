@@ -4,6 +4,9 @@
 ## [Unreleased]
 
 ### New Features
+- introduce 0.9
+- add cheatsheet link
+- remove mfcom (now integrated into mfext)
 - we move to portable builds
 - replace MODULE* environment variables names by MFMODULE* (MODULE_HOME becomes MFMODULE_HOME and so on)
 - add doc files
@@ -49,6 +52,12 @@
 
 
 ### Bug Fixes
+- fix integration tests for ci_* branches on mfext addons
+- add libform.so.5 as allowed extra dependencies
+- typo
+- force delete doc directory from repo docker-mfextaddon_python3_ia-centos7-buildimage
+- remove doc directory from repo docker-mfextaddon_python3_ia-centos7-buildimage
+- fix cheatsheet.md
 - fix tag for mfext addons
 - fix integration tests for mfext addons
 - install build dependency python3_scientific@mfext for mfextaddon_python3_ia

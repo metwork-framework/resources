@@ -30,6 +30,7 @@
 
 {{ ("cat " + "REPO_HOME"|getenv + "/.metwork-framework/README.md 2>/dev/null")|shell }}
 
+{% if cookiecutter.repo not in ['mfext', 'mfsysmon', 'mfadmin'] and "mfextaddon" not in cookiecutter.repo %}
 {% set components=("cat " + "REPO_HOME"|getenv + "/.metwork-framework/components.md 2>/dev/null")|shell %}
 
 {% if components != "" %}
@@ -37,13 +38,21 @@
 
 ## Full list of components
 
-{{ components }}
+{{ components }}
 
 {% endif %}
 {% endif %}
 
 {% if cookiecutter.integration_level|int >= 5  or "mfextaddon_" in cookiecutter.repo %}
 {% if cookiecutter.repo != "mfextaddon_template" %}
+
+{% if "mfextaddon_" not in cookiecutter.repo %}
+
+## Cheatsheet
+
+A cheatsheet for this module is available [here](.metwork-framework/cheatsheet.md)
+
+{% endif %}
 
 ## Reference documentation
 
@@ -66,6 +75,18 @@ See [this document](.metwork-framework/install_a_metwork_package.md).
 
 See [this document](.metwork-framework/configure_a_metwork_package.md).
 {% endif %}
+{% endif %}
+
+{% else %}
+
+## Quickstart, installation guide...
+
+Please consult the [reference documentation](http://metwork-framework.org/pub/metwork/continuous_integration/docs/master/{{cookiecutter.repo}}/).
+
+For very specific use cases, you might be interested in
+[reference documentation for integration branch](http://metwork-framework.org/pub/metwork/continuous_integration/docs/integration/{{cookiecutter.repo}}/).
+
+And if you are looking for an old released version, you can search [here](http://metwork-framework.org/pub/metwork/releases/docs/).
 {% endif %}
 
 ## Contributing guide

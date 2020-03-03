@@ -57,6 +57,7 @@ build_common: &build_common
     - cat module_hash.debug |sort |uniq ; rm -f module_hash.debug
     - echo "$${MODULEHASH}${DRONE_TAG}${DRONE_BRANCH}" |md5sum |cut -d ' ' -f1 >.build_hash
     - if test -f "$${BUILDCACHE}/build_hash_`cat .build_hash`"; then echo "next bypass"; touch .drone_downstream_bypass; exit 0; fi
+    - if test -d docs; then if test -d /pub; then make docs >/pub/metwork/continuous_integration/buildlogs/${DRONE_BRANCH}/{{cookiecutter.repo}}/${OS_VERSION}/${DRONE_BUILD_NUMBER}/make_doc.log 2>&1 || ( tail -200 /pub/metwork/continuous_integration/buildlogs/${DRONE_BRANCH}/{{cookiecutter.repo}}/${OS_VERSION}/${DRONE_BUILD_NUMBER}/make_doc.log ; exit 1 ) else make docs; fi; fi
     - if test -d doc; then if test -d /pub; then make doc >/pub/metwork/continuous_integration/buildlogs/${DRONE_BRANCH}/{{cookiecutter.repo}}/${OS_VERSION}/${DRONE_BUILD_NUMBER}/make_doc.log 2>&1 || ( tail -200 /pub/metwork/continuous_integration/buildlogs/${DRONE_BRANCH}/{{cookiecutter.repo}}/${OS_VERSION}/${DRONE_BUILD_NUMBER}/make_doc.log ; exit 1 ) else make doc; fi; fi
     - rm -Rf html_doc
     - if test -d /opt/metwork-{{FORCED_REPO}}-$${TARGET_DIR}/html_doc; then cp -Rf /opt/metwork-{{FORCED_REPO}}-$${TARGET_DIR}/html_doc . ; fi
@@ -97,11 +98,24 @@ integration_tests_common: &integration_tests_common
     - echo -e "baseurl=http://metwork-framework.org/pub/metwork/continuous_integration/rpms/$${DEP_BRANCH}/${OS_VERSION}/" >> /etc/yum.repos.d/metwork.repo
     - echo -e "gpgcheck=0\n\enabled=1\n\metadata_expire=0\n" >>/etc/yum.repos.d/metwork.repo
 {%- if MFEXT_ADDON == "1" %}
+    - for rpm in metwork-mfext*.rpm; do rpm -qp --requires ./$rpm | grep metwork | grep -v "=" >> liste_dep; done
+    - cat liste_dep | sort -u > liste_dep2
+    - yum -y install `cat liste_dep2`
+{% if cookiecutter.repo == "mfextaddon_python2" %}
+    - yum -y install metwork-mfext-layer-tcltk-$${DEP_BRANCH}
+{% endif %}
+    - rm /etc/yum.repos.d/metwork.repo
+    - yum clean all
     - yum -y localinstall metwork-mfext*.rpm
     - if test -d "integration_tests"; then cd integration_tests; /opt/metwork-mfext/bin/mfext_wrapper ./run_integration_tests.sh; cd ..; fi
 {%- else %}
     - yum -y localinstall metwork-{{cookiecutter.repo}}*.rpm
     - yum -y install make
+{% if cookiecutter.repo == "mfdata" %}
+    - yum -y install vsftpd ftp
+    - service vsftpd start
+    - echo -e "mfdata\nmfdata" | passwd mfdata
+{% endif %}
     - su --command="{{cookiecutter.repo}}.init" - {{cookiecutter.repo}}
     - su --command="{{cookiecutter.repo}}.start" - {{cookiecutter.repo}}
     - su --command="{{cookiecutter.repo}}.status" - {{cookiecutter.repo}}
@@ -278,7 +292,7 @@ pipeline:
     commands:
       - if test "$${FORCED_OS_VERSION}" != ""; then if test "$${FORCED_OS_VERSION}" != "${OS_VERSION}"; then echo "step bypass"; exit 0; fi; fi
       - mkdir -p {{PUB_ROOT}}/releases/rpms/${DRONE_BRANCH}/${OS_VERSION}/
-       - if ! test -L {{PUB_ROOT}}/releases/rpms/${DRONE_BRANCH}/portable; then ln -s centos6 {{PUB_ROOT}}/releases/rpms/${DRONE_BRANCH}/portable; fi
+      - if ! test -L {{PUB_ROOT}}/releases/rpms/${DRONE_BRANCH}/portable; then ln -s centos6 {{PUB_ROOT}}/releases/rpms/${DRONE_BRANCH}/portable; fi
 {%- if cookiecutter.repo != "mfextaddon_python3_ia" %}
       - cp *.rpm {{PUB_ROOT}}/releases/rpms/${DRONE_BRANCH}/${OS_VERSION}/
 {% else %}
