@@ -46,6 +46,9 @@ build_common: &build_common
 {% else %}
     - if test "${OS_VERSION}" = "centos7"; then export METWORK_BUILD_OS=generic; else export METWORK_BUILD_OS=${OS_VERSION}; fi
 {% endif %}
+{% if cookiecutter.repo == "mfextaddon_mapserver" or cookiecutter.repo == "mfextaddon_scientific" or cookiecutter.repo == "mfextaddon_vim" %}
+    - yum install -y metwork-mfext-layer-python2-${DRONE_BRANCH}
+{% endif %}
     - if test -d /buildcache; then export BUILDCACHE=/buildcache; fi
     - mkdir -p /opt/metwork-{{FORCED_REPO}}-$${TARGET_DIR}
     - if test -d /pub; then mkdir -p /pub/metwork/continuous_integration/buildlogs/${DRONE_BRANCH}/{{cookiecutter.repo}}/${OS_VERSION}/${DRONE_BUILD_NUMBER}; fi
