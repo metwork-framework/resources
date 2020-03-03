@@ -3,7 +3,7 @@ include ../adm/root.mk
 CHANGELOGS_SOURCES=$(shell cd .. && ls CHANGELOG-*.md 2>/dev/null)
 CHANGELOGS_TARGETS=$(addprefix 900-changelogs/, $(CHANGELOGS_SOURCES))
 
-CONFIG_INI_TARGET={% if cookiecutter.repo != "mfext" %}850-reference/config.ini{% endif %}
+CONFIG_INI_TARGET={% if "mfext" not in cookiecutter.repo %}850-reference/config.ini{% endif %}
 
 all: $(CHANGELOGS_TARGETS) 850-reference/100-components.md $(CONFIG_INI_TARGET)
 
