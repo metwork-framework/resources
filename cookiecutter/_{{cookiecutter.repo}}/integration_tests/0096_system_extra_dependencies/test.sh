@@ -14,26 +14,31 @@ RET=0
 
 {% if "mfext-addon" not in "REPO_TOPICS"|getenv|from_json %}
 cd "${MFMODULE_HOME}" || exit 1
-DEPS1=$(external_dependencies.sh |awk -F '/' '{print $NF}' |xargs)
-DEPS2=$(external_dependencies_not_found.sh |xargs)
-DEPS=$(echo $DEPS1 $DEPS2)
-for DEP in ${DEPS}; do
-    FOUND=0
-    for OK_DEP in ${OK_DEPS}; do
-        if test "${DEP}" = "${OK_DEP}"; then
-            FOUND=1
-            break
+cd opt
+for layer in `ls`; do
+    cd "${layer}"
+    DEPS1=$(layer_wrapper --layers=${layer}@${MFMODULE_LOWERCASE} -- external_dependencies.sh |awk -F '/' '{print $NF}' |xargs)
+    DEPS2=$(layer_wrapper --layers=${layer}@${MFMODULE_LOWERCASE} -- external_dependencies_not_found.sh |xargs)
+    DEPS=$(echo $DEPS1 $DEPS2)
+    for DEP in ${DEPS}; do
+        FOUND=0
+        for OK_DEP in ${OK_DEPS}; do
+            if test "${DEP}" = "${OK_DEP}"; then
+                FOUND=1
+                break
+            fi
+        done
+        if test "${FOUND}" = "1"; then
+            continue
         fi
+        echo "***** ${DEP} *****"
+        echo "=== revert ldd ==="
+        revert_ldd.sh "${DEP}"
+        echo
+        echo
+        RET=1
     done
-    if test "${FOUND}" = "1"; then
-        continue
-    fi
-    echo "***** ${DEP} *****"
-    echo "=== revert ldd ==="
-    revert_ldd.sh "${DEP}"
-    echo
-    echo
-    RET=1
+    cd ..
 done
 {% else %}
 cd "${MFEXT_HOME}" || exit 1
@@ -46,8 +51,8 @@ for layer in `ls`; do
             echo
             echo "=== System extra dependencies layer ${layer} ==="
             echo
-            DEPS1=$(external_dependencies.sh |awk -F '/' '{print $NF}' |xargs)
-            DEPS2=$(external_dependencies_not_found.sh |xargs)
+            DEPS1=$(layer_wrapper --layers=${layer}@mfext -- external_dependencies.sh |awk -F '/' '{print $NF}' |xargs)
+            DEPS2=$(layer_wrapper --layers=${layer}@mfext -- external_dependencies_not_found.sh |xargs)
             DEPS=$(echo $DEPS1 $DEPS2)
             for DEP in ${DEPS}; do
                 FOUND=0
