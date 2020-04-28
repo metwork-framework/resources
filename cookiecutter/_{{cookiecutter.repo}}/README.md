@@ -13,7 +13,7 @@
 {% if drone_managed != "" %}
 [![Drone CI](http://metwork-framework.org:8000/api/badges/metwork-framework/{{cookiecutter.repo}}/status.svg)](http://metwork-framework.org:8000/metwork-framework/{{cookiecutter.repo}})
 {% else %}
-[![GitHub CI](https://github.com/metwork-framework/{{cookiecutter.repo}}/workflows/CI/badge.svg)](https://github.com/metwork-framework/{{cookiecutter.repo}}/actions?query=workflow%3ACI)
+[![GitHub CI](https://github.com/metwork-framework/{{cookiecutter.repo}}/workflows/CI/badge.svg?branch=master)](https://github.com/metwork-framework/{{cookiecutter.repo}}/actions?query=workflow%3ACI&branch=master)
 {% endif %}
 {%- endif %}
 {%- if "docker-image" in "REPO_TOPICS"|getenv|from_json %}
