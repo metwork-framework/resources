@@ -7,6 +7,7 @@
 - introduce 0.9
 - add cheatsheet link
 - remove mfcom (now integrated into mfext)
+- remove mfcom (now integrated into mfext)
 - we move to portable builds
 - replace MODULE* environment variables names by MFMODULE* (MODULE_HOME becomes MFMODULE_HOME and so on)
 - add doc files
@@ -58,6 +59,7 @@
 - force delete doc directory from repo docker-mfextaddon_python3_ia-centos7-buildimage
 - remove doc directory from repo docker-mfextaddon_python3_ia-centos7-buildimage
 - fix cheatsheet.md
+- add path to misc@mfext
 - fix tag for mfext addons
 - fix integration tests for mfext addons
 - install build dependency python3_scientific@mfext for mfextaddon_python3_ia
