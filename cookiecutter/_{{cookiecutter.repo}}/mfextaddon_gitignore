@@ -22,3 +22,9 @@ doc/CHANGELOG*.rst
 doc/changelogs.rst 
 /__pycache__
 _docs_build
+{% if cookiecutter.repo == "mfextaddon_python2" %}
+layers/layer1_python2_core/0000_adm/download_compile_requirements
+layers/layer1_python2_core/0000_adm/freeze_requirements
+layers/layer1_python2_core/0000_adm/install_requirements
+layers/layer1_python2_core/0000_adm/unsafe_pip
+{% endif %}
