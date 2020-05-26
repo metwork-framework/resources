@@ -58,7 +58,7 @@ build_common: &build_common
     - OUTPUT=`git status --short`
     - if test "$${OUTPUT}" != ""; then echo "ERROR non empty git status output $${OUTPUT}"; echo "git diff output"; git diff; exit 1; fi
 {% if cookiecutter.repo == "mfbus" %}
-    - yum -y install metwork-mfext-layer-rabbitmq-$${DEP_BRANCH}
+    - yum -y install metwork-mfext-layer-rabbitmq-${DRONE_BRANCH##release_}
 {% endif %}
     - MODULEHASH=`/opt/metwork-{{FORCED_REPO}}-$${TARGET_DIR}/bin/{{FORCED_REPO}}_wrapper module_hash 2>module_hash.debug` # FIXME: module_hash for addons ?
     - if test -f /opt/metwork-{{FORCED_REPO}}-$${TARGET_DIR}/.dhash; then cat /opt/metwork-{{FORCED_REPO}}-$${TARGET_DIR}/.dhash; fi
