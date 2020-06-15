@@ -348,6 +348,19 @@ pipeline:
       event: push
       branch: [ master, integration, experimental*, release_* ]
 {% endif %}
+{% if cookiecutter.repo == "mfextaddon_python2" %}
+  trigger_mfxxx_python2_tests:
+    image: metwork/drone-downstream-specific-image:latest
+    repositories:
+      - metwork-framework/mfserv_python2_tests@${DRONE_BRANCH}
+      - metwork-framework/mfdata_python2_tests@${DRONE_BRANCH}
+      - metwork-framework/mfbase_python2_tests@${DRONE_BRANCH}
+    secrets: [ downstream_token, downstream_server ]
+    when:
+      status: [ success ]
+      event: push
+      branch: [ master, integration, experimental*, release_* ]
+{% endif %}
 {% if cookiecutter.repo == "mfserv" %}
   trigger_plugins_buildimage:
     image: metwork/drone-downstream-specific-image:latest
