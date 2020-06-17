@@ -354,7 +354,6 @@ pipeline:
     repositories:
       - metwork-framework/mfserv_python2_tests@${DRONE_BRANCH}
       - metwork-framework/mfdata_python2_tests@${DRONE_BRANCH}
-      - metwork-framework/mfbase_python2_tests@${DRONE_BRANCH}
     secrets: [ downstream_token, downstream_server ]
     when:
       status: [ success ]
