@@ -4,6 +4,7 @@
 ## [Unreleased]
 
 ### New Features
+- add .gitignore and .drone.yml for python2_tests repositories
 - introduce 0.9
 - add cheatsheet link
 - remove mfcom (now integrated into mfext)
