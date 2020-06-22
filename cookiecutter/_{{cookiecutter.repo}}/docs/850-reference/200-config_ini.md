@@ -2,6 +2,8 @@
 
 This is the default {{cookiecutter.repo}} configuration file.
 
+{% raw %}
 ```ini
-{% raw %}{{ "cat docs/850-reference/config.ini"|shell() }}{% endraw %}
+{{ "cat docs/850-reference/config.ini"|shell() }}
 ```
+{% endraw %}

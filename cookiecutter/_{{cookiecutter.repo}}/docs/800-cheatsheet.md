@@ -70,7 +70,7 @@ As `{{cookiecutter.repo}}` user:
 As `{{cookiecutter.repo}}` unix user:
 
 {% raw %}
-{{plugin_ref_management_commands}}
+{{ "cat docs/_plugin_ref_management_commands.md"|shell() }}
 {% endraw %}
 
 {% endif %}
@@ -83,13 +83,13 @@ As `{{cookiecutter.repo}}` unix user:
 As `{{cookiecutter.repo}}` unix user, inside a plugin directory for `make` commands (you must have a `Makefile` and `config.ini` files inside the current working directory):
 
 {% raw %}
-{{plugin_ref_dev_commands}}
+{{ "cat docs/_plugin_ref_dev_commands.md"|shell() }}
 {% endraw %}
 
 ### interesting files inside the plugin directory
 
 {% raw %}
-{{plugin_ref_interesting_files}}
+{{ "cat docs/_plugin_ref_interesting_files.md"|shell() }}
 {% endraw %}
 
 > Note: mandatory files are in **bold**, all these files are not created by default (it mainly depends on the template you used) but you can create them afterwards.
