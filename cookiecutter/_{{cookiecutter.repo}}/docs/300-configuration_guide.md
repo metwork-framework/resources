@@ -103,7 +103,7 @@ But, if you set `DEV` in `/etc/metwork.config` (configuration name), the `debug`
 because of the `debug[DEV]=1` line/variant.
 
 Now, if you set `PROD` in `/etc/metwork.config` (configuration name), as there is no `debug[PROD]` line/variant,
-the debug value will failback to the defauldefault value: `0` (in this example).
+the debug value will failback to the default value: `0` (in this example).
 
 #### Inheritance behavior
 
