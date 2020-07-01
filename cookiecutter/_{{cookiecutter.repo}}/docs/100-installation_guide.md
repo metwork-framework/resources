@@ -171,55 +171,29 @@ zypper install metwork-{{cookiecutter.repo}}-full
 ```
 
 
-{% if cookiecutter.repo in ("mfserv", "mfdata", "mfadmin") %}
+{% if cookiecutter.repo in ("mfserv", "mfadmin") %}
 ### Optional {{cookiecutter.repo}} layers
 
 You can also add extra (optional) `{{cookiecutter.repo}}` layers.
 
-{% if cookiecutter == "mfserv" %}
+{% if cookiecutter.repo == "mfserv" %}
 
 ```console tab="CentOS/Fedora"
-# To install python2 support
-yum install metwork-mfserv-layer-python2
-
 # To install nodejs support
 yum install metwork-mfserv-layer-nodejs
 ```
 
 ```console tab="Mageia"
-# To install python2 support
-urpmi metwork-mfserv-layer-python2
-
 # To install nodejs support
 urpmi install metwork-mfserv-layer-nodejs
 ```
 
 ```console tab="SUSE"
-# To install python2 support
-zypper install metwork-mfserv-layer-python2
-
 # To install nodejs support
 zypper install install metwork-mfserv-layer-nodejs
 ```
 
-{% elif cookiecutter == "mfdata" %}
-
-```console tab="CentOS/Fedora"
-# To install python2 support
-yum install metwork-mfdata-layer-python2
-```
-
-```console tab="Mageia"
-# To install python2 support
-urpmi metwork-mfdata-layer-python2
-```
-
-```console tab="SUSE"
-# To install python2 support
-zypper install metwork-mfdata-layer-python2
-```
-
-{% elif cookiecutter == "mfadmin" %}
+{% elif cookiecutter.repo == "mfadmin" %}
 
 ```console tab="CentOS/Fedora"
 # To install logs support
@@ -251,7 +225,7 @@ zypper install metwork-mfadmin-layer-metrics
 
 ### Optional mfext layers
 
-You can also add extra (optional) `{{cookiecutter.repo}}` layers.
+You can also add extra (optional) `mfext` layers.
 
 ```console tab="CentOS/Fedora"
 # To install some devtools
