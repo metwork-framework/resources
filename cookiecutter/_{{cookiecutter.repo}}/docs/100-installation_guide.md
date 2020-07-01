@@ -273,11 +273,11 @@ For example (please refer to corresponding add-on documentation)
 ```console tab="CentOS/Fedora"
 # To install python2 support
 yum install metwork-mfext-layer-python2
+
 # To install python2 devtools
 yum install metwork-mfext-layer-python2_devtools
 
 # To install opinionated VIM with Python3 support
-# for CentOS or Fedora (see above note for other distributions)
 yum install metwork-mfext-layer-python3_vim
 
 # To install all scientific libraries (for Python3)
