@@ -171,55 +171,29 @@ zypper install metwork-{{cookiecutter.repo}}-full
 ```
 
 
-{% if cookiecutter.repo in ("mfserv", "mfdata", "mfadmin") %}
+{% if cookiecutter.repo in ("mfserv", "mfadmin") %}
 ### Optional {{cookiecutter.repo}} layers
 
 You can also add extra (optional) `{{cookiecutter.repo}}` layers.
 
-{% if cookiecutter == "mfserv" %}
+{% if cookiecutter.repo == "mfserv" %}
 
 ```console tab="CentOS/Fedora"
-# To install python2 support
-yum install metwork-mfserv-layer-python2
-
 # To install nodejs support
 yum install metwork-mfserv-layer-nodejs
 ```
 
 ```console tab="Mageia"
-# To install python2 support
-urpmi metwork-mfserv-layer-python2
-
 # To install nodejs support
 urpmi install metwork-mfserv-layer-nodejs
 ```
 
 ```console tab="SUSE"
-# To install python2 support
-zypper install metwork-mfserv-layer-python2
-
 # To install nodejs support
 zypper install install metwork-mfserv-layer-nodejs
 ```
 
-{% elif cookiecutter == "mfdata" %}
-
-```console tab="CentOS/Fedora"
-# To install python2 support
-yum install metwork-mfdata-layer-python2
-```
-
-```console tab="Mageia"
-# To install python2 support
-urpmi metwork-mfdata-layer-python2
-```
-
-```console tab="SUSE"
-# To install python2 support
-zypper install metwork-mfdata-layer-python2
-```
-
-{% elif cookiecutter == "mfadmin" %}
+{% elif cookiecutter.repo == "mfadmin" %}
 
 ```console tab="CentOS/Fedora"
 # To install logs support
@@ -251,7 +225,7 @@ zypper install metwork-mfadmin-layer-metrics
 
 ### Optional mfext layers
 
-You can also add extra (optional) `{{cookiecutter.repo}}` layers.
+You can also add extra (optional) `mfext` layers.
 
 ```console tab="CentOS/Fedora"
 # To install some devtools
@@ -259,11 +233,6 @@ yum install metwork-mfext-layer-python3_devtools
 
 # To install some (base) scientific libraries
 yum install metwork-mfext-layer-scientific_core
-
-# To install python2 support
-# (including corresponding scientific and devtools addons)
-yum install metwork-mfext-layer-python2
-yum install metwork-mfext-layer-python2_devtools
 
 # To install java/nodejs binaries
 yum install metwork-mfext-layer-nodejs
@@ -277,11 +246,6 @@ urpmi metwork-mfext-layer-python3_devtools
 # To install some (base) scientific libraries
 urpmi metwork-mfext-layer-scientific_core
 
-# To install python2 support
-# (including corresponding scientific and devtools addons)
-urpmi metwork-mfext-layer-python2
-urpmi metwork-mfext-layer-python2_devtools
-
 # To install java/nodejs binaries
 urpmi metwork-mfext-layer-nodejs
 urpmi metwork-mfext-layer-java
@@ -293,11 +257,6 @@ zypper install metwork-mfext-layer-python3_devtools
 
 # To install some (base) scientific libraries
 zypper install metwork-mfext-layer-scientific_core
-
-# To install python2 support
-# (including corresponding scientific and devtools addons)
-zypper install metwork-mfext-layer-python2
-zypper install metwork-mfext-layer-python2_devtools
 
 # To install java/nodejs binaries
 zypper install metwork-mfext-layer-nodejs
@@ -312,12 +271,20 @@ in the same way and with the same repository (for official [add-ons]({% raw %}{{
 For example (please refer to corresponding add-on documentation)
 
 ```console tab="CentOS/Fedora"
+# To install python2 support
+yum install metwork-mfext-layer-python2
+
+# To install python2 devtools
+yum install metwork-mfext-layer-python2_devtools
+
 # To install opinionated VIM with Python3 support
-# for CentOS or Fedora (see above note for other distributions)
 yum install metwork-mfext-layer-python3_vim
 
 # To install all scientific libraries (for Python3)
 yum install metwork-mfext-layer-python3_scientific
+
+# To install all scientific libraries (for Python2)
+yum install metwork-mfext-layer-python2_scientific
 
 # To install "machine learning" Python3 libraries
 yum install metwork-mfext-layer-python3_ia
@@ -329,12 +296,20 @@ yum install metwork-mfext-layer-python3_mapserverapi
 ```
 
 ```console tab="Mageia"
+# To install python2 support
+urpmi metwork-mfext-layer-python2
+# To install python2 devtools
+urpmi metwork-mfext-layer-python2_devtools
+
 # To install opinionated VIM with Python3 support
 # for CentOS or Fedora (see above note for other distributions)
 urpmi metwork-mfext-layer-python3_vim
 
 # To install all scientific libraries (for Python3)
 urpmi metwork-mfext-layer-python3_scientific
+
+# To install all scientific libraries (for Python2)
+urpmi metwork-mfext-layer-python2_scientific
 
 # To install "machine learning" Python3 libraries
 urpmi metwork-mfext-layer-python3_ia
@@ -346,12 +321,20 @@ urpmi metwork-mfext-layer-python3_mapserverapi
 ```
 
 ```console tab="SUSE"
+# To install python2 support
+zypper install metwork-mfext-layer-python2
+# To install python2 devtools
+zypper install metwork-mfext-layer-python2_devtools
+
 # To install opinionated VIM with Python3 support
 # for CentOS or Fedora (see above note for other distributions)
 zypper install metwork-mfext-layer-python3_vim
 
 # To install all scientific libraries (for Python3)
 zypper install metwork-mfext-layer-python3_scientific
+
+# To install all scientific libraries (for Python2)
+zypper install metwork-mfext-layer-python2_scientific
 
 # To install "machine learning" Python3 libraries
 zypper install metwork-mfext-layer-python3_ia
