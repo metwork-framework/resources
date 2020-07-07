@@ -1,3 +1,3 @@
-{% if cookiecutter.repo not in ("mfserv", "mfadmin", "mfsysmon") %}
+{% if cookiecutter.repo not in ("mfserv", "mfadmin", "mfsysmon", "mfdata") %}
 1
 {% endif %}

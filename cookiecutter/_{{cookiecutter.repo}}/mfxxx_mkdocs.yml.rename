@@ -1,4 +1,4 @@
-{% if cookiecutter.repo in ["mfext", "mfsysmon", "mfserv", "mfadmin"] %}
+{% if cookiecutter.repo in ["mfext", "mfsysmon", "mfdata", "mfserv", "mfadmin"] %}
 mkdocs.yml
 {% endif %}
 {% if "mfextaddon_" in cookiecutter.repo %}
