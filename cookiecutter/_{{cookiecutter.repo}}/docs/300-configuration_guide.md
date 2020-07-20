@@ -1,11 +1,5 @@
 # Configuration guide
 
-{% if cookiecutter.repo == "mfext" %}
-!!! warning
-    This is a "general concept" guide not specific to `mfext` module as this
-    module does not offer any configuration.
-{% endif %}
-
 ## Concepts
 
 There are several concepts about configuration in MetWork framework.
