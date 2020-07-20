@@ -31,7 +31,7 @@
 
 {{ ("cat " + "REPO_HOME"|getenv + "/.metwork-framework/README.md 2>/dev/null |envtpl")|shell }}
 
-{% if cookiecutter.repo not in ['mfext', 'mfsysmon', 'mfbase', 'mfadmin', 'mfserv', 'mfdata'] and "mfextaddon" not in cookiecutter.repo %}
+{% if cookiecutter.repo not in ['mfext', 'mfbus', 'mfsysmon', 'mfbase', 'mfadmin', 'mfserv', 'mfdata'] and "mfextaddon" not in cookiecutter.repo %}
 {% set components=("cat " + "REPO_HOME"|getenv + "/.metwork-framework/components.md 2>/dev/null")|shell %}
 
 {% if components != "" %}
