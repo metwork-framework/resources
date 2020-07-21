@@ -67,7 +67,7 @@ pull_request_rules:
       - "#approved-reviews-by>=1"
       - -title~=(WIP|wip)
       - "label!=Status: Blocked"
-      - "title~=^(build|chore|ci|docs|style|refactor|perf|test|fix|feat|fix|feat|feat!|fix!)(\([a-z]+\))?: [\w ]+$"
+      - "title~=^(build|chore|ci|docs|style|refactor|perf|test|fix|feat|fix|feat|feat!|fix!)(\\([a-z]+\\))?: [\w ]+$"
 {% if cookiecutter.integration_level|int >= 4 %}
       - status-success=license/cla
 {% if cookiecutter.repo != 'mfext' and cookiecutter.repo != 'testrepo' and cookiecutter.repo != 'testrepo2' %}
@@ -96,7 +96,7 @@ pull_request_rules:
       - "#approved-reviews-by>=1"
       - -title~=(WIP|wip)
       - "label!=Status: Blocked"
-      - "-title~=^(build|chore|ci|docs|style|refactor|perf|test|fix|feat|fix|feat|feat!|fix!)(\([a-z]+\))?: [\w ]+$"
+      - "-title~=^(build|chore|ci|docs|style|refactor|perf|test|fix|feat|fix|feat|feat!|fix!)(\\([a-z]+\\))?: [\w ]+$"
 {% if cookiecutter.integration_level|int >= 4 %}
       - status-success=license/cla
 {% if cookiecutter.repo != 'mfext' and cookiecutter.repo != 'testrepo' and cookiecutter.repo != 'testrepo2' %}
