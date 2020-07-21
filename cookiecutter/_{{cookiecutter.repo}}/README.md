@@ -29,6 +29,14 @@
 
 [//]: # (TABLE_OF_CONTENTS_PLACEHOLDER)
 
+{% if cookiecutter.integration_level|int >= 4 %}
+## What is MetWork FrameWork?
+
+[MetWork Framework](https://metwork-framework.org) is an opensource system
+for building and managing production grade applications or micro-services
+(from development to operations).
+{% endif %}
+
 {{ ("cat " + "REPO_HOME"|getenv + "/.metwork-framework/README.md 2>/dev/null |envtpl")|shell }}
 
 {% if cookiecutter.repo not in ['mfext', 'mfbus', 'mfsysmon', 'mfbase', 'mfadmin', 'mfserv', 'mfdata'] and "mfextaddon" not in cookiecutter.repo %}
