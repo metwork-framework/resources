@@ -264,7 +264,7 @@ It will:
 - load the `plugin_env` of the current plugin (very useful if you installed some extra libraries in your plugin or if you want to use some custom env variables)
 - then execute your command!
 
-{{ nested_unraw() }}
+{{ nested_endraw() }}
 
 This file will be injected into the `${MFMODULE_RUNTIME_USER}` crontab.
 
