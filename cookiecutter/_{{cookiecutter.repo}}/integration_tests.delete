@@ -1,6 +1,0 @@
-{% if cookiecutter.integration_level|int < 5 and "mfext-addon" not in "REPO_TOPICS"|getenv|from_json %}
-yes
-{% endif %}
-{% if cookiecutter.repo == "mfextaddon_template" -%}
-yes
-{% endif %}

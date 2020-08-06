@@ -1,1 +1,0 @@
-{% if cookiecutter.integration_level|int < 5 %}yes{% endif %}

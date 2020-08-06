@@ -1,5 +1,0 @@
-{% if cookiecutter.integration_level|int < 4 %}
-{% if "autoreadme" not in "REPO_TOPICS"|getenv|from_json %}
-yes
-{% endif %}
-{% endif %}

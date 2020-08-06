@@ -1,3 +1,0 @@
-{% if cookiecutter.repo not in ["mfbus", "mfext", "mfsysmon", "mfdata", "mfbase", "mfadmin", "mfserv"] and "mfextaddon_" not in cookiecutter.repo %}
-1
-{% endif %}

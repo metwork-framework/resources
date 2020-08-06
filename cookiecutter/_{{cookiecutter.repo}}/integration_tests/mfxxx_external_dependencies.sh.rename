@@ -1,3 +1,0 @@
-{% if cookiecutter.integration_level|int == 5 or "mfext-addon" in "REPO_TOPICS"|getenv|from_json %}
-external_dependencies.sh
-{% endif %}

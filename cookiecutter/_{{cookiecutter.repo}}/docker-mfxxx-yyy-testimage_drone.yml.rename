@@ -1,3 +1,0 @@
-{% if cookiecutter.repo|fnmatch('docker-mf*-*-testimage') %}
-    .drone.yml
-{% endif %}

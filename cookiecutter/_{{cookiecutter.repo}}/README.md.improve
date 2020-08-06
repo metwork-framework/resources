@@ -1,3 +1,0 @@
-{% if "autoreadme2" in "REPO_TOPICS"|getenv|from_json %}
-	yes
-{% endif %}
